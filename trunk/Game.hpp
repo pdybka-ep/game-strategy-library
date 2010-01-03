@@ -35,22 +35,59 @@ namespace library {
         }
 
         /**
+         * Returns total number of nodes
+         */
+        int getTotalNumberOfNodes() const {
+            return totalNumberOfNodes_;
+        }
+
+        /**
+         * Returns number of visited nodes
+         */
+        int getNumberOfVisitedNodes() const {
+            return numberOfVisitedNodes_;
+        }
+
+        /**
          * Sets game ID
          */
-        void setGameId(std::string gameId_) {
-            this->gameId_ = gameId_;
+        void setGameId(std::string gameId) {
+            this->gameId_ = gameId;
         }
 
         /**
          * Sets start node
          */
-        void setStartNode(const boost::shared_ptr<Node>& startNode_) {
-            this->startNode_ = startNode_;
+        void setStartNode(const boost::shared_ptr<Node>& startNode) {
+            this->startNode_ = startNode;
+        }
+
+        /**
+         * Sets total number of nodes
+         */
+        void setTotalNumberOfNodes(int totalNumberOfNodes){
+            this->totalNumberOfNodes_ = totalNumberOfNodes;
+        }
+
+        /**
+         * Sets number of visited nodes
+         */
+        void setNumberOfVisitedNodes(int numberOfVisitedNodes){
+            this->numberOfVisitedNodes_ = numberOfVisitedNodes;
+        }
+
+        /**
+         * Increments number of visited nodes
+         */
+        void incNumberOfVisitedNodes(){
+            ++ this->numberOfVisitedNodes_;
         }
 
     protected:
         std::string gameId_;
         boost::shared_ptr<Node> startNode_;
+        int totalNumberOfNodes_;
+        int numberOfVisitedNodes_;
     };
 
 }
