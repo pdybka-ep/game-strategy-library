@@ -14,20 +14,20 @@
 
 namespace library {
 
-	class GameState {
-	public:
-		GameState();
-		GameState(const GameState &);
-		virtual ~GameState();
+    class GameState {
+    public:
+        GameState();
+        GameState(const GameState &);
+        virtual ~GameState();
 
-		GameState& operator= (const GameState&);
+        GameState& operator= (const GameState&);
 
-	protected:
-		Game game_;
-		std::list<Player> players_;
-		boost::shared_ptr<Node> actualNode_;
-		int nextPlayerIndex_;
-	};
+    protected:
+        Game game_;
+        std::list<Player> players_;
+        boost::shared_ptr<Node> actualNode_;
+        int nextPlayerIndex_;
+    };
 
 }
 
