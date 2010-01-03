@@ -8,14 +8,14 @@
 namespace library {
 
     GameState::GameState() {
-        this->actualNode_ = boost::shared_ptr<Node>();
+        this->currentNode_ = boost::shared_ptr<Node>();
         this->nextPlayerIndex_ = -1;
     }
 
 
     GameState::GameState(const GameState & gameState){
         this->game_ = gameState.game_;
-        this->actualNode_ = gameState.actualNode_;
+        this->currentNode_ = gameState.currentNode_;
         this->nextPlayerIndex_ = gameState.nextPlayerIndex_;
         std::list<Player>::const_iterator it = gameState.players_.begin();
         while(it != gameState.players_.end()){
@@ -32,7 +32,7 @@ namespace library {
 
     GameState& GameState::operator= (const GameState& gameState){
         this->game_ = gameState.game_;
-        this->actualNode_ = gameState.actualNode_;
+        this->currentNode_ = gameState.currentNode_;
         this->nextPlayerIndex_ = gameState.nextPlayerIndex_;
         std::list<Player>::const_iterator it = gameState.players_.begin();
         while(it != gameState.players_.end()){

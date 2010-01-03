@@ -22,10 +22,43 @@ namespace library {
 
         GameState& operator= (const GameState&);
 
+
+        boost::shared_ptr<Node> getCurrentNode() const {
+            return currentNode_;
+        }
+
+        Game getGame() const {
+            return game_;
+        }
+
+        int getNextPlayerIndex() const {
+            return nextPlayerIndex_;
+        }
+
+        std::list<Player> getPlayers() const {
+            return players_;
+        }
+
+        void setCurrentNode(boost::shared_ptr<Node> currentNode_) {
+            this->currentNode_ = currentNode_;
+        }
+
+        void setGame(Game game_) {
+            this->game_ = game_;
+        }
+
+        void setNextPlayerIndex(int nextPlayerIndex_) {
+            this->nextPlayerIndex_ = nextPlayerIndex_;
+        }
+
+        void setPlayers(std::list<Player> players_) {
+            this->players_ = players_;
+        }
+
     protected:
         Game game_;
         std::list<Player> players_;
-        boost::shared_ptr<Node> actualNode_;
+        boost::shared_ptr<Node> currentNode_;
         int nextPlayerIndex_;
     };
 

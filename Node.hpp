@@ -35,6 +35,9 @@ namespace library {
             this->availableMoves_ = availableMoves_;
         }
 
+        /**
+         * Adds new move to the list of available moves
+         */
         void addAvailableMove(const Move &move){
             boost::shared_ptr<Move> newMove(new Move(move));
             this->availableMoves_.push_back(newMove);
@@ -54,8 +57,22 @@ namespace library {
             this->nodeId_ = nodeId;
         }
 
+
+        bool isLeaf() const {
+            return this->availableMoves_.empty();
+        }
+
+        int getValue() const {
+            return this->value_;
+        }
+
+        void setValue(int value) {
+            this->value_ = value;
+        }
+
     protected:
         int nodeId_;
+        int value_;
         std::list<boost::shared_ptr<Move> > availableMoves_;
     };
 
