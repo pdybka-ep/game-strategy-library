@@ -1,0 +1,12 @@
+INPUT(
+./release\main.o
+./release\gamewindow.o
+./release\field.o
+./release\gameboard.o
+./release\optionsdialog.o
+./release\moc_gamewindow.o
+./release\moc_optionsdialog.o
+./release\moc_gameboard.o
+./release\moc_field.o
+./release\qrc_res.o
+);

@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GameWindow</class>
+ <widget class="QMainWindow" name="GameWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>407</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>600</width>
+    <height>407</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Kółko i krzyżyk</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/res/ttt.ico</normaloff>:/res/ttt.ico</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="4" column="1">
+       <widget class="QLabel" name="label_5">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ty:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <italic>true</italic>
+         </font>
+        </property>
+        <property name="text">
+         <string>Jesteś:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLCDNumber" name="playerPointsLcd">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="smallDecimalPoint">
+         <bool>false</bool>
+        </property>
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLabel" name="label_4">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>Komputer:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="2">
+       <widget class="QLabel" name="label_3">
+        <property name="font">
+         <font>
+          <italic>true</italic>
+         </font>
+        </property>
+        <property name="text">
+         <string>Statystyki zwycięstw w rozgrywce:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLCDNumber" name="OponentPointsLcd">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLabel" name="label_6">
+        <property name="font">
+         <font>
+          <italic>true</italic>
+         </font>
+        </property>
+        <property name="text">
+         <string>Poziom przeciwnika:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="2">
+       <widget class="QLabel" name="oponentLevelLabel">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="8" column="1" colspan="2">
+       <spacer name="verticalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="3" rowspan="9">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>10</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="playerTypeLabel">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="2">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="6" column="1" colspan="2">
+       <spacer name="verticalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="9" column="2">
+       <widget class="QPushButton" name="exitButton">
+        <property name="text">
+         <string>Koniec</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QPushButton" name="newGameButton">
+        <property name="text">
+         <string>Nowe rozdanie</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="10">
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>371</width>
+          <height>329</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="backgroundBrush">
+         <brush brushstyle="NoBrush">
+          <color alpha="255">
+           <red>65</red>
+           <green>65</green>
+           <blue>65</blue>
+          </color>
+         </brush>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuGame">
+    <property name="title">
+     <string>Gra</string>
+    </property>
+    <addaction name="actionNewGame"/>
+    <addaction name="separator"/>
+    <addaction name="actionStats"/>
+    <addaction name="separator"/>
+    <addaction name="actionEnd"/>
+   </widget>
+   <widget class="QMenu" name="menuOponent">
+    <property name="title">
+     <string>Przeciwnik</string>
+    </property>
+    <widget class="QMenu" name="menuNewOponent">
+     <property name="title">
+      <string>Nowy</string>
+     </property>
+     <addaction name="actionBeginner"/>
+     <addaction name="actionIntermediate"/>
+     <addaction name="actionAdvanced"/>
+    </widget>
+    <addaction name="menuNewOponent"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionLoad"/>
+    <addaction name="separator"/>
+   </widget>
+   <addaction name="menuGame"/>
+   <addaction name="menuOponent"/>
+  </widget>
+  <action name="actionNewGame">
+   <property name="text">
+    <string>Nowe rozdanie</string>
+   </property>
+   <property name="toolTip">
+    <string>&amp;Nowe rozdanie</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>Nowy...</string>
+   </property>
+  </action>
+  <action name="actionBeginner">
+   <property name="text">
+    <string>Początkujący</string>
+   </property>
+   <property name="toolTip">
+    <string>&amp;Początkujący</string>
+   </property>
+  </action>
+  <action name="actionIntermediate">
+   <property name="text">
+    <string>Średni</string>
+   </property>
+   <property name="toolTip">
+    <string>Ś&amp;redni</string>
+   </property>
+  </action>
+  <action name="actionAdvanced">
+   <property name="text">
+    <string>Zaawansowany</string>
+   </property>
+   <property name="toolTip">
+    <string>Z&amp;aawansowany</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Zapisz...</string>
+   </property>
+   <property name="toolTip">
+    <string>&amp;Zapisz</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionLoad">
+   <property name="text">
+    <string>Wczytaj...</string>
+   </property>
+   <property name="toolTip">
+    <string>&amp;Wczytaj</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionEnd">
+   <property name="text">
+    <string>Zakończ</string>
+   </property>
+   <property name="toolTip">
+    <string>Za&amp;kończ</string>
+   </property>
+  </action>
+  <action name="actionStats">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Statystyki...</string>
+   </property>
+   <property name="toolTip">
+    <string>&amp;Statystyki</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>exitButton</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>568</x>
+     <y>396</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>newGameButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionNewGame</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>438</x>
+     <y>385</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

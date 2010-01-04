@@ -1,0 +1,12 @@
+INPUT(
+./debug\main.o
+./debug\gamewindow.o
+./debug\field.o
+./debug\gameboard.o
+./debug\optionsdialog.o
+./debug\moc_gamewindow.o
+./debug\moc_optionsdialog.o
+./debug\moc_gameboard.o
+./debug\moc_field.o
+./debug\qrc_res.o
+);
