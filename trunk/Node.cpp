@@ -28,6 +28,9 @@ namespace library {
 
 
     Node& Node::operator=(const Node& node){
+        if(this == &node)
+            return *this;
+
         this->nodeId_ = node.nodeId_;
         this->value_ = node.value_;
         std::list<boost::shared_ptr<Move> >::const_iterator it = node.availableMoves_.begin();

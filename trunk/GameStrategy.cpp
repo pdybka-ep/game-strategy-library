@@ -20,6 +20,9 @@ namespace library {
     }
 
     GameStrategy& GameStrategy::operator= (const GameStrategy& gameStrategy){
+        if(this == &gameStrategy)
+            return *this;
+
         this->gameState_ = gameStrategy.gameState_;
         this->gameFactory_ = gameStrategy.gameFactory_;
         return *this;
@@ -38,6 +41,7 @@ namespace library {
         gameState_.setGame(game);
         gameState_.setPlayers(players);
         gameState_.setCurrentNode(game.getStartNode());
+        gameState_.addNodeToGamePath(game.getStartNode());
         if(player1.isStartingPlayer()){
             gameState_.setNextPlayerIndex(0);
         }
@@ -47,7 +51,7 @@ namespace library {
     }
 
 
-    Move& GameStrategy::findBestMove() throw(GameNotStartedException, NoMoveAvailableException){
+    Move GameStrategy::findBestMove() throw(GameNotStartedException, NoMoveAvailableException){
         boost::shared_ptr<Node> currentNode = gameState_.getCurrentNode();
         if(currentNode == 0){
             throw GameNotStartedException();
@@ -110,17 +114,38 @@ namespace library {
 
         // move
         gameState_.setCurrentNode(move.getDestination());
-        if(gameState_.getNextPlayerIndex() == 0){
-            gameState_.setNextPlayerIndex(1);
-        }
-        else {
-            gameState_.setNextPlayerIndex(0);
-        }
+        gameState_.addNodeToGamePath(move.getDestination());
+        gameState_.setNextPlayerIndex((gameState_.getNextPlayerIndex()+1)%2);
     }
 
 
     void GameStrategy::endOfGame(const Player& winner){
-        // TODO implement
+        // set value
+        if(gameState_.getPlayers().front() == winner){
+            gameState_.getCurrentNode()->setValue(1);
+        }
+        else if (gameState_.getPlayers().back() == winner) {
+            gameState_.getCurrentNode()->setValue(-1);
+        }
+        else {
+            gameState_.getCurrentNode()->setValue(0);
+        }
+
+        // update values up the tree
+        std::list<boost::shared_ptr<Node> > gamePath = gameState_.getGamePath();
+        bool maximizingNode = (gameState_.getNextPlayerIndex() == 0);
+        bool nodeChanged = false;
+        boost::shared_ptr<Node> currentNode;
+        do {
+            currentNode = gamePath.back();
+            nodeChanged = updateNodeValue(currentNode, maximizingNode);
+            gamePath.pop_back();
+            maximizingNode = !maximizingNode;
+        } while (nodeChanged && !gamePath.empty());
+
+        // set not started (finished) game
+        boost::shared_ptr<Node> empty;
+        gameState_.setCurrentNode(empty);
     }
 
 
@@ -130,5 +155,26 @@ namespace library {
 
     void GameStrategy::loadGame(const std::string& filePath){
         // TODO implement
+    }
+
+
+    /* private methods */
+    bool GameStrategy::updateNodeValue(boost::shared_ptr<Node>& node, bool maximizingNode) {
+        if(node->isLeaf())
+            return false;
+
+        int oldValue = node->getValue();
+        int newValue = oldValue;
+        std::list<boost::shared_ptr<Move> > availableMoves = node->getAvailableMoves();
+        for(std::list<boost::shared_ptr<Move> >::const_iterator it = availableMoves.begin();
+                it != availableMoves.end(); ++it){
+            if((maximizingNode && oldValue < (*it)->getDestination()->getValue())
+                    || (!maximizingNode && oldValue > (*it)->getDestination()->getValue())){
+                newValue = (*it)->getDestination()->getValue();
+            }
+        }
+
+        node->setValue(newValue);
+        return (oldValue != newValue);
     }
 }

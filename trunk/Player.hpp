@@ -10,6 +10,10 @@
 
 namespace library {
 
+    class Player;
+    bool operator==(const Player&, const Player&);
+    bool operator!=(const Player&, const Player&);
+
     class Player {
     public:
         Player();
@@ -17,6 +21,8 @@ namespace library {
         virtual ~Player();
 
         Player& operator=(const Player&);
+        friend bool operator==(const Player&, const Player&);
+        friend bool operator!=(const Player&, const Player&);
 
         /**
          * Returns player's name
