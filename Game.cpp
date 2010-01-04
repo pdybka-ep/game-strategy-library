@@ -26,6 +26,9 @@ namespace library {
 
 
     Game& Game::operator=(const Game& game){
+        if(this == &game)
+            return *this;
+
         this->gameId_ = game.gameId_;
         this->startNode_ = game.startNode_;
         this->totalNumberOfNodes_ = game.totalNumberOfNodes_;

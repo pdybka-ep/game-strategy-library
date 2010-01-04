@@ -13,6 +13,10 @@ namespace library {
     // forward declaration
     class Node;
 
+    class Move;
+    bool operator== (const Move&, const Move&);
+    bool operator!= (const Move&, const Move&);
+
     class Move {
     public:
         Move();
@@ -20,6 +24,8 @@ namespace library {
         virtual ~Move();
 
         Move& operator= (const Move&);
+        friend bool operator== (const Move&, const Move&);
+        friend bool operator!= (const Move&, const Move&);
 
         boost::shared_ptr<Node> getDestination() const {
             return destination_;

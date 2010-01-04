@@ -16,12 +16,9 @@ namespace library {
     GameState::GameState(const GameState & gameState){
         this->game_ = gameState.game_;
         this->currentNode_ = gameState.currentNode_;
+        this->players_ = gameState.players_;
         this->nextPlayerIndex_ = gameState.nextPlayerIndex_;
-        std::list<Player>::const_iterator it = gameState.players_.begin();
-        while(it != gameState.players_.end()){
-            this->players_.push_back(*it);
-            ++it;
-        }
+        this->gamePath_ = gameState.gamePath_;
     }
 
 
@@ -31,14 +28,14 @@ namespace library {
 
 
     GameState& GameState::operator= (const GameState& gameState){
+        if(this == &gameState)
+            return *this;
+
         this->game_ = gameState.game_;
         this->currentNode_ = gameState.currentNode_;
+        this->players_ = gameState.players_;
         this->nextPlayerIndex_ = gameState.nextPlayerIndex_;
-        std::list<Player>::const_iterator it = gameState.players_.begin();
-        while(it != gameState.players_.end()){
-            this->players_.push_back(*it);
-            ++it;
-        }
+        this->gamePath_ = gameState.gamePath_;
         return *this;
     }
 
