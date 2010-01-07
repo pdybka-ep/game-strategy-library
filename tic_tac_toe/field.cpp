@@ -1,12 +1,13 @@
 /**
-    field.cpp
-    Author: Hanna Dutkiewicz
+    @file   field.cpp
+    @author Hanna Dutkiewicz
 */
 
 #include <QPainter>
 #include <QPen>
 #include "field.hpp"
 
+/* Represents a single field on a game board. One of GUI classes. */
 Field::Field(QObject * parent): QObject(parent), fieldState_(EMPTY){
 
     setFlags(QGraphicsItem::ItemIsSelectable);
@@ -17,11 +18,13 @@ Field::Field(QObject * parent): QObject(parent), fieldState_(EMPTY){
     crossImage_.load(":/res/cross.png");
 }
 
+/* A destructor. */
 Field::~Field(){
 
 }
 
-void Field::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt, QWidget *w){
+/* Method ovverides default paint method for QGraphicsItem objects. It paints appropriate image depending on fieldState_. */
+void Field::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *){
 /*
     QBrush brush;
     brush.setColor(Qt::blue);
@@ -41,12 +44,14 @@ void Field::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt, QWidge
 
 }
 
+/* Initialize size and top left point of a Field object on a GameBoard.*/
 void Field::init(QSizeF size, QPointF startPoint){
     size_ = size;
     startPoint_ = startPoint;
 }
 
-void Field::mousePressEvent (QGraphicsSceneMouseEvent * event){
+/* Method ovverides default one to handle mouse press events. */
+void Field::mousePressEvent (QGraphicsSceneMouseEvent * ){
     if(fieldState_ == EMPTY)
         wasClicked();
 }

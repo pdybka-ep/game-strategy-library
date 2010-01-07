@@ -1,7 +1,8 @@
 /**
-    field.h
-    Author: Hanna Dutkiewicz
+    @file   field.hpp
+    @author Hanna Dutkiewicz
 */
+
 #ifndef FIELD_H
 #define FIELD_H
 
@@ -11,6 +12,7 @@
 /**
     @class Field Class
     Represents a single field on a game board.
+    One of the GUI classes.
     @author Hanna Dutkiewicz
   */
 class Field : public QObject, public QGraphicsItem{
@@ -36,20 +38,6 @@ public:
     };
 
 
-/********* PRIVATE FIELDS *********/
-private:
-    /** Size of a field object. */
-    QSizeF size_;
-    /** Top left point of object's position. */
-    QPointF startPoint_;
-    /** Image of a circle field. */
-    QImage circleImage_;
-    /** Image of a cross field. */
-    QImage crossImage_;
-    /** State of the field. */
-    FieldState fieldState_;
-
-
 /********* PROPERTIES *********/
 private:
     Q_PROPERTY(FieldState fieldState_ READ getFieldState WRITE setFieldState)
@@ -64,6 +52,7 @@ public:
       @param newState new state of the field (eg. when circle was "put" on the field)
       */
     void setFieldState(FieldState newState) {   fieldState_ = newState; update(); }
+
 
 
 /********* PUBLIC METHODS *********/
@@ -84,7 +73,7 @@ public:
       @param opt pointer to QStyleOptionGraphicsItem object
       @param w pointer to QWidget object
     */
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *opt, QWidget *w);
+    void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
 
     /**
       Initialize size and top left point of a Field object on a GameBoard.
@@ -109,6 +98,8 @@ public:
         return QRectF(startPoint_.x(), startPoint_.y(), size_.width(), size_.height());
     }
 
+
+
 /********* SIGNALS *********/
 signals:
     /**
@@ -117,6 +108,22 @@ signals:
       @see mousePressEvent()
     */
     void wasClicked();
+
+
+
+/********* PRIVATE FIELDS *********/
+private:
+    /** Size of a field object. */
+    QSizeF size_;
+    /** Top left point of object's position. */
+    QPointF startPoint_;
+    /** Image of a circle field. */
+    QImage circleImage_;
+    /** Image of a cross field. */
+    QImage crossImage_;
+    /** State of the field. */
+    FieldState fieldState_;
+
 
 };
 

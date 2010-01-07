@@ -1,12 +1,14 @@
 /**
-    gameboard.h
-    Author: Hanna Dutkiewicz
+    @file   gameboard.hpp
+    @author Hanna Dutkiewicz
 */
 
 #ifndef GAMEBOARD_H
 #define GAMEBOARD_H
 
 #include <QObject>
+#include <boost/multi_array.hpp>
+#include <boost/shared_ptr.hpp>
 #include "field.hpp"
 
 /**
@@ -19,21 +21,20 @@ class GameBoard: public QObject{
 
     friend class GameWindow;
 
-/********* PRIVATE FIELDS **********/
-private:
-    /** All the fields on a board game */
-    Field ** field_;
-    /** A pointer to a graphics scene */
-    QGraphicsScene * scene_;
 
 /********* PUBLIC METHODS **********/
 public:
+	/**
+		A default constructor.
+	*/
+	GameBoard(QObject * parent = 0);
+
     /**
       A constructor, creates a GameBoard with a graphics scene attached to it.
       @param scene pointer to QGraphicsScene on which the game board will be drawn
       @param parent pointer to object's parent
       */
-   GameBoard(QGraphicsScene * scene, QObject * parent = 0);
+	GameBoard(boost::shared_ptr<QGraphicsScene> scene, QObject * parent = 0);
 
    /**
      A destructor.
@@ -50,6 +51,10 @@ public:
       */
     void endGame();
 
+	void setGraphicsScene(boost::shared_ptr<QGraphicsScene> scene);
+
+
+
 /********* PUBLIC SLOTS **********/
 public slots:
     /**
@@ -58,9 +63,24 @@ public slots:
       */
     void fieldWasClicked();
 
+
+
 /********* PRIVATE METHODS **********/
 private:
+    /**
+      Clears the scene an deletes all the fields.
+      */
     void clear();
+
+
+
+/********* PRIVATE FIELDS **********/
+private:
+    /** All the fields on a board game */
+	Field ** field_;
+
+    /** A pointer to a graphics scene */
+	boost::shared_ptr<QGraphicsScene> scene_;
 
 
 

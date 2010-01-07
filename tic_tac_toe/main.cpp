@@ -1,6 +1,6 @@
 /**
-    main.cpp
-    Author: Hanna Dutkiewicz
+    @file main.cpp
+    @author Hanna Dutkiewicz
 */
 
 #include <QtGui/QApplication>
