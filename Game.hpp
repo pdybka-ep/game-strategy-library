@@ -58,7 +58,7 @@ namespace library {
         /**
          * Sets game ID
          */
-        void setGameId(std::string gameId) {
+        void setGameId(const std::string& gameId) {
             this->gameId_ = gameId;
         }
 
