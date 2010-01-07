@@ -1,5 +1,5 @@
 CC=g++
-LIB_OBJ=Player.o Node.o Move.o Game.o GameState.o AbstractGameFactory.o InvalidMoveException.o GameNotStartedException.o NoMoveAvailableException.o GameStrategy.o
+LIB_OBJ=Player.o Node.o Move.o Game.o GameState.o AbstractGameFactory.o InvalidMoveException.o GameNotStartedException.o NoMoveAvailableException.o InvalidPlayerException.o UnknownGameException.o GameStrategy.o
 CPPFLAGS=-O3 -pedantic
 
 all: library
@@ -23,6 +23,10 @@ InvalidMoveException.o: InvalidMoveException.hpp InvalidMoveException.cpp
 GameNotStartedException.o: GameNotStartedException.hpp GameNotStartedException.cpp 
 
 NoMoveAvailableException.o: NoMoveAvailableException.hpp NoMoveAvailableException.cpp
+
+InvalidPlayerException.o: InvalidPlayerException.hpp InvalidPlayerException.cpp
+
+UnknownGameException.o: UnknownGameException.hpp UnknownGameException.cpp
 
 GameStrategy.o: GameStrategy.hpp GameStrategy.cpp
 

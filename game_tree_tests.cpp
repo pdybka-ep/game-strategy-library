@@ -23,7 +23,7 @@ struct GameTreeFixture{
         n1->setValue(0);
         game.setGameId("game");
         game.setStartNode(n1);
-        game.setTotalNumberOfNodes(1);
+        game.setTotalNumberOfLeafs(1);
     }
     ~GameTreeFixture(){
     }
@@ -42,16 +42,16 @@ BOOST_FIXTURE_TEST_CASE( test_adding_nodes, GameTreeFixture ){
     boost::shared_ptr<Node> n2(new Node());
     n2->setNodeId(2);
 
-    Move m12;
-    m12.setMoveId(12);
-    m12.setDestination(n2);
+    boost::shared_ptr<Move> m12(new Move());
+    m12->setMoveId(12);
+    m12->setDestination(n2);
 
     game.getStartNode()->addAvailableMove(m12);
 
     moves = game.getStartNode()->getAvailableMoves();
     movesIt = moves.begin();
     BOOST_CHECK_EQUAL( moves.size(), 1 );
-    BOOST_CHECK( *(*movesIt) == m12 );
+    BOOST_CHECK( *(*movesIt) == *m12 );
     BOOST_CHECK( (*movesIt)->getDestination() == n2 );
 
 
@@ -59,19 +59,19 @@ BOOST_FIXTURE_TEST_CASE( test_adding_nodes, GameTreeFixture ){
     boost::shared_ptr<Node> n3(new Node());
     n2->setNodeId(3);
 
-    Move m13;
-    m13.setMoveId(13);
-    m13.setDestination(n3);
+    boost::shared_ptr<Move> m13(new Move());
+    m13->setMoveId(13);
+    m13->setDestination(n3);
 
     game.getStartNode()->addAvailableMove(m13);
 
     moves = game.getStartNode()->getAvailableMoves();
     movesIt = moves.begin();
     BOOST_CHECK_EQUAL( moves.size(), 2 );
-    BOOST_CHECK( *(*movesIt) == m12 );
+    BOOST_CHECK( *(*movesIt) == *m12 );
     BOOST_CHECK( (*movesIt)->getDestination() == n2 );
     ++movesIt;
-    BOOST_CHECK( *(*movesIt) == m13 );
+    BOOST_CHECK( *(*movesIt) == *m13 );
     BOOST_CHECK( (*movesIt)->getDestination() == n3 );
 
 }

@@ -46,9 +46,8 @@ namespace library {
         /**
          * Adds new move to the list of available moves
          */
-        void addAvailableMove(const Move &move){
-            boost::shared_ptr<Move> newMove(new Move(move));
-            this->availableMoves_.push_back(newMove);
+        void addAvailableMove(const boost::shared_ptr<Move> &move){
+            this->availableMoves_.push_back(move);
         }
 
         /**
@@ -78,10 +77,19 @@ namespace library {
             this->value_ = value;
         }
 
+        bool isVisited() const {
+            return this->visited_;
+        }
+
+        void setVisited(bool visited) {
+            this->visited_ = visited;
+        }
+
     protected:
         int nodeId_;
         int value_;
         std::list<boost::shared_ptr<Move> > availableMoves_;
+        bool visited_;
     };
 
 }
