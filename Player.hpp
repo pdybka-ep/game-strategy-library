@@ -52,7 +52,7 @@ namespace library {
             this->startingPlayer_ = startingPlayer;
         }
 
-    private:
+    protected:
         std::string name_;
         bool startingPlayer_;
     };
