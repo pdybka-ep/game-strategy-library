@@ -39,8 +39,8 @@ namespace library {
         /**
          * Sets available moves
          */
-        void setAvailableMoves(std::list<boost::shared_ptr<Move> > availableMoves_) {
-            this->availableMoves_ = availableMoves_;
+        void setAvailableMoves(std::list<boost::shared_ptr<Move> > availableMoves) {
+            this->availableMoves_ = availableMoves;
         }
 
         /**

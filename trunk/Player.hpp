@@ -41,7 +41,7 @@ namespace library {
         /**
          * Sets player's name
          */
-        void setName(std::string name) {
+        void setName(const std::string& name) {
             this->name_ = name;
         }
 
