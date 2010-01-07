@@ -13,6 +13,10 @@
 
 namespace library {
 
+    class Node;
+    bool operator== (const Node&, const Node&);
+    bool operator!= (const Node&, const Node&);
+
     class Node {
     public:
         Node();
@@ -20,6 +24,10 @@ namespace library {
         virtual ~Node();
 
         Node& operator= (const Node&);
+
+        friend bool operator== (const Node&, const Node&);
+        friend bool operator!= (const Node&, const Node&);
+
 
         /**
          * Returns available moves

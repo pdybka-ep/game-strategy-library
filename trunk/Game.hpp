@@ -12,6 +12,10 @@
 
 namespace library {
 
+    class Game;
+    bool operator== (const Game&, const Game&);
+    bool operator!= (const Game&, const Game&);
+
     class Game {
     public:
         Game();
@@ -19,6 +23,9 @@ namespace library {
         virtual ~Game();
 
         Game& operator=(const Game&);
+        friend bool operator== (const Game&, const Game&);
+        friend bool operator!= (const Game&, const Game&);
+
 
         /**
          * Returns game ID

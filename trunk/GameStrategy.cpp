@@ -4,6 +4,7 @@
  */
 
 #include "GameStrategy.hpp"
+#include <iostream> // FIXME TMP!
 
 namespace library {
 
@@ -97,18 +98,20 @@ namespace library {
     void GameStrategy::move(const Move& move) throw(GameNotStartedException, InvalidMoveException){
         boost::shared_ptr<Node> currentNode = gameState_.getCurrentNode();
         if(currentNode == 0){
+            std::cout << "throwing GameNotStartedException" << std::endl;
             throw GameNotStartedException();
         }
         std::list<boost::shared_ptr<Move> > availableMoves = currentNode->getAvailableMoves();
 
         // check if move is acceptable
         bool acceptable = false;
-        for(std::list<boost::shared_ptr<Move> >::const_iterator it = availableMoves.begin(); it!=availableMoves.end() && acceptable!=true; ++it){
-            if((*it)->getMoveId() == move.getMoveId()){
+        for(std::list<boost::shared_ptr<Move> >::const_iterator it = availableMoves.begin(); it!=availableMoves.end() && acceptable==false; ++it){
+            if(*(*it) == move){
                 acceptable = true;
             }
         }
         if(!acceptable){
+            std::cout << "throwing InvalidMoveException" << std::endl;
             throw InvalidMoveException();
         }
 
@@ -133,16 +136,20 @@ namespace library {
 
         // update values up the tree
         std::list<boost::shared_ptr<Node> > gamePath = gameState_.getGamePath();
-        bool maximizingNode = (gameState_.getNextPlayerIndex() == 0);
-        bool nodeChanged = false;
-        boost::shared_ptr<Node> currentNode;
-        do {
-            currentNode = gamePath.back();
-            nodeChanged = updateNodeValue(currentNode, maximizingNode);
-            gamePath.pop_back();
-            maximizingNode = !maximizingNode;
-        } while (nodeChanged && !gamePath.empty());
-
+        // get back one level in tree (don't have to update the leaf)
+        gamePath.pop_back();
+        gameState_.setNextPlayerIndex((gameState_.getNextPlayerIndex()+1)%2);
+        if(gamePath.size() != 0){
+            bool maximizingNode = (gameState_.getNextPlayerIndex() == 0);
+            bool nodeChanged = false;
+            boost::shared_ptr<Node> currentNode;
+            do {
+                currentNode = gamePath.back();
+                nodeChanged = updateNodeValue(currentNode, maximizingNode);
+                gamePath.pop_back();
+                maximizingNode = !maximizingNode;
+            } while (nodeChanged && !gamePath.empty());
+        }
         // set not started (finished) game
         boost::shared_ptr<Node> empty;
         gameState_.setCurrentNode(empty);
@@ -163,13 +170,13 @@ namespace library {
         if(node->isLeaf())
             return false;
 
-        int oldValue = node->getValue();
-        int newValue = oldValue;
         std::list<boost::shared_ptr<Move> > availableMoves = node->getAvailableMoves();
+        int oldValue = node->getValue();
+        int newValue = availableMoves.front()->getDestination()->getValue();
         for(std::list<boost::shared_ptr<Move> >::const_iterator it = availableMoves.begin();
                 it != availableMoves.end(); ++it){
-            if((maximizingNode && oldValue < (*it)->getDestination()->getValue())
-                    || (!maximizingNode && oldValue > (*it)->getDestination()->getValue())){
+            if((maximizingNode && newValue < (*it)->getDestination()->getValue())
+                    || (!maximizingNode && newValue > (*it)->getDestination()->getValue())){
                 newValue = (*it)->getDestination()->getValue();
             }
         }

@@ -41,4 +41,18 @@ namespace library {
         return *this;
     }
 
+
+    bool operator== (const Node& n1, const Node& n2){
+        if(&n1 == &n2)
+            return true;
+        if(n1.nodeId_ == n2.nodeId_ && n1.value_ == n2.value_
+                && n1.availableMoves_ == n2.availableMoves_)
+            return true;
+        return false;
+    }
+
+    bool operator!= (const Node& n1, const Node& n2){
+        return !(n1 == n2);
+    }
+
 }

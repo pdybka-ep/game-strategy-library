@@ -1,8 +1,10 @@
 CC=g++
+LIB_OBJ=Player.o Node.o Move.o Game.o GameState.o AbstractGameFactory.o InvalidMoveException.o GameNotStartedException.o NoMoveAvailableException.o GameStrategy.o
+CPPFLAGS=-O3 -pedantic
 
 all: library
 
-library: Player.o Node.o Move.o Game.o GameState.o AbstractGameFactory.o InvalidMoveException.o GameNotStartedException.o NoMoveAvailableException.o GameStrategy.o
+library: $(LIB_OBJ)
 
 Player.o: Player.hpp Player.cpp
 
@@ -16,13 +18,28 @@ GameState.o: GameState.hpp GameState.cpp
 
 AbstractGameFactory.o: AbstractGameFactory.hpp AbstractGameFactory.cpp
 
-GameStrategy.o: GameStrategy.hpp GameStrategy.cpp
+InvalidMoveException.o: InvalidMoveException.hpp InvalidMoveException.cpp
 
 GameNotStartedException.o: GameNotStartedException.hpp GameNotStartedException.cpp 
 
-InvalidMoveException.o: InvalidMoveException.hpp InvalidMoveException.cpp
-
 NoMoveAvailableException.o: NoMoveAvailableException.hpp NoMoveAvailableException.cpp
 
+GameStrategy.o: GameStrategy.hpp GameStrategy.cpp
+
+basic_tests: $(LIB_OBJ) basic_tests.cpp
+	$(CC) $(CPPFLAGS) -o basic_tests basic_tests.cpp $(LIB_OBJ)
+
+game_tree_tests: $(LIB_OBJ) game_tree_tests.cpp
+	$(CC) $(CPPFLAGS) -o game_tree_tests game_tree_tests.cpp $(LIB_OBJ)
+
+game_strategy_tests: $(LIB_OBJ) game_strategy_tests.cpp
+	$(CC) $(CPPFLAGS) -o game_strategy_tests game_strategy_tests.cpp $(LIB_OBJ)
+
+
+run_test: basic_tests game_tree_tests game_strategy_tests
+	./basic_tests ; ./game_tree_tests ; ./game_strategy_tests
+
+
 clean:
-	rm *.o
+	rm *.o basic_tests game_tree_tests game_strategy_tests
+
