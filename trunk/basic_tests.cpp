@@ -171,8 +171,8 @@ BOOST_AUTO_TEST_SUITE_END()
 struct GameFixture{
     GameFixture(){
         g1.setGameId("game1");
-        g1.setTotalNumberOfNodes(100);
-        g1.setNumberOfVisitedNodes(55);
+        g1.setTotalNumberOfLeafs(100);
+        g1.setNumberOfVisitedLeafs(55);
         node1 = boost::shared_ptr<Node>(new Node());
         g1.setStartNode(node1);
     }
@@ -186,8 +186,8 @@ BOOST_AUTO_TEST_SUITE( basic_game_tests )
 /* test getters and setters */
 BOOST_FIXTURE_TEST_CASE( test_game_getters_setters, GameFixture ){
     BOOST_CHECK_EQUAL( g1.getGameId(), "game1" );
-    BOOST_CHECK_EQUAL( g1.getTotalNumberOfNodes(), 100 );
-    BOOST_CHECK_EQUAL( g1.getNumberOfVisitedNodes(), 55 );
+    BOOST_CHECK_EQUAL( g1.getTotalNumberOfLeafs(), 100 );
+    BOOST_CHECK_EQUAL( g1.getNumberOfVisitedLeafs(), 55 );
     boost::shared_ptr<Node> node2(new Node());
     BOOST_CHECK( *(g1.getStartNode().get()) == *(node2.get()) );
 }
@@ -198,8 +198,8 @@ BOOST_FIXTURE_TEST_CASE( test_game_copy_constructor, GameFixture ){
     Game g2(g1);
 
     BOOST_CHECK_EQUAL( g1.getGameId(), g2.getGameId() );
-    BOOST_CHECK_EQUAL( g1.getTotalNumberOfNodes(), g2.getTotalNumberOfNodes() );
-    BOOST_CHECK_EQUAL( g1.getNumberOfVisitedNodes(), g2.getNumberOfVisitedNodes() );
+    BOOST_CHECK_EQUAL( g1.getTotalNumberOfLeafs(), g2.getTotalNumberOfLeafs() );
+    BOOST_CHECK_EQUAL( g1.getNumberOfVisitedLeafs(), g2.getNumberOfVisitedLeafs() );
     BOOST_CHECK_EQUAL( g1.getStartNode(), g2.getStartNode() );
 }
 
@@ -211,8 +211,8 @@ BOOST_FIXTURE_TEST_CASE( test_game_operators, GameFixture ){
 
     g2 = g1;
     BOOST_CHECK_EQUAL( g1.getGameId(), g2.getGameId() );
-    BOOST_CHECK_EQUAL( g1.getTotalNumberOfNodes(), g2.getTotalNumberOfNodes() );
-    BOOST_CHECK_EQUAL( g1.getNumberOfVisitedNodes(), g2.getNumberOfVisitedNodes() );
+    BOOST_CHECK_EQUAL( g1.getTotalNumberOfLeafs(), g2.getTotalNumberOfLeafs() );
+    BOOST_CHECK_EQUAL( g1.getNumberOfVisitedLeafs(), g2.getNumberOfVisitedLeafs() );
     BOOST_CHECK_EQUAL( g1.getStartNode(), g2.getStartNode() );
     BOOST_CHECK( g1 == g2 );
 }

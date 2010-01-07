@@ -13,6 +13,8 @@
 #include "GameNotStartedException.hpp"
 #include "InvalidMoveException.hpp"
 #include "NoMoveAvailableException.hpp"
+#include "InvalidPlayerException.hpp"
+#include "UnknownGameException.hpp"
 
 namespace library {
 
@@ -25,11 +27,13 @@ namespace library {
         GameStrategy& operator= (const GameStrategy&);
 
         /* library functions */
-        void initialize(boost::shared_ptr<AbstractGameFactory>&);
-        void startGame(const Game&, const Player&, const Player&);
-        Move findBestMove() throw(GameNotStartedException, NoMoveAvailableException);
-        void move(const Move&) throw(GameNotStartedException, InvalidMoveException);
-        void endOfGame(const Player&);
+        void initialize(const boost::shared_ptr<AbstractGameFactory>&);
+        void startGame(const Game&, const boost::shared_ptr<Player> &, const boost::shared_ptr<Player> &);
+        void startGame() throw(UnknownGameException);
+        boost::shared_ptr<Move> findBestMove() throw(GameNotStartedException, NoMoveAvailableException);
+        void move(const boost::shared_ptr<Move>&) throw(GameNotStartedException, InvalidMoveException);
+        void endOfGame(const boost::shared_ptr<Player> &) throw(GameNotStartedException);
+        void endOfGame() throw(GameNotStartedException);
         void saveGame(const std::string&);
         void loadGame(const std::string&);
 
@@ -40,6 +44,7 @@ namespace library {
     private:
         boost::shared_ptr<AbstractGameFactory> gameFactory_;
         GameState gameState_;
+        bool gameStateInitialized_;
     };
 
 }
