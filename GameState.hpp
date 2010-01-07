@@ -43,20 +43,20 @@ namespace library {
             return gamePath_;
         }
 
-        void setCurrentNode(const boost::shared_ptr<Node>& currentNode_) {
-            this->currentNode_ = currentNode_;
+        void setCurrentNode(const boost::shared_ptr<Node>& currentNode) {
+            this->currentNode_ = currentNode;
         }
 
         void setGame(const Game& game_) {
             this->game_ = game_;
         }
 
-        void setNextPlayerIndex(int nextPlayerIndex_) {
-            this->nextPlayerIndex_ = nextPlayerIndex_;
+        void setNextPlayerIndex(int nextPlayerIndex) {
+            this->nextPlayerIndex_ = nextPlayerIndex;
         }
 
-        void setPlayers(const std::list<boost::shared_ptr<Player> >& players_) {
-            this->players_ = players_;
+        void setPlayers(const std::list<boost::shared_ptr<Player> >& players) {
+            this->players_ = players;
         }
 
         void setGamePath(const std::list<boost::shared_ptr<Node> >& gamePath) {
