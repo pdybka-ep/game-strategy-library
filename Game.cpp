@@ -35,4 +35,20 @@ namespace library {
         this->numberOfVisitedNodes_ = game.numberOfVisitedNodes_;
         return *this;
     }
+
+
+    bool operator== (const Game& g1, const Game& g2){
+        if(&g1 == &g2)
+            return true;
+        if(g1.gameId_ == g2.gameId_ && *(g1.startNode_) == *(g2.startNode_)
+                && g1.numberOfVisitedNodes_ == g2.numberOfVisitedNodes_
+                && g1.totalNumberOfNodes_ == g2.totalNumberOfNodes_)
+            return true;
+        return false;
+    }
+
+    bool operator!= (const Game& g1, const Game& g2){
+        return !(g1 == g2);
+    }
+
 }

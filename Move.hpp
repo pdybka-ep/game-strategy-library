@@ -7,6 +7,7 @@
 #define MOVE_H_
 
 #include <boost/shared_ptr.hpp>
+#include <iostream>
 
 namespace library {
 

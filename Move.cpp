@@ -4,6 +4,7 @@
  */
 
 #include "Move.hpp"
+#include "Node.hpp"
 
 namespace library {
 
@@ -33,7 +34,7 @@ namespace library {
     bool operator== (const Move& m1, const Move& m2){
         if(&m1 == &m2)
             return true;
-        if(m1.moveId_ == m2.moveId_ && m1.destination_ == m2.destination_)
+        if(m1.moveId_ == m2.moveId_ && *(m1.destination_.get()) == *(m2.destination_.get()))
             return true;
         return false;
     }
@@ -41,4 +42,5 @@ namespace library {
     bool operator!= (const Move& m1, const Move& m2){
         return !(m1==m2);
     }
+
 }
