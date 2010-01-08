@@ -27,7 +27,7 @@ namespace library {
             return currentNode_;
         }
 
-        Game getGame() const {
+        boost::shared_ptr<Game> getGame() const {
             return game_;
         }
 
@@ -47,7 +47,7 @@ namespace library {
             this->currentNode_ = currentNode;
         }
 
-        void setGame(const Game& game_) {
+        void setGame(const boost::shared_ptr<Game>& game_) {
             this->game_ = game_;
         }
 
@@ -72,7 +72,7 @@ namespace library {
         }
 
     protected:
-        Game game_;
+        boost::shared_ptr<Game> game_;
         std::list<boost::shared_ptr<Player> > players_;
         boost::shared_ptr<Node> currentNode_;
         int nextPlayerIndex_;

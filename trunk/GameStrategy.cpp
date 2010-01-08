@@ -5,6 +5,8 @@
 
 #include "GameStrategy.hpp"
 #include <iostream> // FIXME TMP!
+#include <fstream>
+#include <sstream>
 
 namespace library {
 
@@ -36,16 +38,16 @@ namespace library {
         this->gameFactory_ = gameFactory;
     }
 
-    void GameStrategy::startGame(const Game& game, const boost::shared_ptr<Player> & player1, const boost::shared_ptr<Player> & player2){
+    void GameStrategy::startGame(const boost::shared_ptr<Game>& game, const boost::shared_ptr<Player> & player1, const boost::shared_ptr<Player> & player2){
         std::list<boost::shared_ptr<Player> > players;
         players.push_back(player1);
         players.push_back(player2);
 
         gameState_.setGame(game);
         gameState_.setPlayers(players);
-        gameState_.setCurrentNode(game.getStartNode());
+        gameState_.setCurrentNode(game->getStartNode());
         gameState_.clearGamePath();
-        gameState_.addNodeToGamePath(game.getStartNode());
+        gameState_.addNodeToGamePath(game->getStartNode());
         if(player1->isStartingPlayer()){
             gameState_.setNextPlayerIndex(0);
         }
@@ -59,9 +61,9 @@ namespace library {
         if(!gameStateInitialized_){
             throw UnknownGameException();
         }
-        gameState_.setCurrentNode(gameState_.getGame().getStartNode());
+        gameState_.setCurrentNode(gameState_.getGame()->getStartNode());
         gameState_.clearGamePath();
-        gameState_.addNodeToGamePath(gameState_.getGame().getStartNode());
+        gameState_.addNodeToGamePath(gameState_.getGame()->getStartNode());
         if(gameState_.getPlayers().front()->isStartingPlayer()){
             gameState_.setNextPlayerIndex(0);
         }
@@ -161,7 +163,7 @@ namespace library {
 
         // update counter
         if(gameState_.getCurrentNode()->isVisited() == false){
-            gameState_.getGame().incNumberOfVisitedLeafs();
+            gameState_.getGame()->incNumberOfVisitedLeafs();
             gameState_.getCurrentNode()->setVisited(true);
         }
 
@@ -181,7 +183,7 @@ namespace library {
 
         // update counter
         if(gameState_.getCurrentNode()->isVisited() == false){
-            gameState_.getGame().incNumberOfVisitedLeafs();
+            gameState_.getGame()->incNumberOfVisitedLeafs();
             gameState_.getCurrentNode()->setVisited(true);
         }
 
@@ -190,12 +192,37 @@ namespace library {
         gameState_.setCurrentNode(empty);
     }
 
-    void GameStrategy::saveGame(const std::string& filePath){
-        // TODO implement
+    void GameStrategy::saveGame(const std::string& filePath) throw(FileAccessException, GameFactoryInitializationException){
+        if(gameFactory_.get() == 0){
+            throw GameFactoryInitializationException();
+        }
+        std::ofstream file(filePath.c_str());
+        if(!file.is_open()){
+            throw FileAccessException();
+        }
+        file << gameFactory_->serialize(gameState_.getGame());
+        file.close();
     }
 
-    void GameStrategy::loadGame(const std::string& filePath){
-        // TODO implement
+    void GameStrategy::loadGame(const std::string& filePath) throw(FileAccessException, GameFactoryInitializationException){
+        if(gameFactory_.get() == 0){
+            throw GameFactoryInitializationException();
+        }
+        std::ifstream file(filePath.c_str());
+        if(!file.is_open()){
+            throw FileAccessException();
+        }
+        boost::shared_ptr<Game> game;
+        std::stringstream gameDataBuf;
+        std::string gameData, tmp;
+        while(!file.eof()){
+            file >> tmp;
+            gameDataBuf << tmp;
+        }
+        gameData = gameDataBuf.str();
+        file.close();
+        game = gameFactory_->deserialize(gameData);
+        gameState_.setGame(game);
     }
 
 

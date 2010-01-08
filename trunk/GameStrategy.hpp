@@ -15,6 +15,8 @@
 #include "NoMoveAvailableException.hpp"
 #include "InvalidPlayerException.hpp"
 #include "UnknownGameException.hpp"
+#include "FileAccessException.hpp"
+#include "GameFactoryInitializationException.hpp"
 
 namespace library {
 
@@ -28,14 +30,18 @@ namespace library {
 
         /* library functions */
         void initialize(const boost::shared_ptr<AbstractGameFactory>&);
-        void startGame(const Game&, const boost::shared_ptr<Player> &, const boost::shared_ptr<Player> &);
+        void startGame(const boost::shared_ptr<Game>&, const boost::shared_ptr<Player> &, const boost::shared_ptr<Player> &);
         void startGame() throw(UnknownGameException);
         boost::shared_ptr<Move> findBestMove() throw(GameNotStartedException, NoMoveAvailableException);
         void move(const boost::shared_ptr<Move>&) throw(GameNotStartedException, InvalidMoveException);
         void endOfGame(const boost::shared_ptr<Player> &) throw(GameNotStartedException);
         void endOfGame() throw(GameNotStartedException);
-        void saveGame(const std::string&);
-        void loadGame(const std::string&);
+        void saveGame(const std::string&) throw(FileAccessException, GameFactoryInitializationException);
+        void loadGame(const std::string&) throw(FileAccessException, GameFactoryInitializationException);
+
+        boost::shared_ptr<Game> getCurrentGame() const {
+            return this->gameState_.getGame();
+        }
 
     private:
         /* private helper methods */

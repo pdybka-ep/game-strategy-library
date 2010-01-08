@@ -7,6 +7,7 @@
 #define ABSTRACTGAMEFACTORY_HPP_
 
 #include <string>
+#include <boost/shared_ptr.hpp>
 #include "Game.hpp"
 
 namespace library {
@@ -18,9 +19,9 @@ namespace library {
 
         /* virtual methods */
         virtual bool canCreate(const std::string& gameName) = 0;
-        virtual Game& create(const std::string& gameName) = 0;
-        virtual std::string& serialize(const Game&) = 0;
-        virtual Game& deserialize(const std::string& data) = 0;
+        virtual boost::shared_ptr<Game> create(const std::string& gameName) = 0;
+        virtual std::string& serialize(const boost::shared_ptr<Game>&) = 0;
+        virtual boost::shared_ptr<Game>& deserialize(const std::string& data) = 0;
     };
 
 }
