@@ -56,7 +56,7 @@ namespace library {
          * @param data serialized data containing information about the game
          * @return pointer to the created game
          */
-        virtual boost::shared_ptr<Game>& deserialize(const std::string& data) = 0;
+        virtual boost::shared_ptr<Game> deserialize(const std::string& data) = 0;
     };
 
 }
