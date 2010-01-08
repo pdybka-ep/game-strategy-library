@@ -96,9 +96,10 @@ struct GameStrategyFixture{
         n1->addAvailableMove(m13);
 
         // Game
-        game.setGameId("test_game");
-        game.setStartNode(n1);
-        game.setTotalNumberOfLeafs(4);
+        game = boost::shared_ptr<Game>(new Game());
+        game->setGameId("test_game");
+        game->setStartNode(n1);
+        game->setTotalNumberOfLeafs(4);
 
         // Players
         p1 = boost::shared_ptr<Player>(new Player());
@@ -113,7 +114,7 @@ struct GameStrategyFixture{
     }
 
     GameStrategy gameStrategy;
-    Game game;
+    boost::shared_ptr<Game> game;
     boost::shared_ptr<Player> p1, p2;
     boost::shared_ptr<Move> m12, m13, m24, m25, m36, m67, m68;
     boost::shared_ptr<Node> n1, n2, n3, n4, n5, n6, n7, n8;
@@ -252,7 +253,100 @@ BOOST_AUTO_TEST_CASE( game_strategy_test_best_moves1 ){
     BOOST_CHECK( *(gameStrategy.findBestMove()) == *m24 );
     gameStrategy.move(m25);
     gameStrategy.endOfGame(p1);
+}
 
+
+BOOST_AUTO_TEST_CASE( game_strategy_test_best_moves2 ){
+    // play first game
+    gameStrategy.startGame(game, p1, p2);
+    gameStrategy.move(m12);
+    gameStrategy.move(m25);
+    gameStrategy.endOfGame(p1);
+
+    // play second game
+    gameStrategy.startGame();
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m12 );
+    gameStrategy.move(m12);
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m24 );
+    gameStrategy.move(m24);
+    gameStrategy.endOfGame(p2);
+}
+
+
+BOOST_AUTO_TEST_CASE( game_strategy_test_best_moves3 ){
+    // play first two game
+    gameStrategy.startGame(game, p1, p2);
+    gameStrategy.move(m12);
+    gameStrategy.move(m25);
+    gameStrategy.endOfGame(p1);
+    gameStrategy.startGame();
+    gameStrategy.move(m12);
+    gameStrategy.move(m24);
+    gameStrategy.endOfGame(p2);
+
+    // play third game
+    gameStrategy.startGame();
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m13 );
+    gameStrategy.move(m13);
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m36 );
+    gameStrategy.move(m36);
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m67 );
+    gameStrategy.move(m67);
+    gameStrategy.endOfGame(p2);
+}
+
+
+BOOST_AUTO_TEST_CASE( game_strategy_test_best_moves4 ){
+    // play first three game
+    gameStrategy.startGame(game, p1, p2);
+    gameStrategy.move(m12);
+    gameStrategy.move(m25);
+    gameStrategy.endOfGame(p1);
+    gameStrategy.startGame();
+    gameStrategy.move(m12);
+    gameStrategy.move(m24);
+    gameStrategy.endOfGame(p2);
+    gameStrategy.startGame();
+    gameStrategy.move(m13);
+    gameStrategy.move(m36);
+    gameStrategy.move(m67);
+    gameStrategy.endOfGame(p2);
+
+    // play fourth game
+    gameStrategy.startGame();
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m13 );
+    gameStrategy.move(m13);
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m36 );
+    gameStrategy.move(m36);
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m68 );
+    gameStrategy.move(m68);
+    gameStrategy.endOfGame(p1);
+}
+
+
+BOOST_AUTO_TEST_CASE( game_strategy_test_best_moves5 ){
+    // play first three game
+    gameStrategy.startGame(game, p1, p2);
+    gameStrategy.move(m12);
+    gameStrategy.move(m25);
+    gameStrategy.endOfGame(p1);
+    gameStrategy.startGame();
+    gameStrategy.move(m12);
+    gameStrategy.move(m24);
+    gameStrategy.endOfGame(p2);
+    gameStrategy.startGame();
+    gameStrategy.move(m13);
+    gameStrategy.move(m36);
+    gameStrategy.move(m67);
+    gameStrategy.endOfGame(p2);
+
+    // play fourth game
+    gameStrategy.startGame();
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m13 );
+    gameStrategy.move(m12);
+    BOOST_CHECK( *(gameStrategy.findBestMove()) == *m24 );
+    gameStrategy.move(m24);
+    gameStrategy.endOfGame(p1);
 }
 
 
