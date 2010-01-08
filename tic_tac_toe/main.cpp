@@ -4,17 +4,26 @@
 */
 
 #include <QtGui/QApplication>
+#include <boost/shared_ptr.hpp>
 #include "gamewindow.hpp"
 #include "optionsdialog.hpp"
+#include "TicTacToeGameController.hpp"
+
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    GameWindow w;
 
-    OptionsDialog dialog(&w);
+	GameWindow window;
 
-    w.show();
+	OptionsDialog dialog(&window);
+
+	TicTacToeGameController controller(window);
+	controller.initialize();
+
+	window.show();
     dialog.exec();
+
     return a.exec();
 }

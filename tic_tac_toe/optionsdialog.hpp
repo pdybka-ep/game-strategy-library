@@ -7,7 +7,10 @@
 #define OPTIONSDIALOG_H
 
 #include <QtGui/QDialog>
+#include <QString>
 #include <boost/shared_ptr.hpp>
+
+#include "TicTacToePlayer.hpp"
 
 namespace Ui {
     class OptionsDialog;
@@ -42,7 +45,8 @@ signals:
       Gives all the parametres to the main window of the game.
       @see onOk()
       */
-     void Ok();
+	void okSignal
+		(TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel, QString filename);
 
 private slots:
      /**
@@ -58,7 +62,9 @@ private slots:
 private:
     /** User interface object for OptionsDialog */
 	boost::shared_ptr<Ui::OptionsDialog> m_ui_;
-
+	
+	QString filename_;
+	TicTacToePlayer::PlayerLevel playerLevel_;
 
 };
 

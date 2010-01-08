@@ -45,13 +45,14 @@ void Field::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 }
 
 /* Initialize size and top left point of a Field object on a GameBoard.*/
-void Field::init(QSizeF size, QPointF startPoint){
+void Field::init(QSizeF size, QPointF startPoint, int x, int y){
     size_ = size;
     startPoint_ = startPoint;
+	coordinates_ = std::make_pair<int,int>(x,y);
 }
 
 /* Method ovverides default one to handle mouse press events. */
 void Field::mousePressEvent (QGraphicsSceneMouseEvent * ){
     if(fieldState_ == EMPTY)
-        wasClicked();
+        wasClickedSignal();
 }

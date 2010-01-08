@@ -17,9 +17,9 @@ public:
 	virtual ~TicTacToeGameFactory();
 
 	bool canCreate(const std::string & gameName);
-	library::Game& create(const std::string & gameName);
+	boost::shared_ptr<library::Game> create(const std::string & gameName);
 	std::string& serialize(const library::Game & game);
-	library::Game& deserialize(const std::string & data);
+	boost::shared_ptr<library::Game> deserialize(const std::string & data);
 
 };
 

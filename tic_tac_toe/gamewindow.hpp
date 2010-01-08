@@ -8,8 +8,10 @@
 
 #include <QtGui/QMainWindow>
 #include <boost/shared_ptr.hpp>
+#include <QGraphicsScene>
 
 #include "gameboard.hpp"
+#include "TicTacToePlayer.hpp"
 
 class GameBoard;
 
@@ -25,6 +27,7 @@ namespace Ui{
   */
 class GameWindow : public QMainWindow{
     Q_OBJECT
+	Q_DISABLE_COPY( GameWindow )
 
 /******** PUBLIC METHODS ********/
 public:
@@ -40,6 +43,7 @@ public:
       */
     ~GameWindow();
 
+	void setGraphicsScene(boost::shared_ptr<QGraphicsScene> graphScene);
 
 
 /******** PRIVATE SLOTS FOR MENU ITEMS ********/
@@ -72,16 +76,32 @@ public slots:
       Slot connected to signal Ok() from OptionsDialog.
       Sets all the parametres before game is started.
       */
-    void okClicked();
+	void okClickedSlot
+		(TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel, QString filename);
+
+signals:
+	void crateNewOponentSignal(TicTacToePlayer::PlayerLevel level);
+
+	void saveGameSignal(std::string & filename);
+
+	void loadGameSignal(std::string & filename);
+
+	void createNewGameSignal();
+
+	void createFirstGameNewPlayerSignal
+		(TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel);
+
+	void createFirstGameLoadPlayerSignal
+		(TicTacToePlayer::PlayerSign humanPlayerSign, std::string & computerPlayerFilename);
 
 
 /******** PRIVATE FIELDS ********/
 private:
     /** User interface object for GameWindow */
 	boost::shared_ptr<Ui::GameWindow> ui_;
+	//Ui::GameWindow * ui_;
 
-    /** A pointer to a game board */
-	boost::shared_ptr<GameBoard> board_;
+	boost::shared_ptr<QGraphicsScene> scene_;
 };
 
 #endif // GAMEWINDOW_H

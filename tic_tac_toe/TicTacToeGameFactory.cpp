@@ -19,15 +19,15 @@ bool TicTacToeGameFactory::canCreate(const std::string & gameName){
 	return false;
 }
 
-Game& TicTacToeGameFactory::create(const std::string & gameName){
-	return Game();
+boost::shared_ptr<Game> TicTacToeGameFactory::create(const std::string & gameName){
+	return boost::shared_ptr<Game>();
 }
 
 std::string& TicTacToeGameFactory::serialize(const Game & game){
 	return std::string("");
 }
 
-Game& TicTacToeGameFactory::deserialize(const std::string & data){
-	return Game();
+boost::shared_ptr<Game> TicTacToeGameFactory::deserialize(const std::string & data){
+	return boost::shared_ptr<Game>();
 }
 

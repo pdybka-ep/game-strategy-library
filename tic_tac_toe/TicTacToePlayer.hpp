@@ -19,6 +19,7 @@ class TicTacToePlayer: library::Player{
 public:
 	enum PlayerType {HUMAN, COMPUTER};
 	enum PlayerSign {CROSS, CIRCLE};
+	enum PlayerLevel {BEGINNER, INTERMEDIATE, ADVANCED};
 
 public:
 	TicTacToePlayer();

@@ -79,8 +79,10 @@ public:
       Initialize size and top left point of a Field object on a GameBoard.
       @param size size of this object
       @param startPoint top left position point
+	  @param x
+	  @param y
       */
-    void init(QSizeF size, QPointF startPoint);
+    void init(QSizeF size, QPointF startPoint, int x, int y);
 
     /**
       Method ovverides default one to handle mouse press events.
@@ -98,6 +100,10 @@ public:
         return QRectF(startPoint_.x(), startPoint_.y(), size_.width(), size_.height());
     }
 
+	std::pair<int,int> getCoordinates() const{
+		return coordinates_;
+	}
+
 
 
 /********* SIGNALS *********/
@@ -107,7 +113,7 @@ signals:
       It is generated to notify GameBoard that this particular field was clicked.
       @see mousePressEvent()
     */
-    void wasClicked();
+    void wasClickedSignal();
 
 
 
@@ -123,6 +129,8 @@ private:
     QImage crossImage_;
     /** State of the field. */
     FieldState fieldState_;
+
+	std::pair<int,int> coordinates_;
 
 
 };
