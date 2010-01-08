@@ -16,10 +16,26 @@ namespace library {
     bool operator== (const Game&, const Game&);
     bool operator!= (const Game&, const Game&);
 
+    /**
+     * Class representing a single game
+     * @author Michał Kołodziejski
+     */
     class Game {
     public:
+        /**
+         * Creates a game
+         */
         Game();
-        Game(const Game&);
+
+        /**
+         * Copies a game
+         * @param game a game to be copied
+         */
+        Game(const Game& game);
+
+        /**
+         * Destroys a game
+         */
         virtual ~Game();
 
         Game& operator=(const Game&);
@@ -91,9 +107,24 @@ namespace library {
         }
 
     protected:
+        /**
+         * Game's ID
+         */
         std::string gameId_;
+
+        /**
+         * Start node
+         */
         boost::shared_ptr<Node> startNode_;
+
+        /**
+         * Total number of leafs. It's equal to number of all game tree's routes.
+         */
         int totalNumberOfLeafs_;
+
+        /**
+         * Number of visited leafs.
+         */
         int numberOfVisitedLeafs_;
     };
 
