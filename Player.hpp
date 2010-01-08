@@ -14,10 +14,26 @@ namespace library {
     bool operator==(const Player&, const Player&);
     bool operator!=(const Player&, const Player&);
 
+    /**
+     * Class representing a single player
+     * @author Michał Kołodziejski
+     */
     class Player {
     public:
+        /**
+         * Creates a player
+         */
         Player();
-        Player(const Player&);
+
+        /**
+         * Creates a player as a copy of an argument
+         * @param player a player to be copied
+         */
+        Player(const Player& player);
+
+        /**
+         * Destroys the player
+         */
         virtual ~Player();
 
         Player& operator=(const Player&);
@@ -26,6 +42,7 @@ namespace library {
 
         /**
          * Returns player's name
+         * @return player's name
          */
         std::string getName() const {
             return name_;
@@ -33,6 +50,7 @@ namespace library {
 
         /**
          * Returns information if player is starting player
+         * @return <code>true</code> if player is starting player, <code>false</code> otherwise
          */
         bool isStartingPlayer() const {
             return startingPlayer_;
@@ -40,6 +58,7 @@ namespace library {
 
         /**
          * Sets player's name
+         * @param name a name to be set
          */
         void setName(const std::string& name) {
             this->name_ = name;
@@ -47,13 +66,21 @@ namespace library {
 
         /**
          * Sets starting flag
+         * @param startingPlayer a flag to be set
          */
         void setStartingPlayer(bool startingPlayer) {
             this->startingPlayer_ = startingPlayer;
         }
 
     protected:
+        /**
+         * Player's name
+         */
         std::string name_;
+
+        /**
+         * Flag if player is starting player
+         */
         bool startingPlayer_;
     };
 
