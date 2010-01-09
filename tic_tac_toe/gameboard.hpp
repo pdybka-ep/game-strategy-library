@@ -56,6 +56,9 @@ public slots:
     void fieldWasClickedSlot();
 
 
+signals:
+	void playerMadeAmoveSignal(std::pair<int,int> coordinates);
+
 
 /********* PRIVATE METHODS **********/
 private:

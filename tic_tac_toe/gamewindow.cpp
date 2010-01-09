@@ -6,6 +6,9 @@
 #include <QImage>
 #include <QBrush>
 #include <QGraphicsScene>
+#include <QFileDialog>
+#include <QMessageBox>
+
 #include <boost/shared_ptr.hpp>
 
 #include "gamewindow.hpp"
@@ -40,43 +43,58 @@ void GameWindow::okClickedSlot
     int x, y, w, h;
     ui_->graphicsView->rect().getRect(&x, &y, &w, &h);
 	scene_->setSceneRect(QRect(x, y, w-2, h-2));
-	/*
-    board_->startNewGame();
-	*/
+	
+	// set oponent's level and player's sign on the window
+	//ui_->playerSignLabel->setText();
+	//ui_->oponentLevelLabel->setText();
+
+	// generate signal to GameController to start a new game
+	if(filename.isEmpty()){
+		createFirstGameNewPlayerSignal(humanPlayerSign, computerPlayerLevel);
+	}
+	else{
+		createFirstGameLoadPlayerSignal(humanPlayerSign, filename.toStdString());
+	}
 }
 
 
 /*************** MENU items reactions ****************/
 /* Starts a new game. */
 void GameWindow::on_actionNewGame_triggered(){
-	//TicTacToeGameController::getInstance().createNewGameSlot();
+	createNewGameSignal();
 }
 
 /* Starts a new game with different oponent: a beginner. */
 void GameWindow::on_actionBeginner_triggered(){
-	//TicTacToeGameController::getInstance().crateNewOponentSlot(TicTacToePlayer::PlayerLevel::BEGINNER);
+	crateNewOponentSignal(TicTacToePlayer::BEGINNER);
 }
 
 /* Starts a new game with different oponent: an intermediate player. */
 void GameWindow::on_actionIntermediate_triggered(){
-	//TicTacToeGameController::getInstance().crateNewOponentSlot(TicTacToePlayer::PlayerLevel::INTERMEDIATE);
+	crateNewOponentSignal(TicTacToePlayer::INTERMEDIATE);
 }
 
 /* Starts a new game with different oponent: an advanced player. */
 void GameWindow::on_actionAdvanced_triggered(){
-	//TicTacToeGameController::getInstance().crateNewOponentSlot(TicTacToePlayer::PlayerLevel::ADVANCED);
+	crateNewOponentSignal(TicTacToePlayer::ADVANCED);
 }
 
 /* Saves current state of game (to be specific: the wisdom of an oponent). */
 void GameWindow::on_actionSave_triggered(){
+	saveGameSignal();
 }
 
 /* Loads state of game (to be specific: the wisdom of an oponent). */
 void GameWindow::on_actionLoad_triggered(){
-
+	QString qfilename = QFileDialog::getOpenFileName(this, tr("Open"), "/", tr("Game Files (*.beg *.int *.adv)"));
+	loadGameSignal(qfilename.toStdString());
 }
 
 /* Closes the game */
 void GameWindow::on_actionEnd_triggered(){
+	QMessageBox msgBox;
+	msgBox.setText("Papa :)");
+	msgBox.exec();
+
     QCoreApplication::quit();
 }

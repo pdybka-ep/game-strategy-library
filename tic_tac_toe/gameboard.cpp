@@ -89,7 +89,8 @@ void GameBoard::endGame(){
 void GameBoard::fieldWasClickedSlot(){
     // here - check which player is this turn and set fields state to current player's symbol
     Field * field = static_cast<Field *> (scene_->focusItem());
-    field->setFieldState(Field::CROSS);
+    
+	playerMadeAmoveSignal(field->getCoordinates());
 }
 
 /* Clears the scene an deletes all the fields */

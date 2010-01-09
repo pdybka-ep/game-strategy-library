@@ -178,7 +178,7 @@
        </spacer>
       </item>
       <item row="1" column="2" colspan="2">
-       <widget class="QLabel" name="playerTypeLabel">
+       <widget class="QLabel" name="playerSignLabel">
         <property name="font">
          <font>
           <weight>75</weight>

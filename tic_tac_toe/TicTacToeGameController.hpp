@@ -6,6 +6,7 @@
 #ifndef TICTACTOEGAMECONTROLLER_H
 #define TICTACTOEGAMECONTROLLER_H
 
+#include <QObject>
 
 #include <boost/shared_ptr.hpp>
 #include "..\game-strategy-library\GameStrategy.hpp"
@@ -21,7 +22,9 @@
 	Game controller (in MVC model), a singleton.
 	@uthor Hanna Dutkiewicz
 */
-class TicTacToeGameController{
+class TicTacToeGameController: public QObject{
+
+	Q_OBJECT
 
 public:
 	TicTacToeGameController(GameWindow &gameWindow_);
@@ -34,10 +37,13 @@ public slots:
 
 	void crateNewOponentSlot(TicTacToePlayer::PlayerLevel level);
 
-	void saveGameSlot(std::string & filename);
+	void saveGameSlot();
 
 	void loadGameSlot(std::string & filename);
 
+	/**
+		Creates just another game in a set of games. Starts the game with the same properties: sign and oponent.
+	*/
 	void createNewGameSlot();
 
 	void createFirstGameNewPlayerSlot
@@ -46,7 +52,7 @@ public slots:
 	void createFirstGameLoadPlayerSlot
 		(TicTacToePlayer::PlayerSign humanPlayerSign, std::string & computerPlayerFilename);
 
-	void playerMadeAmoveSlot(TicTacToeMove m);
+	void playerMadeAmoveSlot(std::pair<int,int> m);
 
 
 private:

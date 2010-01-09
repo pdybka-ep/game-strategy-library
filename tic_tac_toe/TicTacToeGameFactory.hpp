@@ -18,7 +18,7 @@ public:
 
 	bool canCreate(const std::string & gameName);
 	boost::shared_ptr<library::Game> create(const std::string & gameName);
-	std::string& serialize(const library::Game & game);
+	std::string& serialize(const boost::shared_ptr<library::Game>& game);
 	boost::shared_ptr<library::Game> deserialize(const std::string & data);
 
 };

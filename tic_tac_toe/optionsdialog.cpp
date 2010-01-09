@@ -35,15 +35,15 @@ void OptionsDialog::on_loadOponentButton_clicked(){
 
 	if(filename_.endsWith(".beg")){
 		m_ui_->oponentLevelLabel->setText("Poczatkujacy");
-		playerLevel_ = TicTacToePlayer::PlayerLevel::BEGINNER;
+		playerLevel_ = TicTacToePlayer::BEGINNER;
 	} 
 	else if(filename_.endsWith(".int")){
 		m_ui_->oponentLevelLabel->setText("Sredni");
-		playerLevel_ = TicTacToePlayer::PlayerLevel::INTERMEDIATE;
+		playerLevel_ = TicTacToePlayer::INTERMEDIATE;
 	} 
 	else if(filename_.endsWith(".adv")){
 		m_ui_->oponentLevelLabel->setText("Zaawansowany");
-		playerLevel_ = TicTacToePlayer::PlayerLevel::ADVANCED;
+		playerLevel_ = TicTacToePlayer::ADVANCED;
 	}
 }
 
@@ -59,7 +59,7 @@ void OptionsDialog::onOk(){
 	}
 
 	TicTacToePlayer::PlayerSign playerSign = (m_ui_->circleRadioButton->isChecked() ?
-		TicTacToePlayer::PlayerSign::CIRCLE : TicTacToePlayer::PlayerSign::CROSS);
+		TicTacToePlayer::CIRCLE : TicTacToePlayer::CROSS);
     
 	// create a new oponent of specific level
 	if(m_ui_->newOponentRadioButton->isChecked()){
@@ -67,11 +67,11 @@ void OptionsDialog::onOk(){
 		filename_ = ""; // set to default
 
 		if(m_ui_->beginnerRadioButton->isChecked())
-			playerLevel_ = TicTacToePlayer::PlayerLevel::BEGINNER;
+			playerLevel_ = TicTacToePlayer::BEGINNER;
 		else if(m_ui_->intermediateRadioButton->isChecked())
-			playerLevel_ = TicTacToePlayer::PlayerLevel::INTERMEDIATE;
+			playerLevel_ = TicTacToePlayer::INTERMEDIATE;
 		else
-			playerLevel_ = TicTacToePlayer::PlayerLevel::ADVANCED;
+			playerLevel_ = TicTacToePlayer::ADVANCED;
 	}
 	// else - all parametres were set in on_loadOponentButton_clicked()
 

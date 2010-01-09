@@ -23,7 +23,7 @@ boost::shared_ptr<Game> TicTacToeGameFactory::create(const std::string & gameNam
 	return boost::shared_ptr<Game>();
 }
 
-std::string& TicTacToeGameFactory::serialize(const Game & game){
+std::string& TicTacToeGameFactory::serialize(const boost::shared_ptr<Game>& game){
 	return std::string("");
 }
 

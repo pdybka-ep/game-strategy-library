@@ -82,9 +82,9 @@ public slots:
 signals:
 	void crateNewOponentSignal(TicTacToePlayer::PlayerLevel level);
 
-	void saveGameSignal(std::string & filename);
+	void saveGameSignal();
 
-	void loadGameSignal(std::string & filename);
+	void loadGameSignal(std::string filename);
 
 	void createNewGameSignal();
 
