@@ -1,10 +1,21 @@
 CC=g++
 LIB_OBJ=Player.o Node.o Move.o Game.o GameState.o AbstractGameFactory.o InvalidMoveException.o GameNotStartedException.o NoMoveAvailableException.o InvalidPlayerException.o UnknownGameException.o FileAccessException.o GameFactoryInitializationException.o GameStrategy.o
 CPPFLAGS=-O3 -pedantic
+AR=ar
+LIBS=-lgame_strategy -L.
 
-all: library
 
-library: $(LIB_OBJ)
+
+all: libgame_strategy.a
+
+libgame_strategy.a: $(LIB_OBJ)
+	$(AR) rv $@ $?
+
+doc: $(LIB_OBJ)
+	doxygen doxygen.conf
+
+
+############### object files ###############
 
 Player.o: Player.hpp Player.cpp
 
@@ -34,20 +45,27 @@ FileAccessException.o: FileAccessException.hpp FileAccessException.cpp
 
 GameStrategy.o: GameStrategy.hpp GameStrategy.cpp
 
-basic_tests: $(LIB_OBJ) basic_tests.cpp
-	$(CC) $(CPPFLAGS) -o basic_tests basic_tests.cpp $(LIB_OBJ)
 
-game_tree_tests: $(LIB_OBJ) game_tree_tests.cpp
-	$(CC) $(CPPFLAGS) -o game_tree_tests game_tree_tests.cpp $(LIB_OBJ)
 
-game_strategy_tests: $(LIB_OBJ) game_strategy_tests.cpp
-	$(CC) $(CPPFLAGS) -o game_strategy_tests game_strategy_tests.cpp $(LIB_OBJ)
-
+############### tests ###############
 
 run_test: basic_tests game_tree_tests game_strategy_tests
 	./basic_tests ; ./game_tree_tests ; ./game_strategy_tests
+	
+	
+basic_tests: libgame_strategy.a basic_tests.cpp
+	$(CC) $(CPPFLAGS) -o basic_tests basic_tests.cpp $(LIBS)
 
+game_tree_tests: libgame_strategy.a game_tree_tests.cpp
+	$(CC) $(CPPFLAGS) -o game_tree_tests game_tree_tests.cpp $(LIBS)
+
+game_strategy_tests: libgame_strategy.a game_strategy_tests.cpp
+	$(CC) $(CPPFLAGS) -o game_strategy_tests game_strategy_tests.cpp $(LIBS)
+
+
+
+############### clean ###############
 
 clean:
-	rm *.o basic_tests game_tree_tests game_strategy_tests
+	rm *.o libgame_strategy.a basic_tests game_tree_tests game_strategy_tests
 
