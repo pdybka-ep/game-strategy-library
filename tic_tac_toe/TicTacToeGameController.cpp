@@ -114,14 +114,6 @@ void TicTacToeGameController::gameOponentCreatedSlot(){
 void TicTacToeGameController::createFirstGameNewPlayerSlot
 (TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel){
 
-	OponentCreator creator;
-/*
-	connect(&creator,	SIGNAL(gameWasCreatedSignal(boost::shared_ptr<Game>)), 
-			this,		SLOT(gameOponentCreatedSlot(boost::shared_ptr<Game> )));
-*/
-	creator.init(computerPlayerLevel);
-	//creator.start();
-
 	QFuture<boost::shared_ptr<Game> > f = run(boost::bind(&TicTacToeGameFactory::create, factory_));
 	//QFutureWatcher<boost::shared_ptr<Game> > watcher;
 	watcher_.setFuture(f);

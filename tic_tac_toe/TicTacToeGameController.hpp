@@ -18,7 +18,6 @@
 #include "TicTacToePlayer.hpp"
 #include "GameBoard.hpp"
 #include "TicTacToeMove.hpp"
-#include "OponentCreator.hpp"
 
 
 /**
