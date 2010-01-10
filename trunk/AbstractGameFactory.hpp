@@ -38,11 +38,10 @@ namespace library {
         virtual bool canCreate(const std::string& gameName) = 0;
 
         /**
-         * Creates game with the given name
-         * @param gameName name of the game
+         * Creates game specific to the factory 
          * @return pointer to the created game
          */
-        virtual boost::shared_ptr<Game> create(const std::string& gameName) = 0;
+        virtual boost::shared_ptr<Game> create() = 0;
 
         /**
          * Serializes information about the game

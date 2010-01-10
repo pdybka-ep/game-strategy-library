@@ -126,6 +126,15 @@ namespace library {
             return this->gameState_.getGame();
         }
 
+		/**
+         * Returns current game state
+         * @return current game state
+         */
+        GameState & getCurrentGameState() {
+			GameState & ref = gameState_;
+            return ref;
+        }
+
     private:
         /* private helper methods */
         bool updateNodeValue(boost::shared_ptr<Node>& node, bool maximizingNode);
