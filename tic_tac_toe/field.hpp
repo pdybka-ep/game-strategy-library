@@ -9,10 +9,13 @@
 #include <QObject>
 #include <QGraphicsItem>
 
+#include "BaseField.hpp"
+
+/*
 class Field;
 bool operator== (const Field&, const Field&);
 bool operator!= (const Field&, const Field&);
-
+*/
 
 /**
     @class Field Class
@@ -20,40 +23,8 @@ bool operator!= (const Field&, const Field&);
     One of the GUI classes.
     @author Hanna Dutkiewicz
   */
-class Field : public QObject, public QGraphicsItem{
+class Field : public QObject, public QGraphicsItem, public BaseField{
     Q_OBJECT
-    Q_ENUMS(FieldState)
-
-public:
-    /**
-      @enum FieldState
-      State of the field. It represents what is on the field of a game board.
-      */
-    enum FieldState {
-        /** an empty field */
-        EMPTY,
-        /** field with a circle on it */
-        CIRCLE,
-        /** field with a cross on it */
-        CROSS
-    };
-
-
-/********* PROPERTIES *********/
-private:
-    Q_PROPERTY(FieldState fieldState_ READ getFieldState WRITE setFieldState)
-public:
-    /**
-      Getter of a fieldState_ field.
-      @return state of the field (a FieldState)
-      */
-    FieldState getFieldState() const {  return fieldState_; }
-    /**
-      Setter of a fieldState_ field.
-      @param newState new state of the field (eg. when circle was "put" on the field)
-      */
-    void setFieldState(FieldState newState) {   fieldState_ = newState; update(); }
-
 
 
 /********* PUBLIC METHODS *********/
@@ -105,16 +76,12 @@ public:
         return QRectF(startPoint_.x(), startPoint_.y(), size_.width(), size_.height());
     }
 
-	std::pair<int,int> getCoordinates() const{
-		return coordinates_;
-	}
-
+	void setFieldState(FieldState newState) {   fieldState_ = newState; update(); }
+/*
 	friend bool operator== (const Field&, const Field&);
 	friend bool operator!= (const Field&, const Field&);
-
-	bool isEmpty() const{
-		return (fieldState_ == EMPTY);
-	}
+*/
+	
 
 /********* SIGNALS *********/
 signals:
@@ -137,11 +104,6 @@ private:
     QImage circleImage_;
     /** Image of a cross field. */
     QImage crossImage_;
-    /** State of the field. */
-    FieldState fieldState_;
-
-	std::pair<int,int> coordinates_;
-
 
 };
 

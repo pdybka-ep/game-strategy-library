@@ -42,11 +42,11 @@ void TicTacToeGameController::initialize(){
 	gameBoard_.setGraphicsScene(graphScene);
 
 	TicTacToeGameFactory * factory = new TicTacToeGameFactory;
-	factory_ = boost::shared_ptr<TicTacToeGameFactory>(factory);
+	//factory_ = boost::shared_ptr<TicTacToeGameFactory>(factory);
 
-	boost::shared_ptr<AbstractGameFactory> factoryPtr = 
-		boost::shared_ptr<AbstractGameFactory>( static_cast<AbstractGameFactory *>(factory) );
-	gameStrategy_.initialize(factoryPtr);
+	//boost::shared_ptr<AbstractGameFactory> 
+	factory_ = boost::shared_ptr<AbstractGameFactory>( static_cast<AbstractGameFactory *>(factory) );
+	gameStrategy_.initialize(factory_);
 
 
 	// connect all signals and slots between GameWindow and controller
@@ -114,7 +114,8 @@ void TicTacToeGameController::gameOponentCreatedSlot(){
 void TicTacToeGameController::createFirstGameNewPlayerSlot
 (TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel){
 
-	QFuture<boost::shared_ptr<Game> > f = run(boost::bind(&TicTacToeGameFactory::create, factory_));
+	TicTacToeGameFactory * tttFactory = static_cast<TicTacToeGameFactory *>( factory_.get() );
+	QFuture<boost::shared_ptr<Game> > f = run(boost::bind(&TicTacToeGameFactory::create, tttFactory));
 	//QFutureWatcher<boost::shared_ptr<Game> > watcher;
 	watcher_.setFuture(f);
 	connect(&watcher_, SIGNAL(finished()), this, SLOT(gameOponentCreatedSlot()));

@@ -13,7 +13,7 @@
 #include "TicTacToePlayer.hpp"
 
 
-GameBoard::GameBoard(QObject * parent): QObject(parent), boardState_(GAME_DURING_PLAY), line_(NONE), field_(NULL){
+GameBoard::GameBoard(QObject * parent): QObject(parent), BaseGameBoard(){
 	winnerImage_.load(":/res/win.png");
 	loserImage_.load(":/res/lose.png");
 	remisImage_.load(":/res/remis.png");
@@ -35,15 +35,15 @@ void GameBoard::setGraphicsScene(boost::shared_ptr<QGraphicsScene> scene){
 /* Method is called to start a new game. It clears current scene and creates new fields on it. */
 void GameBoard::startFirstGame(){
 
-    // clear the game board
-    //clear();
-
     // create new fields
-	
-    field_ = new Field * [MAX_IN_A_ROW];
+    /*
+	field_ = new Field * [MAX_IN_A_ROW];
     for(int i = 0; i < MAX_IN_A_ROW; ++i)
        field_[i] = new Field[MAX_IN_A_ROW];
-    
+    */
+	for(int i = 0; i < MAX_IN_A_ROW; ++i)
+		for(int j = 0; j < MAX_IN_A_ROW; ++j)
+			field_(i,j) = new Field;
 
     // the smaller size of scene
     qreal allSize = (scene_->sceneRect().height() > scene_->sceneRect().width())
@@ -69,11 +69,11 @@ void GameBoard::startFirstGame(){
         }
         for(int j = 0; j < MAX_IN_A_ROW; ++j){
             // inits a field object with proper size and position
-            field_[i][j].init(QSizeF(oneFieldSize, oneFieldSize), startPoint, i, j);
-            scene_->addItem(&field_[i][j]);
+            static_cast<Field *>( field_(i,j) )->init(QSizeF(oneFieldSize, oneFieldSize), startPoint, i, j);
+            scene_->addItem( static_cast<Field *>(field_(i,j)) );
 
             // connect fields with game board
-            connect((&field_[i][j]), SIGNAL(wasClickedSignal()), this, SLOT(fieldWasClickedSlot()));
+            connect(static_cast<Field *>(field_(i,j) ), SIGNAL(wasClickedSignal()), this, SLOT(fieldWasClickedSlot()));
 
             if(j > 0 && i == 0)
                 scene_->addLine(startPoint.x(), startPoint.y(), startPoint.x(), startPoint.y()+(MAX_IN_A_ROW)*oneFieldSize, rectPen);
@@ -86,11 +86,10 @@ void GameBoard::startFirstGame(){
 }
 
 void GameBoard::startNewGame(){
-	line_ = NONE;
 	boardState_ = GAME_DURING_PLAY;
 	for(int i = 0; i < MAX_IN_A_ROW; ++i)
 		for(int j = 0; j < MAX_IN_A_ROW; ++j)
-			field_[i][j].setFieldState(Field::EMPTY);
+			field_(i,j)->setFieldState(Field::EMPTY);
 	scene_->removeItem(pixItem_);
 }
 
@@ -111,45 +110,6 @@ void GameBoard::endGame(){
 }
 
 void GameBoard::addFinishElementsToScene(const QPixmap & pixmap){
-
-	if(line_ != NONE){
-		switch(line_){
-			case CROSS_S:
-
-				break;
-			case CROSS_BACKS:
-
-				break;
-
-			case H0:
-
-				break;
-
-			case H1:
-
-				break;
-
-			case H2:
-
-				break;
-
-			case V0:
-
-				break;
-
-			case V1:
-
-				break;
-
-			case V2:
-
-				break;
-		}
-	}
-
-	//QRect imRect = pixmap.rect();
-	//QPoint startImPoint((scene_->sceneRect().width()-imRect)/2, (scene_->sceneRect().height()-imRect)/2);
-	//pixmap.setOffset(startImPoint);
 	pixItem_ = scene_->addPixmap(pixmap);
 }
 
@@ -174,7 +134,7 @@ void GameBoard::fieldWasClickedSlot(){
 
 
 
-
+/*
 GameBoard::GameBoardState GameBoard::makeAmove(std::pair<int,int> coordinates, TicTacToePlayer::PlayerSign sign){
 
 	Field::FieldState state = (sign == TicTacToePlayer::CIRCLE ? Field::CIRCLE : Field::CROSS);
@@ -202,3 +162,4 @@ GameBoard::GameBoardState GameBoard::makeAmove(std::pair<int,int> coordinates, T
 
 	return GAME_DURING_PLAY;
 }
+*/

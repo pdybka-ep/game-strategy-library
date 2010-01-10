@@ -8,7 +8,7 @@
 #include "field.hpp"
 
 /* Represents a single field on a game board. One of GUI classes. */
-Field::Field(QObject * parent): QObject(parent), fieldState_(EMPTY){
+Field::Field(QObject * parent): QObject(parent), BaseField(){
 
     setFlags(QGraphicsItem::ItemIsSelectable);
     setFlags(QGraphicsItem::ItemIsFocusable);
@@ -82,7 +82,7 @@ void Field::mousePressEvent (QGraphicsSceneMouseEvent * ){
     if(fieldState_ == EMPTY)
         wasClickedSignal();
 }
-
+/*
 bool operator== (const Field& f1, const Field& f2){
 	return (!f1.isEmpty() && f1.fieldState_ == f2.fieldState_);
 }
@@ -90,3 +90,4 @@ bool operator== (const Field& f1, const Field& f2){
 bool operator!= (const Field& f1, const Field& f2){
 	return (f1.fieldState_ != f2.fieldState_);
 }
+*/

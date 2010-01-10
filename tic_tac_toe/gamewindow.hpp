@@ -86,7 +86,7 @@ signals:
 
 	void saveGameSignal();
 
-	void loadGameSignal(std::string filename);
+	void loadGameSignal(std::string &filename);
 
 	void createNewGameSignal();
 

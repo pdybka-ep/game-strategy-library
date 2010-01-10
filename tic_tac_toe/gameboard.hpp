@@ -15,22 +15,20 @@
 
 #include "field.hpp"
 #include "TicTacToePlayer.hpp"
+#include "BaseGameBoard.hpp"
 
 /**
     @class GameBoard
     @author Hanna Dutkiewicz
     Represents a game board of a "Tic-Tac-Toe" game.
   */
-class GameBoard: public QObject{
+class GameBoard: public QObject, public BaseGameBoard{
     Q_OBJECT
-	Q_ENUMS( GameBoardState )
-	Q_ENUMS( FinishLine )
 
 
 /********* PUBLIC METHODS **********/
 public:
-	enum GameBoardState {GAME_NOT_STARTED, GAME_DURING_PLAY, GAME_FINISH_WINNER, GAME_FINISH_REMIS};
-	enum FinishLine {NONE, CROSS_S, CROSS_BACKS, H0, H1, H2, V0, V1, V2};
+	//enum GameBoardState {GAME_NOT_STARTED, GAME_DURING_PLAY, GAME_FINISH_WINNER, GAME_FINISH_REMIS};
 
 	/**
 		A default constructor.
@@ -40,7 +38,7 @@ public:
    /**
      A destructor.
      */
-    ~GameBoard();
+    virtual ~GameBoard();
 
     /**
       Method is called to start a new game. It clears current scene and creates new fields on it.
@@ -60,7 +58,7 @@ public:
 
 	void setGraphicsScene(boost::shared_ptr<QGraphicsScene> scene);
 
-	GameBoardState makeAmove(std::pair<int,int> coordinates, TicTacToePlayer::PlayerSign sign);
+	//GameBoardState makeAmove(std::pair<int,int> coordinates, TicTacToePlayer::PlayerSign sign);
 
 	void wait();
 	void stopWaiting();
@@ -94,12 +92,10 @@ private:
 private:
     /** All the fields on a board game */
 	//Field field_[3][3];
-	Field ** field_;
+	//Field ** field_;
 
     /** A pointer to a graphics scene */
 	boost::shared_ptr<QGraphicsScene> scene_;
-
-	GameBoardState boardState_;
 
 	QPixmap winnerImage_;
 	QPixmap loserImage_;
@@ -107,12 +103,6 @@ private:
 	QPixmap waitImage_;
 	QGraphicsPixmapItem * pixItem_;
 
-	FinishLine line_;
-
-/********* CONSTS **********/
-private:
-    /** Maximum fields in a row of a game board */
-    static const int MAX_IN_A_ROW = 3;
 
 };
 

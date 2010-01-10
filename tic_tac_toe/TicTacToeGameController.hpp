@@ -12,6 +12,7 @@
 #include <boost/shared_ptr.hpp>
 #include "..\game-strategy-library\GameStrategy.hpp"
 #include "..\game-strategy-library\Player.hpp"
+#include "..\game-strategy-library\AbstractGameFactory.hpp"
 
 #include "TicTacToeGameFactory.hpp"
 #include "GameWindow.hpp"
@@ -68,7 +69,7 @@ private:
 	// model
 	library::GameStrategy gameStrategy_;
 
-	boost::shared_ptr<TicTacToeGameFactory> factory_;
+	boost::shared_ptr<library::AbstractGameFactory> factory_;
 
 	// view
 	GameWindow &gameWindow_;
