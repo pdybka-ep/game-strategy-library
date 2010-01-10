@@ -7,9 +7,14 @@
 #define GAMEBOARD_H
 
 #include <QObject>
+#include <QPixmap>
+#include <QGraphicsPixmapItem>
+
 #include <boost/multi_array.hpp>
 #include <boost/shared_ptr.hpp>
+
 #include "field.hpp"
+#include "TicTacToePlayer.hpp"
 
 /**
     @class GameBoard
@@ -18,12 +23,15 @@
   */
 class GameBoard: public QObject{
     Q_OBJECT
-
-    friend class GameWindow;
+	Q_ENUMS( GameBoardState )
+	Q_ENUMS( FinishLine )
 
 
 /********* PUBLIC METHODS **********/
 public:
+	enum GameBoardState {GAME_NOT_STARTED, GAME_DURING_PLAY, GAME_FINISH_WINNER, GAME_FINISH_REMIS};
+	enum FinishLine {NONE, CROSS_S, CROSS_BACKS, H0, H1, H2, V0, V1, V2};
+
 	/**
 		A default constructor.
 	*/
@@ -39,12 +47,23 @@ public:
       */
     void startNewGame();
 
+	/**
+      Method is called to start a new game. It clears current scene and creates new fields on it.
+    */
+    void startFirstGame();
+
     /**
       Method called when a game is finished to stop the game, actualize game tree and show the winner.
       */
     void endGame();
+	void endGame(TicTacToePlayer::PlayerType winner);
 
 	void setGraphicsScene(boost::shared_ptr<QGraphicsScene> scene);
+
+	GameBoardState makeAmove(std::pair<int,int> coordinates, TicTacToePlayer::PlayerSign sign);
+
+	void wait();
+	void stopWaiting();
 
 
 
@@ -67,17 +86,28 @@ private:
       */
     void clear();
 
+	void addFinishElementsToScene(const QPixmap & pixmap);
+
 
 
 /********* PRIVATE FIELDS **********/
 private:
     /** All the fields on a board game */
+	//Field field_[3][3];
 	Field ** field_;
 
     /** A pointer to a graphics scene */
 	boost::shared_ptr<QGraphicsScene> scene_;
 
+	GameBoardState boardState_;
 
+	QPixmap winnerImage_;
+	QPixmap loserImage_;
+	QPixmap remisImage_;
+	QPixmap waitImage_;
+	QGraphicsPixmapItem * pixItem_;
+
+	FinishLine line_;
 
 /********* CONSTS **********/
 private:

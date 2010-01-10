@@ -45,6 +45,8 @@ public:
 
 	void setGraphicsScene(boost::shared_ptr<QGraphicsScene> graphScene);
 
+	void endGame();
+	void endGame(TicTacToePlayer::PlayerType winner);
 
 /******** PRIVATE SLOTS FOR MENU ITEMS ********/
 private slots:

@@ -234,6 +234,9 @@
       </item>
       <item row="9" column="1">
        <widget class="QPushButton" name="newGameButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Nowe rozdanie</string>
         </property>
@@ -325,6 +328,9 @@
    <addaction name="menuOponent"/>
   </widget>
   <action name="actionNewGame">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Nowe rozdanie</string>
    </property>

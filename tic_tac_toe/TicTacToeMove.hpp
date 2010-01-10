@@ -11,6 +11,7 @@
 class TicTacToeMove;
 bool operator== (const TicTacToeMove & move1, const TicTacToeMove & move2);
 bool operator!= (const TicTacToeMove & move1, const TicTacToeMove & move2);
+std::ostream & operator<<(std::ostream & os, const TicTacToeMove & node);
 
 
 class TicTacToeMove: public library::Move{
@@ -25,6 +26,7 @@ public:
 
     friend bool operator== (const TicTacToeMove & move1, const TicTacToeMove & move2);
     friend bool operator!= (const TicTacToeMove & move1, const TicTacToeMove & move2);
+	friend std::ostream & operator<<(std::ostream & os, const TicTacToeMove & node);
 
 	std::pair<int,int> getCoordinates() const{
 		return coordinates_;
@@ -37,6 +39,7 @@ public:
 	void setCoordinates(const std::pair<int,int> coordinates){
 		this->coordinates_ = coordinates;
 	}
+
 
 
 private:

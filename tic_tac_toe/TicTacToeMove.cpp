@@ -3,8 +3,12 @@
   @author Hanna Dutkiewicz
 */
 
+#include <iostream>
 #include "TicTacToeMove.hpp"
+#include "TicTacToeNode.hpp"
 #include "..\game-strategy-library\Node.hpp"
+
+using std::endl;
 
 TicTacToeMove::TicTacToeMove(): Move(){
 
@@ -42,4 +46,18 @@ bool operator== (const TicTacToeMove & m1, const TicTacToeMove & m2){
 
 bool operator!= (const TicTacToeMove & m1, const TicTacToeMove & m2){
 	return !(m1 == m2);
+}
+
+std::ostream & operator<<(std::ostream & os, const TicTacToeMove & move){
+
+	os << "---MOVE-------------"<<endl;
+	os << " id: " << move.moveId_;
+	os << " coordinates: (" << move.coordinates_.first << "," << move.coordinates_.second << ")"; 
+	os << " dest node id: " << move.destination_->getNodeId();
+	os << "---END MOVE-------------"<<endl;
+
+	TicTacToeNode * tttnode = static_cast<TicTacToeNode *>( move.destination_.get() );
+    os << *tttnode;
+
+	return os;
 }

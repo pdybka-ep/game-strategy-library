@@ -14,7 +14,7 @@ bool operator==(const TicTacToePlayer & p1, const TicTacToePlayer & p2);
 bool operator!=(const TicTacToePlayer & p1, const TicTacToePlayer & p2);
 
 
-class TicTacToePlayer: library::Player{
+class TicTacToePlayer: public library::Player{
 
 public:
 	enum PlayerType {HUMAN, COMPUTER};
@@ -33,6 +33,10 @@ public:
 
 	PlayerType getPlayerType() const{
 		return playerType_;
+	}
+
+	void setPlayerType(const PlayerType type){
+		this->playerType_ = type;
 	}
 
 	PlayerSign getPlayerSign() const{

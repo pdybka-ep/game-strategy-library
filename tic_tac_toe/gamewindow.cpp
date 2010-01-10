@@ -35,6 +35,21 @@ void GameWindow::setGraphicsScene(boost::shared_ptr<QGraphicsScene> graphScene){
 	scene_ = graphScene;
 }
 
+void GameWindow::endGame(){
+	ui_->newGameButton->setEnabled(true);
+	ui_->actionNewGame->setEnabled(true);
+}
+
+void GameWindow::endGame(TicTacToePlayer::PlayerType winner){
+	ui_->newGameButton->setEnabled(true);
+	ui_->actionNewGame->setEnabled(true);
+
+	if(winner == TicTacToePlayer::COMPUTER)
+		ui_->OponentPointsLcd->display( ui_->OponentPointsLcd->intValue()+1 );
+	else
+		ui_->playerPointsLcd->display( ui_->playerPointsLcd->intValue()+1 );
+}
+
 
 /* Sets all the parametres before game is started. */
 void GameWindow::okClickedSlot
@@ -45,8 +60,10 @@ void GameWindow::okClickedSlot
 	scene_->setSceneRect(QRect(x, y, w-2, h-2));
 	
 	// set oponent's level and player's sign on the window
-	//ui_->playerSignLabel->setText();
-	//ui_->oponentLevelLabel->setText();
+	ui_->playerSignLabel->setText(humanPlayerSign == TicTacToePlayer::CIRCLE ? " KOLKO " : " KRZYZYK ");
+
+	QString level = (computerPlayerLevel == TicTacToePlayer::BEGINNER) ? " Sredni" : ( (computerPlayerLevel == TicTacToePlayer::ADVANCED) ? " Zaawansowany " : " Poczatkujacy ");
+	ui_->oponentLevelLabel->setText(level);
 
 	// generate signal to GameController to start a new game
 	if(filename.isEmpty()){
@@ -61,6 +78,8 @@ void GameWindow::okClickedSlot
 /*************** MENU items reactions ****************/
 /* Starts a new game. */
 void GameWindow::on_actionNewGame_triggered(){
+	ui_->newGameButton->setEnabled(false);
+	ui_->actionNewGame->setEnabled(false);
 	createNewGameSignal();
 }
 

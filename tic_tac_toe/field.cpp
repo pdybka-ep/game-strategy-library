@@ -14,8 +14,34 @@ Field::Field(QObject * parent): QObject(parent), fieldState_(EMPTY){
     setFlags(QGraphicsItem::ItemIsFocusable);
     setAcceptedMouseButtons(Qt::LeftButton);
 
+	coordinates_ = std::make_pair<int,int>(-1,-1);
+
     circleImage_.load(":/res/circle.png");
     crossImage_.load(":/res/cross.png");
+}
+
+Field::Field(const Field & field){
+	*this = field;
+}
+
+Field& Field::operator= (const Field& field){
+	if(this == &field)
+		return *this;
+
+	setParent(field.parent());
+
+	fieldState_ = field.fieldState_;
+	coordinates_ = field.coordinates_;
+	size_ = field.size_;
+    startPoint_ = field.startPoint_;
+	circleImage_ = field.circleImage_;
+	crossImage_ = field.crossImage_;
+
+	setFlags(QGraphicsItem::ItemIsSelectable);
+    setFlags(QGraphicsItem::ItemIsFocusable);
+    setAcceptedMouseButtons(Qt::LeftButton);
+
+	return *this;
 }
 
 /* A destructor. */
@@ -55,4 +81,12 @@ void Field::init(QSizeF size, QPointF startPoint, int x, int y){
 void Field::mousePressEvent (QGraphicsSceneMouseEvent * ){
     if(fieldState_ == EMPTY)
         wasClickedSignal();
+}
+
+bool operator== (const Field& f1, const Field& f2){
+	return (!f1.isEmpty() && f1.fieldState_ == f2.fieldState_);
+}
+
+bool operator!= (const Field& f1, const Field& f2){
+	return (f1.fieldState_ != f2.fieldState_);
 }

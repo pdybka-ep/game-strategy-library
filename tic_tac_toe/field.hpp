@@ -9,6 +9,11 @@
 #include <QObject>
 #include <QGraphicsItem>
 
+class Field;
+bool operator== (const Field&, const Field&);
+bool operator!= (const Field&, const Field&);
+
+
 /**
     @class Field Class
     Represents a single field on a game board.
@@ -30,11 +35,7 @@ public:
         /** field with a circle on it */
         CIRCLE,
         /** field with a cross on it */
-        CROSS,
-        /** state of the field after game is finished, a circle crossed because of the victory */
-        CIRCLE_FINISH,
-        /** state of the field after game is finished, a cross crossed because of the victory */
-        CROSS_FINISH
+        CROSS
     };
 
 
@@ -61,11 +62,15 @@ public:
       A contstructor.
       @param parent field's parent (in this case it should be a GameBoard object)
       */
-    Field(QObject * parent = 0);
+	Field(QObject * parent = 0);
+
+	Field(const Field & field);
     /**
       A destructor.
       */
     ~Field();
+
+	Field& operator= (const Field&);
 
     /**
       Method ovverides default paint method for QGraphicsItem objects. It paints appropriate image depending on fieldState_.
@@ -104,7 +109,12 @@ public:
 		return coordinates_;
 	}
 
+	friend bool operator== (const Field&, const Field&);
+	friend bool operator!= (const Field&, const Field&);
 
+	bool isEmpty() const{
+		return (fieldState_ == EMPTY);
+	}
 
 /********* SIGNALS *********/
 signals:

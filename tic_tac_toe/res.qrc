@@ -1,7 +1,11 @@
 <RCC>
-    <qresource prefix="/" >
+    <qresource prefix="/">
         <file>res/ttt.ico</file>
         <file>res/circle.png</file>
         <file>res/cross.png</file>
+        <file>res/lose.png</file>
+        <file>res/make.png</file>
+        <file>res/remis.png</file>
+        <file>res/win.png</file>
     </qresource>
 </RCC>

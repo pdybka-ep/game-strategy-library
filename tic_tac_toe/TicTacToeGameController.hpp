@@ -7,19 +7,23 @@
 #define TICTACTOEGAMECONTROLLER_H
 
 #include <QObject>
+#include <QFutureWatcher>
 
 #include <boost/shared_ptr.hpp>
 #include "..\game-strategy-library\GameStrategy.hpp"
+#include "..\game-strategy-library\Player.hpp"
+
 #include "TicTacToeGameFactory.hpp"
 #include "GameWindow.hpp"
 #include "TicTacToePlayer.hpp"
 #include "GameBoard.hpp"
 #include "TicTacToeMove.hpp"
+#include "OponentCreator.hpp"
 
 
 /**
 	@class GameController
-	Game controller (in MVC model), a singleton.
+	Game controller (in MVC model)
 	@uthor Hanna Dutkiewicz
 */
 class TicTacToeGameController: public QObject{
@@ -29,7 +33,7 @@ class TicTacToeGameController: public QObject{
 public:
 	TicTacToeGameController(GameWindow &gameWindow_);
 
-	~TicTacToeGameController(){}
+	~TicTacToeGameController();
 
 	void initialize();
 
@@ -54,21 +58,28 @@ public slots:
 
 	void playerMadeAmoveSlot(std::pair<int,int> m);
 
+	void gameOponentCreatedSlot();
+
 
 private:
-	//TicTacToeGameController(){}
-	//TicTacToeGameController(const TicTacToeGameController &){}
+	void makeComputerMove();
+	bool checkEndGame(std::pair<int,int> coordinates, boost::shared_ptr<library::Player> player);
 
+	
 	// model
 	library::GameStrategy gameStrategy_;
+
+	boost::shared_ptr<TicTacToeGameFactory> factory_;
 
 	// view
 	GameWindow &gameWindow_;
 
 	// game elements
 	GameBoard gameBoard_;
-	TicTacToePlayer player1_;
-	TicTacToePlayer player2_;
+	boost::shared_ptr<library::Player> playerHuman_;
+	boost::shared_ptr<library::Player> playerComp_;
+
+	QFutureWatcher<boost::shared_ptr<library::Game> > watcher_;
 };
 
 
