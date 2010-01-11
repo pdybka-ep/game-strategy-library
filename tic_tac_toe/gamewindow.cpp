@@ -15,6 +15,7 @@
 #include "ui_gamewindow.h"
 #include "TicTacToeGameController.hpp"
 #include "TicTacToePlayer.hpp"
+#include "OptionsDialog.hpp"
 
 
 /* A constructor of GameWindow - the main window of a game. */
@@ -37,12 +38,14 @@ void GameWindow::setGraphicsScene(boost::shared_ptr<QGraphicsScene> graphScene){
 
 void GameWindow::endGame(){
 	ui_->newGameButton->setEnabled(true);
+	ui_->actionTotalNewGame->setEnabled(true);
 	ui_->actionNewGame->setEnabled(true);
 }
 
 void GameWindow::endGame(TicTacToePlayer::PlayerType winner){
 	ui_->newGameButton->setEnabled(true);
 	ui_->actionNewGame->setEnabled(true);
+	ui_->actionTotalNewGame->setEnabled(true);
 
 	if(winner == TicTacToePlayer::COMPUTER)
 		ui_->OponentPointsLcd->display( ui_->OponentPointsLcd->intValue()+1 );
@@ -50,6 +53,16 @@ void GameWindow::endGame(TicTacToePlayer::PlayerType winner){
 		ui_->playerPointsLcd->display( ui_->playerPointsLcd->intValue()+1 );
 }
 
+
+void GameWindow::wait(){
+	ui_->exitButton->setEnabled(false);
+	ui_->actionEnd->setEnabled(false);
+}
+
+void GameWindow::stopWaiting(){
+	ui_->exitButton->setEnabled(true);
+	ui_->actionEnd->setEnabled(true);
+}
 
 /* Sets all the parametres before game is started. */
 void GameWindow::okClickedSlot
@@ -60,10 +73,13 @@ void GameWindow::okClickedSlot
 	scene_->setSceneRect(QRect(x, y, w-2, h-2));
 	
 	// set oponent's level and player's sign on the window
-	ui_->playerSignLabel->setText(humanPlayerSign == TicTacToePlayer::CIRCLE ? " KOLKO " : " KRZYZYK ");
+	ui_->playerSignLabel->setText(humanPlayerSign == TicTacToePlayer::CIRCLE ? " KÓ£KO " : " KRZY¯YK ");
 
-	QString level = (computerPlayerLevel == TicTacToePlayer::BEGINNER) ? " Sredni" : ( (computerPlayerLevel == TicTacToePlayer::ADVANCED) ? " Zaawansowany " : " Poczatkujacy ");
+	QString level = (computerPlayerLevel == TicTacToePlayer::BEGINNER) ? " Pocz¹tkuj¹cy" : ( (computerPlayerLevel == TicTacToePlayer::ADVANCED) ? " Zaawansowany " : "Œredni");
 	ui_->oponentLevelLabel->setText(level);
+
+	ui_->playerPointsLcd->display(0);
+	ui_->OponentPointsLcd->display(0);
 
 	// generate signal to GameController to start a new game
 	if(filename.isEmpty()){
@@ -80,23 +96,15 @@ void GameWindow::okClickedSlot
 void GameWindow::on_actionNewGame_triggered(){
 	ui_->newGameButton->setEnabled(false);
 	ui_->actionNewGame->setEnabled(false);
+	ui_->actionTotalNewGame->setEnabled(false);
 	createNewGameSignal();
 }
 
-/* Starts a new game with different oponent: a beginner. */
-void GameWindow::on_actionBeginner_triggered(){
-	crateNewOponentSignal(TicTacToePlayer::BEGINNER);
+void GameWindow::on_actionTotalNewGame_triggered(){
+	OptionsDialog dialog(this);
+	dialog.exec();
 }
 
-/* Starts a new game with different oponent: an intermediate player. */
-void GameWindow::on_actionIntermediate_triggered(){
-	crateNewOponentSignal(TicTacToePlayer::INTERMEDIATE);
-}
-
-/* Starts a new game with different oponent: an advanced player. */
-void GameWindow::on_actionAdvanced_triggered(){
-	crateNewOponentSignal(TicTacToePlayer::ADVANCED);
-}
 
 /* Saves current state of game (to be specific: the wisdom of an oponent). */
 void GameWindow::on_actionSave_triggered(){

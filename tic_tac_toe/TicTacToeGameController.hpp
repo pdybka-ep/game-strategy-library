@@ -10,6 +10,8 @@
 #include <QFutureWatcher>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/random.hpp>
+
 #include "..\game-strategy-library\GameStrategy.hpp"
 #include "..\game-strategy-library\Player.hpp"
 #include "..\game-strategy-library\AbstractGameFactory.hpp"
@@ -65,9 +67,11 @@ public slots:
 private:
 	void makeComputerMove();
 	bool checkEndGame
-		(std::pair<int,int> coordinates, boost::shared_ptr<library::Player> player, BaseGameBoard & board, bool notifyWindow = true);
+		(std::pair<int,int> coordinates, boost::shared_ptr<library::Player> player, BaseGameBoard & board, bool notifyWindow);
 
 	void trainComputerPlayer(boost::shared_ptr<library::Game> game);
+
+	boost::shared_ptr<library::Move> getRandMove();
 	
 	// model
 	library::GameStrategy gameStrategy_;
@@ -85,6 +89,8 @@ private:
 	QFutureWatcher<boost::shared_ptr<library::Game> > watcher_;
 
 	TicTacToePlayer::PlayerLevel computerPlayerLevel_;
+
+	//boost::variate_generator<boost::mt19937&, boost::uniform_int<int> >  random;
 };
 
 

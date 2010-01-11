@@ -3,38 +3,31 @@
 using boost::numeric::ublas::matrix;
 
 BaseGameBoard::BaseGameBoard(): boardState_(GAME_DURING_PLAY), field_(3,3){
+	for(int i = 0; i < MAX_IN_A_ROW; ++i)
+		for(int j = 0; j < MAX_IN_A_ROW; ++j){
+			field_(i,j) = new BaseField;
+			field_(i,j)->setCoordinates(std::make_pair<int,int>(i,j) );
+		}
 }
 
 BaseGameBoard::~BaseGameBoard(){
-	for(int i = 0; i < MAX_IN_A_ROW; ++i)
-		for(int j = 0; j < MAX_IN_A_ROW; ++j)
-			delete field_(i,j);
+	if(field_(0,0) != NULL){
+		for(int i = 0; i < MAX_IN_A_ROW; ++i)
+			for(int j = 0; j < MAX_IN_A_ROW; ++j)
+				delete field_(i,j);
+	}
 }
 
 void BaseGameBoard::startNewGame(){
 	boardState_ = GAME_DURING_PLAY;
 	for(int i = 0; i < MAX_IN_A_ROW; ++i)
 		for(int j = 0; j < MAX_IN_A_ROW; ++j)
-			//field_[i][j].setFieldState(BaseField::EMPTY);
 			field_(i,j)->setFieldState(BaseField::EMPTY);
 	
 }
 
 void BaseGameBoard::startFirstGame(){
-	boardState_ = GAME_DURING_PLAY;
-	/*
-	field_ = new BaseField * [MAX_IN_A_ROW];
-    
-	for(int i = 0; i < MAX_IN_A_ROW; ++i)
-       field_[i] = new BaseField[MAX_IN_A_ROW];
-	*/
-
-
-	for(int i = 0; i < MAX_IN_A_ROW; ++i)
-		for(int j = 0; j < MAX_IN_A_ROW; ++j){
-			field_(i,j) = new BaseField;
-			field_(i,j)->setCoordinates(std::make_pair<int,int>(i,j) );
-		}
+	startNewGame();
 }
 
 void BaseGameBoard::endGame(){

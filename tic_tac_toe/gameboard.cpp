@@ -18,6 +18,8 @@ GameBoard::GameBoard(QObject * parent): QObject(parent), BaseGameBoard(){
 	loserImage_.load(":/res/lose.png");
 	remisImage_.load(":/res/remis.png");
 	waitImage_.load(":res/make.png");
+
+
 }
 
 

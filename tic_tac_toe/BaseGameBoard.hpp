@@ -20,11 +20,11 @@ public:
 	BaseGameBoard();
 	virtual ~BaseGameBoard();
 
-	void startNewGame();
-	void startFirstGame();
+	virtual void startNewGame();
+	virtual void startFirstGame();
 
-	void endGame();
-	void endGame(TicTacToePlayer::PlayerType );
+	virtual void endGame();
+	virtual void endGame(TicTacToePlayer::PlayerType );
 
 	GameBoardState makeAmove(std::pair<int,int> coordinates, TicTacToePlayer::PlayerSign sign);
 

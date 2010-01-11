@@ -48,19 +48,15 @@ public:
 	void endGame();
 	void endGame(TicTacToePlayer::PlayerType winner);
 
+	void wait();
+	void stopWaiting();
+
 /******** PRIVATE SLOTS FOR MENU ITEMS ********/
 private slots:
     /** Starts a new game. */
     void on_actionNewGame_triggered();
 
-    /** Starts a new game with different oponent: a beginner. */
-    void on_actionBeginner_triggered();
-
-    /** Starts a new game with different oponent: an intermediate player. */
-    void on_actionIntermediate_triggered();
-
-    /** Starts a new game with different oponent: an advanced player. */
-    void on_actionAdvanced_triggered();
+	void on_actionTotalNewGame_triggered();
 
     /** Saves current state of game (to be specific: the wisdom of an oponent). */
     void on_actionSave_triggered();

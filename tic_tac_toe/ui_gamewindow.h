@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gamewindow.ui'
 **
-** Created: Mon 11. Jan 02:41:26 2010
+** Created: Mon 11. Jan 22:48:17 2010
 **      by: Qt User Interface Compiler version 4.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -40,6 +40,8 @@ public:
     QAction *actionSave;
     QAction *actionLoad;
     QAction *actionEnd;
+    QAction *actionNowa_gra;
+    QAction *actionTotalNewGame;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QGridLayout *gridLayout;
@@ -62,8 +64,6 @@ public:
     QSpacerItem *horizontalSpacer_2;
     QMenuBar *menuBar;
     QMenu *menuGame;
-    QMenu *menuOponent;
-    QMenu *menuNewOponent;
 
     void setupUi(QMainWindow *GameWindow)
     {
@@ -98,6 +98,10 @@ public:
         actionLoad->setObjectName(QString::fromUtf8("actionLoad"));
         actionEnd = new QAction(GameWindow);
         actionEnd->setObjectName(QString::fromUtf8("actionEnd"));
+        actionNowa_gra = new QAction(GameWindow);
+        actionNowa_gra->setObjectName(QString::fromUtf8("actionNowa_gra"));
+        actionTotalNewGame = new QAction(GameWindow);
+        actionTotalNewGame->setObjectName(QString::fromUtf8("actionTotalNewGame"));
         centralWidget = new QWidget(GameWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
@@ -233,24 +237,13 @@ public:
         menuBar->setGeometry(QRect(0, 0, 609, 23));
         menuGame = new QMenu(menuBar);
         menuGame->setObjectName(QString::fromUtf8("menuGame"));
-        menuOponent = new QMenu(menuBar);
-        menuOponent->setObjectName(QString::fromUtf8("menuOponent"));
-        menuNewOponent = new QMenu(menuOponent);
-        menuNewOponent->setObjectName(QString::fromUtf8("menuNewOponent"));
         GameWindow->setMenuBar(menuBar);
 
         menuBar->addAction(menuGame->menuAction());
-        menuBar->addAction(menuOponent->menuAction());
+        menuGame->addAction(actionTotalNewGame);
         menuGame->addAction(actionNewGame);
         menuGame->addSeparator();
         menuGame->addAction(actionEnd);
-        menuOponent->addAction(menuNewOponent->menuAction());
-        menuOponent->addAction(actionSave);
-        menuOponent->addAction(actionLoad);
-        menuOponent->addSeparator();
-        menuNewOponent->addAction(actionBeginner);
-        menuNewOponent->addAction(actionIntermediate);
-        menuNewOponent->addAction(actionAdvanced);
 
         retranslateUi(GameWindow);
         QObject::connect(exitButton, SIGNAL(clicked()), GameWindow, SLOT(close()));
@@ -294,6 +287,8 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionEnd->setToolTip(QApplication::translate("GameWindow", "Za&ko\305\204cz", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
+        actionNowa_gra->setText(QApplication::translate("GameWindow", "Nowa gra", 0, QApplication::UnicodeUTF8));
+        actionTotalNewGame->setText(QApplication::translate("GameWindow", "Nowa gra", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("GameWindow", "Ty:", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("GameWindow", "Jeste\305\233:", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("GameWindow", "Komputer:", 0, QApplication::UnicodeUTF8));
@@ -304,8 +299,6 @@ public:
         exitButton->setText(QApplication::translate("GameWindow", "Koniec", 0, QApplication::UnicodeUTF8));
         newGameButton->setText(QApplication::translate("GameWindow", "Nowe rozdanie", 0, QApplication::UnicodeUTF8));
         menuGame->setTitle(QApplication::translate("GameWindow", "Gra", 0, QApplication::UnicodeUTF8));
-        menuOponent->setTitle(QApplication::translate("GameWindow", "Przeciwnik", 0, QApplication::UnicodeUTF8));
-        menuNewOponent->setTitle(QApplication::translate("GameWindow", "Nowy", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
