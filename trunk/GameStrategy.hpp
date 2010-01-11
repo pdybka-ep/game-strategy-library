@@ -126,18 +126,21 @@ namespace library {
             return this->gameState_.getGame();
         }
 
-		/**
-         * Returns current game state
-         * @return current game state
+        /**
+         * Returns currently available moves
+         * @return currently available moves
+         * @throw GameNotStartedException thrown if game hasn't been started
          */
-        GameState & getCurrentGameState() {
-			GameState & ref = gameState_;
-            return ref;
+        std::list<boost::shared_ptr<Move> > getAvailableMoves() const throw (GameNotStartedException){
+            if(gameState_.getCurrentNode().get() == 0)
+                throw GameNotStartedException();
+            return gameState_.getCurrentNode()->getAvailableMoves();
         }
 
     private:
         /* private helper methods */
-        bool updateNodeValue(boost::shared_ptr<Node>& node, bool maximizingNode);
+        bool updateNodeValue(boost::shared_ptr<Node> node, bool maximizingNode);
+        void updateDownTheTree(boost::shared_ptr<Node> node, int value);
 
     private:
         /**

@@ -161,6 +161,8 @@ BOOST_AUTO_TEST_CASE( game_strategy_test_game1 ){
     BOOST_CHECK( n5->getValue() == 1 );
     BOOST_CHECK( n7->getValue() == 0 );
     BOOST_CHECK( n8->getValue() == 0 );
+
+    BOOST_CHECK( game->getNumberOfVisitedLeafs() == 1 );
 }
 
 
@@ -183,6 +185,8 @@ BOOST_AUTO_TEST_CASE( game_strategy_test_game2 ){
     BOOST_CHECK( n5->getValue() ==  1 );
     BOOST_CHECK( n7->getValue() ==  0 );
     BOOST_CHECK( n8->getValue() ==  0 );
+
+    BOOST_CHECK( game->getNumberOfVisitedLeafs() == 2 );
 }
 
 
@@ -211,6 +215,8 @@ BOOST_AUTO_TEST_CASE( game_strategy_test_game3 ){
     BOOST_CHECK( n5->getValue() ==  1 );
     BOOST_CHECK( n7->getValue() == -1 );
     BOOST_CHECK( n8->getValue() ==  0 );
+
+    BOOST_CHECK( game->getNumberOfVisitedLeafs() == 3 );
 }
 
 
@@ -243,6 +249,36 @@ BOOST_AUTO_TEST_CASE( game_strategy_test_game4 ){
     BOOST_CHECK( n5->getValue() ==  1 );
     BOOST_CHECK( n7->getValue() == -1 );
     BOOST_CHECK( n8->getValue() ==  1 );
+
+    BOOST_CHECK( game->getNumberOfVisitedLeafs() == 4 );
+}
+
+
+BOOST_AUTO_TEST_CASE( game_strategy_test_game5 ){
+    // play first two games as above
+    gameStrategy.startGame(game, p1, p2);
+    gameStrategy.move(m12);
+    gameStrategy.move(m25);
+    gameStrategy.endOfGame(p1);
+    gameStrategy.startGame();
+    gameStrategy.move(m12);
+    gameStrategy.move(m24);
+    gameStrategy.endOfGame(p2);
+
+    // play third game
+    gameStrategy.startGame();
+    gameStrategy.move(m13);
+    gameStrategy.endOfGame(p1);
+    // game finished before any leaf reached - check update down the tree
+    BOOST_CHECK( n1->getValue() ==  1 );
+    BOOST_CHECK( n2->getValue() == -1 );
+    BOOST_CHECK( n3->getValue() ==  1 );
+    BOOST_CHECK( n4->getValue() == -1 );
+    BOOST_CHECK( n5->getValue() ==  1 );
+    BOOST_CHECK( n7->getValue() ==  1 );
+    BOOST_CHECK( n8->getValue() ==  1 );
+
+    BOOST_CHECK( game->getNumberOfVisitedLeafs() == 4 );
 }
 
 
