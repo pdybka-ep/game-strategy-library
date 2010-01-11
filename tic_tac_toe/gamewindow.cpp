@@ -7,7 +7,6 @@
 #include <QBrush>
 #include <QGraphicsScene>
 #include <QFileDialog>
-#include <QMessageBox>
 
 #include <boost/shared_ptr.hpp>
 
@@ -20,9 +19,7 @@
 
 /* A constructor of GameWindow - the main window of a game. */
 GameWindow::GameWindow(QWidget *parent): QMainWindow(parent), ui_(new Ui::GameWindow){
-
     ui_->setupUi(this);
-	
 }
 
 /* A destructor. */
@@ -31,7 +28,6 @@ GameWindow::~GameWindow(){
 }
 
 void GameWindow::setGraphicsScene(boost::shared_ptr<QGraphicsScene> graphScene){
-	//Ui::GameWindow * ui = static_cast<Ui::GameWindow *> ( ui_.get() );
 	ui_->graphicsView->setScene(graphScene.get());
 	scene_ = graphScene;
 }
@@ -57,11 +53,21 @@ void GameWindow::endGame(TicTacToePlayer::PlayerType winner){
 void GameWindow::wait(){
 	ui_->exitButton->setEnabled(false);
 	ui_->actionEnd->setEnabled(false);
+	ui_->newGameButton->setEnabled(false);
+	ui_->actionNewGame->setEnabled(false);
+	ui_->actionTotalNewGame->setEnabled(false);
+	ui_->actionLoad->setEnabled(false);
+	ui_->actionSave->setEnabled(false);
 }
 
 void GameWindow::stopWaiting(){
 	ui_->exitButton->setEnabled(true);
 	ui_->actionEnd->setEnabled(true);
+	ui_->newGameButton->setEnabled(true);
+	ui_->actionNewGame->setEnabled(true);
+	ui_->actionTotalNewGame->setEnabled(true);
+	ui_->actionLoad->setEnabled(true);
+	ui_->actionSave->setEnabled(true);
 }
 
 /* Sets all the parametres before game is started. */
@@ -75,7 +81,7 @@ void GameWindow::okClickedSlot
 	// set oponent's level and player's sign on the window
 	ui_->playerSignLabel->setText(humanPlayerSign == TicTacToePlayer::CIRCLE ? " KÓ£KO " : " KRZY¯YK ");
 
-	QString level = (computerPlayerLevel == TicTacToePlayer::BEGINNER) ? " Pocz¹tkuj¹cy" : ( (computerPlayerLevel == TicTacToePlayer::ADVANCED) ? " Zaawansowany " : "Œredni");
+	QString level = (computerPlayerLevel == TicTacToePlayer::BEGINNER) ? " Poczatkujacy" : ( (computerPlayerLevel == TicTacToePlayer::ADVANCED) ? " Zaawansowany " : "Œredni");
 	ui_->oponentLevelLabel->setText(level);
 
 	ui_->playerPointsLcd->display(0);
@@ -119,9 +125,5 @@ void GameWindow::on_actionLoad_triggered(){
 
 /* Closes the game */
 void GameWindow::on_actionEnd_triggered(){
-	QMessageBox msgBox;
-	msgBox.setText("Papa :)");
-	msgBox.exec();
-
     QCoreApplication::quit();
 }

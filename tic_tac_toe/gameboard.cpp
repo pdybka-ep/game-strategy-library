@@ -13,12 +13,11 @@
 #include "TicTacToePlayer.hpp"
 
 
-GameBoard::GameBoard(QObject * parent): QObject(parent), BaseGameBoard(){
+GameBoard::GameBoard(QObject * parent): QObject(parent), BaseGameBoard(), initialized_(false){
 	winnerImage_.load(":/res/win.png");
 	loserImage_.load(":/res/lose.png");
 	remisImage_.load(":/res/remis.png");
 	waitImage_.load(":res/make.png");
-
 
 }
 
@@ -34,15 +33,13 @@ void GameBoard::setGraphicsScene(boost::shared_ptr<QGraphicsScene> scene){
     scene_->setBackgroundBrush(QBrush(Qt::black));
 }
 
-/* Method is called to start a new game. It clears current scene and creates new fields on it. */
-void GameBoard::startFirstGame(){
+void GameBoard::init(){
 
-    // create new fields
-    /*
-	field_ = new Field * [MAX_IN_A_ROW];
-    for(int i = 0; i < MAX_IN_A_ROW; ++i)
-       field_[i] = new Field[MAX_IN_A_ROW];
-    */
+	if(initialized_){
+		clear();
+		return;
+	}
+
 	for(int i = 0; i < MAX_IN_A_ROW; ++i)
 		for(int j = 0; j < MAX_IN_A_ROW; ++j)
 			field_(i,j) = new Field;
@@ -85,9 +82,16 @@ void GameBoard::startFirstGame(){
         startPoint.setY(startPoint.y()+oneFieldSize);
     }
 
+	initialized_ = true;
+
 }
 
+
 void GameBoard::startNewGame(){
+	clear();
+}
+
+void GameBoard::clear(){
 	boardState_ = GAME_DURING_PLAY;
 	for(int i = 0; i < MAX_IN_A_ROW; ++i)
 		for(int j = 0; j < MAX_IN_A_ROW; ++j)
@@ -117,10 +121,12 @@ void GameBoard::addFinishElementsToScene(const QPixmap & pixmap){
 
 void GameBoard::wait(){
 	pixItem_ = scene_->addPixmap(waitImage_);
+	boardState_ = GAME_NOT_STARTED;
 }
 
 void GameBoard::stopWaiting(){
 	scene_->removeItem(pixItem_);
+	boardState_ = GAME_DURING_PLAY;
 }
 
 
@@ -133,35 +139,3 @@ void GameBoard::fieldWasClickedSlot(){
 			playerMadeAmoveSignal(field->getCoordinates());
 	}
 }
-
-
-
-/*
-GameBoard::GameBoardState GameBoard::makeAmove(std::pair<int,int> coordinates, TicTacToePlayer::PlayerSign sign){
-
-	Field::FieldState state = (sign == TicTacToePlayer::CIRCLE ? Field::CIRCLE : Field::CROSS);
-	field_[coordinates.first][coordinates.second].setFieldState(state);
-
-	int emptyCounter = 0;
-
-	for(int i = 0; i < MAX_IN_A_ROW; ++i){
-		if(field_[0][i] == field_[1][i] && field_[1][i] == field_[2][i])
-			return GAME_FINISH_WINNER;
-		else if(field_[i][0] == field_[i][1] && field_[i][1] == field_[i][2])
-			return GAME_FINISH_WINNER;
-
-		for(int j = 0; j < MAX_IN_A_ROW; ++j)
-			if(field_[i][j].isEmpty())
-				++emptyCounter;
-	}
-
-	if(emptyCounter == 0)
-		return GAME_FINISH_REMIS;
-
-	if((field_[0][0] == field_[1][1] && field_[1][1] == field_[2][2]) ||
-		(field_[0][2] == field_[1][1] && field_[1][1] == field_[2][0]))
-		return GAME_FINISH_WINNER;
-
-	return GAME_DURING_PLAY;
-}
-*/

@@ -21,7 +21,9 @@ public:
 	virtual ~BaseGameBoard();
 
 	virtual void startNewGame();
-	virtual void startFirstGame();
+	virtual void init();
+	
+	//virtual void startFirstGame();
 
 	virtual void endGame();
 	virtual void endGame(TicTacToePlayer::PlayerType );

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gamewindow.ui'
 **
-** Created: Mon 11. Jan 22:48:17 2010
+** Created: Tue 12. Jan 00:42:12 2010
 **      by: Qt User Interface Compiler version 4.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -42,6 +42,8 @@ public:
     QAction *actionEnd;
     QAction *actionNowa_gra;
     QAction *actionTotalNewGame;
+    QAction *actionLoad_2;
+    QAction *actionSave_2;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QGridLayout *gridLayout;
@@ -102,6 +104,10 @@ public:
         actionNowa_gra->setObjectName(QString::fromUtf8("actionNowa_gra"));
         actionTotalNewGame = new QAction(GameWindow);
         actionTotalNewGame->setObjectName(QString::fromUtf8("actionTotalNewGame"));
+        actionLoad_2 = new QAction(GameWindow);
+        actionLoad_2->setObjectName(QString::fromUtf8("actionLoad_2"));
+        actionSave_2 = new QAction(GameWindow);
+        actionSave_2->setObjectName(QString::fromUtf8("actionSave_2"));
         centralWidget = new QWidget(GameWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
@@ -240,8 +246,11 @@ public:
         GameWindow->setMenuBar(menuBar);
 
         menuBar->addAction(menuGame->menuAction());
-        menuGame->addAction(actionTotalNewGame);
         menuGame->addAction(actionNewGame);
+        menuGame->addSeparator();
+        menuGame->addAction(actionTotalNewGame);
+        menuGame->addAction(actionSave_2);
+        menuGame->addAction(actionLoad_2);
         menuGame->addSeparator();
         menuGame->addAction(actionEnd);
 
@@ -289,6 +298,8 @@ public:
 #endif // QT_NO_TOOLTIP
         actionNowa_gra->setText(QApplication::translate("GameWindow", "Nowa gra", 0, QApplication::UnicodeUTF8));
         actionTotalNewGame->setText(QApplication::translate("GameWindow", "Nowa gra", 0, QApplication::UnicodeUTF8));
+        actionLoad_2->setText(QApplication::translate("GameWindow", "Wczytaj gr\304\231", 0, QApplication::UnicodeUTF8));
+        actionSave_2->setText(QApplication::translate("GameWindow", "Zapisz gr\304\231", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("GameWindow", "Ty:", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("GameWindow", "Jeste\305\233:", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("GameWindow", "Komputer:", 0, QApplication::UnicodeUTF8));

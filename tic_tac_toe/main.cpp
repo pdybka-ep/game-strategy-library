@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO8859-2"));
+	QTextCodec::setCodecForCStrings( QTextCodec::codecForName("ISO8859-2") ); 
 
 	GameWindow window;
 

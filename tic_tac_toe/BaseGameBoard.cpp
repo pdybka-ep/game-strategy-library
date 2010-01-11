@@ -4,10 +4,8 @@ using boost::numeric::ublas::matrix;
 
 BaseGameBoard::BaseGameBoard(): boardState_(GAME_DURING_PLAY), field_(3,3){
 	for(int i = 0; i < MAX_IN_A_ROW; ++i)
-		for(int j = 0; j < MAX_IN_A_ROW; ++j){
-			field_(i,j) = new BaseField;
-			field_(i,j)->setCoordinates(std::make_pair<int,int>(i,j) );
-		}
+		for(int j = 0; j < MAX_IN_A_ROW; ++j)
+			field_(i,j) = NULL;
 }
 
 BaseGameBoard::~BaseGameBoard(){
@@ -18,6 +16,15 @@ BaseGameBoard::~BaseGameBoard(){
 	}
 }
 
+void BaseGameBoard::init(){
+	for(int i = 0; i < MAX_IN_A_ROW; ++i)
+		for(int j = 0; j < MAX_IN_A_ROW; ++j){
+			field_(i,j) = new BaseField;
+			field_(i,j)->setCoordinates(std::make_pair<int,int>(i,j) );
+		}
+}
+
+
 void BaseGameBoard::startNewGame(){
 	boardState_ = GAME_DURING_PLAY;
 	for(int i = 0; i < MAX_IN_A_ROW; ++i)
@@ -25,11 +32,11 @@ void BaseGameBoard::startNewGame(){
 			field_(i,j)->setFieldState(BaseField::EMPTY);
 	
 }
-
+/*
 void BaseGameBoard::startFirstGame(){
 	startNewGame();
 }
-
+*/
 void BaseGameBoard::endGame(){
 	boardState_ = GAME_FINISH_REMIS;
 }

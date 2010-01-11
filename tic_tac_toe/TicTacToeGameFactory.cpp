@@ -46,8 +46,6 @@ boost::shared_ptr<Game> TicTacToeGameFactory::create(){
 
 	game->setGameId(TIC_TAC_TOE_NAME);
 
-	// create game tree
-
 	// create root node
 	boost::shared_ptr<Node> root = createRootNode();
 
@@ -55,6 +53,7 @@ boost::shared_ptr<Game> TicTacToeGameFactory::create(){
 	std::stack< boost::shared_ptr<Node> > nodesStack;
 	nodesStack.push(root);
 
+	int leafs = 0;
 	while(!nodesStack.empty()){
 		// take one node from the stock
 		boost::shared_ptr<Node> currentNode = nodesStack.top();
@@ -66,6 +65,10 @@ boost::shared_ptr<Game> TicTacToeGameFactory::create(){
 
 		// get all available moves
 		std::list<boost::shared_ptr<Move> > currentNodeMovesList = currentNode->getAvailableMoves();
+		if(currentNodeMovesList.size() == 0){
+			++leafs;
+			continue;
+		}
 		
 		// for all available moves get destination nodes and add them to the stock
 		std::list<boost::shared_ptr<Move> >::const_iterator it = currentNodeMovesList.begin();
@@ -74,7 +77,7 @@ boost::shared_ptr<Game> TicTacToeGameFactory::create(){
 			++it;
 		}
 	}
-	game->setTotalNumberOfLeafs(nodeId);
+	game->setTotalNumberOfLeafs(leafs);
 
 	moveId = 0;
 	nodeId = 0;
@@ -116,6 +119,7 @@ void TicTacToeGameFactory::addAllAvailableMoves(boost::shared_ptr<Node> node){
 		tttnode->addAvailableMove(nextMove);
 		++it;
 	}
+	tttnode->clearNextCoordinatesList();
 }
 
 boost::shared_ptr<Move> TicTacToeGameFactory::createNewMove

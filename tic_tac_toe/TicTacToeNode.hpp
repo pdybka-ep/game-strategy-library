@@ -46,6 +46,10 @@ public:
 		nextCoordinates_ = nextCoordinates;
 	}
 
+	void clearNextCoordinatesList(){
+		nextCoordinates_.clear();
+	}
+
 private:
 	// used just for building the game tree
 	std::list<std::pair<int,int> > nextCoordinates_;

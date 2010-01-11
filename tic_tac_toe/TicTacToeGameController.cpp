@@ -50,10 +50,9 @@ void TicTacToeGameController::initialize(){
 	gameWindow_.setGraphicsScene(graphScene);
 	gameBoard_.setGraphicsScene(graphScene);
 
-	TicTacToeGameFactory * factory = new TicTacToeGameFactory;
-	//factory_ = boost::shared_ptr<TicTacToeGameFactory>(factory);
+	//gameBoard_.init();
 
-	//boost::shared_ptr<AbstractGameFactory> 
+	TicTacToeGameFactory * factory = new TicTacToeGameFactory;
 	factory_ = boost::shared_ptr<AbstractGameFactory>( static_cast<AbstractGameFactory *>(factory) );
 	gameStrategy_.initialize(factory_);
 
@@ -107,28 +106,10 @@ void TicTacToeGameController::createNewGameSlot(){
 }
 
 
-void TicTacToeGameController::gameOponentCreatedSlot(){
-	boost::shared_ptr<Game> game = watcher_.result();
-
-	// check computer player level and teach him if it's necessary
-	if(computerPlayerLevel_ != TicTacToePlayer::BEGINNER){
-		trainComputerPlayer(game);
-	}
-
-	gameStrategy_.startGame(game, playerHuman_, playerComp_);
-	gameBoard_.startFirstGame();
-
-	gameBoard_.stopWaiting();
-	gameWindow_.stopWaiting();
-
-	// make first move
-	if(playerComp_->isStartingPlayer()){
-		makeComputerMove();
-	}
-}
-
 void TicTacToeGameController::createFirstGameNewPlayerSlot
 (TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel){
+
+	gameBoard_.init();
 
 	computerPlayerLevel_ = computerPlayerLevel;
 
@@ -156,10 +137,36 @@ void TicTacToeGameController::createFirstGameNewPlayerSlot
 	playerComp_ = boost::shared_ptr<Player>(playerC);
 }
 
+
+void TicTacToeGameController::gameOponentCreatedSlot(){
+	boost::shared_ptr<Game> game = watcher_.result();
+
+	// check computer player level and teach him if it's necessary
+	if(computerPlayerLevel_ != TicTacToePlayer::BEGINNER){
+		trainComputerPlayer(game);
+	}
+
+	gameStrategy_.startGame(game, playerHuman_, playerComp_);
+	gameBoard_.startNewGame();
+
+	gameBoard_.stopWaiting();
+	gameWindow_.stopWaiting();
+
+	// make first move
+	if(playerComp_->isStartingPlayer()){
+		makeComputerMove();
+	}
+}
+
+
+
 void TicTacToeGameController::createFirstGameLoadPlayerSlot
 (TicTacToePlayer::PlayerSign humanPlayerSign, std::string & computerPlayerFilename){
 
+	gameBoard_.init();
+
 }
+
 
 void TicTacToeGameController::playerMadeAmoveSlot(std::pair<int,int> move){
 	
@@ -181,7 +188,6 @@ void TicTacToeGameController::playerMadeAmoveSlot(std::pair<int,int> move){
 }
 
 /**************** PRIVATE METHODS *******************/
-
 void TicTacToeGameController::makeComputerMove(){
 
 	boost::shared_ptr<Move> move = gameStrategy_.findBestMove();
@@ -230,13 +236,16 @@ void TicTacToeGameController::trainComputerPlayer(boost::shared_ptr<Game> game){
 	boost::shared_ptr<Player> player2ptr = boost::shared_ptr<Player>(dummyPlayer2);
 
 	BaseGameBoard board;
-
-	board.startFirstGame();
+	board.init();
+	
+	board.startNewGame();
 	gameStrategy_.startGame(game, player1ptr, player2ptr);
 
 	TicTacToeMove * tttmove;
 
-	while(game->getNumberOfVisitedLeafs() < 300000){
+	int max = (computerPlayerLevel_ == TicTacToePlayer::INTERMEDIATE) ? NODES_MEDIUM : NODES_ADVANCED;
+
+	while(true){
 
 		// player1 move
 		boost::shared_ptr<Move> move = getRandMove();
@@ -252,6 +261,17 @@ void TicTacToeGameController::trainComputerPlayer(boost::shared_ptr<Game> game){
 			tttmove = static_cast<TicTacToeMove *> (move.get());
 
 			// if game is finished start a new one or break
+			if(!checkEndGame(tttmove->getCoordinates(), player2ptr, board, false))
+				continue;
+			
+				// game finished, start a new game
+			if(game->getNumberOfVisitedLeafs() >= max)
+				break;
+			board.startNewGame();
+			gameStrategy_.startGame();
+		}
+	}
+			/*
 			if(checkEndGame(tttmove->getCoordinates(), player2ptr, board, false)){
 				// game finished, start a new game
 				if(game->getNumberOfVisitedLeafs() >= 300000)
@@ -264,9 +284,7 @@ void TicTacToeGameController::trainComputerPlayer(boost::shared_ptr<Game> game){
 				break;
 			board.startNewGame();
 			gameStrategy_.startGame();
-		}
-			
-	}
+		}*/
 }
 
 boost::shared_ptr<library::Move> TicTacToeGameController::getRandMove(){

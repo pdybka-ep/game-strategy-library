@@ -48,7 +48,9 @@ public:
 	/**
       Method is called to start a new game. It clears current scene and creates new fields on it.
     */
-    void startFirstGame();
+    //void startFirstGame();
+
+	void init();
 
     /**
       Method called when a game is finished to stop the game, actualize game tree and show the winner.
@@ -103,6 +105,7 @@ private:
 	QPixmap waitImage_;
 	QGraphicsPixmapItem * pixItem_;
 
+	bool initialized_;
 
 };
 

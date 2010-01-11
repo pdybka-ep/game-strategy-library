@@ -303,8 +303,11 @@
     <property name="title">
      <string>Gra</string>
     </property>
-    <addaction name="actionTotalNewGame"/>
     <addaction name="actionNewGame"/>
+    <addaction name="separator"/>
+    <addaction name="actionTotalNewGame"/>
+    <addaction name="actionSave_2"/>
+    <addaction name="actionLoad_2"/>
     <addaction name="separator"/>
     <addaction name="actionEnd"/>
    </widget>
@@ -397,6 +400,16 @@
   <action name="actionTotalNewGame">
    <property name="text">
     <string>Nowa gra</string>
+   </property>
+  </action>
+  <action name="actionLoad_2">
+   <property name="text">
+    <string>Wczytaj grę</string>
+   </property>
+  </action>
+  <action name="actionSave_2">
+   <property name="text">
+    <string>Zapisz grę</string>
    </property>
   </action>
  </widget>

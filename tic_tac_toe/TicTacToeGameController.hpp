@@ -90,6 +90,9 @@ private:
 
 	TicTacToePlayer::PlayerLevel computerPlayerLevel_;
 
+	static const int NODES_MEDIUM = 100000;
+	static const int NODES_ADVANCED = 300000;
+
 	//boost::variate_generator<boost::mt19937&, boost::uniform_int<int> >  random;
 };
 

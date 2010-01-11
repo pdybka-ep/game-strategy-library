@@ -9,11 +9,14 @@ SOURCES += main.cpp \
     gamewindow.cpp \
     field.cpp \
     gameboard.cpp \
-    optionsdialog.cpp
+    optionsdialog.cpp \
+    SignDialog.cpp
 HEADERS += gamewindow.hpp \
     optionsdialog.hpp \
     gameboard.hpp \
-    field.hpp
+    field.hpp \
+    SignDialog.hpp
 FORMS += gamewindow.ui \
-    optionsdialog.ui
+    optionsdialog.ui \
+    signdialog.ui
 RESOURCES += res.qrc
