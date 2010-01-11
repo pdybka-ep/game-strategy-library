@@ -74,7 +74,7 @@ namespace library {
 
     boost::shared_ptr<Move> GameStrategy::findBestMove() throw(GameNotStartedException, NoMoveAvailableException){
         boost::shared_ptr<Node> currentNode = gameState_.getCurrentNode();
-        if(currentNode == 0){
+        if(currentNode.get() == 0){
             throw GameNotStartedException();
         }
 
@@ -101,7 +101,7 @@ namespace library {
 
     void GameStrategy::move(const boost::shared_ptr<Move>& move) throw(GameNotStartedException, InvalidMoveException){
         boost::shared_ptr<Node> currentNode = gameState_.getCurrentNode();
-        if(currentNode == 0){
+        if(currentNode.get() == 0){
             std::cout << "throwing GameNotStartedException" << std::endl;
             throw GameNotStartedException();
         }
@@ -128,7 +128,7 @@ namespace library {
 
     void GameStrategy::endOfGame(const boost::shared_ptr<Player> & winner) throw(GameNotStartedException){
         boost::shared_ptr<Node> currentNode = gameState_.getCurrentNode();
-        if(currentNode == 0){
+        if(currentNode.get() == 0){
             std::cout << "throwing GameNotStartedException" << std::endl;
             throw GameNotStartedException();
         }
@@ -174,7 +174,7 @@ namespace library {
 
     void GameStrategy::endOfGame() throw(GameNotStartedException){
         boost::shared_ptr<Node> currentNode = gameState_.getCurrentNode();
-        if(currentNode == 0){
+        if(currentNode.get() == 0){
             std::cout << "throwing GameNotStartedException" << std::endl;
             throw GameNotStartedException();
         }
