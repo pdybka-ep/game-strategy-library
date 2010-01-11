@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gamewindow.ui'
 **
-** Created: Sun 10. Jan 13:40:40 2010
+** Created: Mon 11. Jan 02:41:26 2010
 **      by: Qt User Interface Compiler version 4.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!

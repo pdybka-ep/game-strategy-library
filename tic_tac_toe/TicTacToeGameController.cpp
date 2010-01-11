@@ -11,10 +11,13 @@
 
 #include "..\game-strategy-library\AbstractGameFactory.hpp"
 #include "..\game-strategy-library\Node.hpp"
+#include "..\game-strategy-library\Player.hpp"
+#include "..\game-strategy-library\Game.hpp"
 
 #include "TicTacToeGameController.hpp"
 #include "TicTacToeGameFactory.hpp"
 #include "GameWindow.hpp"
+#include "BaseGameBoard.hpp"
 
 
 using namespace library;
@@ -22,7 +25,7 @@ using namespace QtConcurrent;
 
 
 TicTacToeGameController::TicTacToeGameController(GameWindow& gameWindow): 
-QObject(NULL), gameWindow_(gameWindow){
+QObject(NULL), gameWindow_(gameWindow), computerPlayerLevel_(TicTacToePlayer::BEGINNER){
 	
 }
 
@@ -101,6 +104,11 @@ void TicTacToeGameController::createNewGameSlot(){
 void TicTacToeGameController::gameOponentCreatedSlot(){
 	boost::shared_ptr<Game> game = watcher_.result();
 
+	// check computer player level and teach him if it's necessary
+	if(computerPlayerLevel_ != TicTacToePlayer::BEGINNER){
+		trainComputerPlayer(game);
+	}
+
 	gameStrategy_.startGame(game, playerHuman_, playerComp_);
 	gameBoard_.stopWaiting();
 	gameBoard_.startFirstGame();
@@ -113,6 +121,8 @@ void TicTacToeGameController::gameOponentCreatedSlot(){
 
 void TicTacToeGameController::createFirstGameNewPlayerSlot
 (TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel){
+
+	computerPlayerLevel_ = computerPlayerLevel;
 
 	TicTacToeGameFactory * tttFactory = static_cast<TicTacToeGameFactory *>( factory_.get() );
 	QFuture<boost::shared_ptr<Game> > f = run(boost::bind(&TicTacToeGameFactory::create, tttFactory));
@@ -155,7 +165,7 @@ void TicTacToeGameController::playerMadeAmoveSlot(std::pair<int,int> move){
         ++it;
     }
 
-	if(!checkEndGame(move, playerHuman_)){
+	if(!checkEndGame(move, playerHuman_, gameBoard_)){
 		makeComputerMove();
 	}
 }
@@ -168,28 +178,83 @@ void TicTacToeGameController::makeComputerMove(){
 	gameStrategy_.move(move);
 
 	TicTacToeMove * tttmove = static_cast<TicTacToeMove *> (move.get());
-	checkEndGame(tttmove->getCoordinates(), playerComp_);
+	checkEndGame(tttmove->getCoordinates(), playerComp_, gameBoard_);
 }
 
 // return true if finished
-bool TicTacToeGameController::checkEndGame(std::pair<int,int> coordinates, boost::shared_ptr<Player> player){
+bool TicTacToeGameController::checkEndGame
+(std::pair<int,int> coordinates, boost::shared_ptr<Player> player, BaseGameBoard & board, bool notifyWindow){
 	
 	TicTacToePlayer * tttplayer = static_cast<TicTacToePlayer *> (player.get());
-	GameBoard::GameBoardState gameState = gameBoard_.makeAmove(coordinates, tttplayer->getPlayerSign());
+	//GameBoard::GameBoardState gameState = gameBoard_.makeAmove(coordinates, tttplayer->getPlayerSign());
+	GameBoard::GameBoardState gameState = board.makeAmove(coordinates, tttplayer->getPlayerSign());
 
 	if(gameState == GameBoard::GAME_DURING_PLAY)
 		return false;
 	
 	if(gameState == GameBoard::GAME_FINISH_REMIS){
 		gameStrategy_.endOfGame();
-		gameBoard_.endGame();
-		gameWindow_.endGame();
+		//gameBoard_.endGame();
+		board.endGame();
+		if(notifyWindow)	
+			gameWindow_.endGame();
 	}
 	else{
 		gameStrategy_.endOfGame(player);
-		gameBoard_.endGame(tttplayer->getPlayerType());
-		gameWindow_.endGame(tttplayer->getPlayerType());
+		//gameBoard_.endGame(tttplayer->getPlayerType());
+		board.endGame(tttplayer->getPlayerType());
+		if(notifyWindow)
+			gameWindow_.endGame(tttplayer->getPlayerType());
 	}
 
 	return true;
+}
+
+void TicTacToeGameController::trainComputerPlayer(boost::shared_ptr<Game> game){
+
+	TicTacToePlayer * dummyPlayer1 = new TicTacToePlayer;
+	dummyPlayer1->setName("1");
+	dummyPlayer1->setPlayerSign(TicTacToePlayer::CIRCLE);
+	boost::shared_ptr<Player> player1ptr = boost::shared_ptr<Player>(dummyPlayer1);
+
+	TicTacToePlayer * dummyPlayer2 = new TicTacToePlayer;
+	dummyPlayer2->setName("2");
+	dummyPlayer2->setPlayerSign(TicTacToePlayer::CROSS);
+	boost::shared_ptr<Player> player2ptr = boost::shared_ptr<Player>(dummyPlayer2);
+
+	BaseGameBoard board;
+
+	board.startFirstGame();
+	gameStrategy_.startGame(game, player1ptr, player2ptr);
+
+	boost::shared_ptr<Move> move;
+	TicTacToeMove * tttmove;
+
+	while(game->getNumberOfVisitedLeafs() < 2000){
+
+		// player1 move
+		move = gameStrategy_.findBestMove();
+		gameStrategy_.move(move);
+		tttmove = static_cast<TicTacToeMove *> (move.get());
+		
+		// check if player1 won
+		if(!checkEndGame(tttmove->getCoordinates(), player1ptr, board, false)){
+			
+			// if not player2 makes a move
+			move = gameStrategy_.findBestMove();
+			gameStrategy_.move(move);
+			tttmove = static_cast<TicTacToeMove *> (move.get());
+
+			// if game is finished start a new one or break
+			if(checkEndGame(tttmove->getCoordinates(), player2ptr, board, false)){
+				// game finished, start a new game
+				if(game->getNumberOfVisitedLeafs() >= 2000)
+					break;
+				board.startNewGame();
+				gameStrategy_.startGame();
+			}
+		}
+			
+	}
+
 }

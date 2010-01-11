@@ -11,11 +11,6 @@
 
 #include "BaseField.hpp"
 
-/*
-class Field;
-bool operator== (const Field&, const Field&);
-bool operator!= (const Field&, const Field&);
-*/
 
 /**
     @class Field Class

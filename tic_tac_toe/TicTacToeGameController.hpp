@@ -19,6 +19,7 @@
 #include "TicTacToePlayer.hpp"
 #include "GameBoard.hpp"
 #include "TicTacToeMove.hpp"
+#include "BaseGameBoard.hpp"
 
 
 /**
@@ -63,8 +64,10 @@ public slots:
 
 private:
 	void makeComputerMove();
-	bool checkEndGame(std::pair<int,int> coordinates, boost::shared_ptr<library::Player> player);
+	bool checkEndGame
+		(std::pair<int,int> coordinates, boost::shared_ptr<library::Player> player, BaseGameBoard & board, bool notifyWindow = true);
 
+	void trainComputerPlayer(boost::shared_ptr<library::Game> game);
 	
 	// model
 	library::GameStrategy gameStrategy_;
@@ -80,6 +83,8 @@ private:
 	boost::shared_ptr<library::Player> playerComp_;
 
 	QFutureWatcher<boost::shared_ptr<library::Game> > watcher_;
+
+	TicTacToePlayer::PlayerLevel computerPlayerLevel_;
 };
 
 
