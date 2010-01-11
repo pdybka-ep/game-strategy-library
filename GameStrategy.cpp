@@ -138,15 +138,28 @@ namespace library {
             throw InvalidPlayerException();
         }
         else if(*(gameState_.getPlayers().front()) == *winner){
-            gameState_.getCurrentNode()->setValue(1);
+            currentNode->setValue(1);
         }
         else if (*(gameState_.getPlayers().back()) == *winner) {
-            gameState_.getCurrentNode()->setValue(-1);
+            currentNode->setValue(-1);
+        }
+
+
+        if(!(currentNode->isLeaf())){
+            /* generally shouldn't happen, but just in case of lazy programmer... */
+            updateDownTheTree(currentNode, currentNode->getValue());
+        }
+        else {
+            // update counter
+            if(!currentNode->isVisited()){
+                currentNode->setVisited(true);
+                gameState_.getGame()->incNumberOfVisitedLeafs();
+            }
         }
 
         // update values up the tree
         std::list<boost::shared_ptr<Node> > gamePath = gameState_.getGamePath();
-        // get back one level in tree (don't have to update the leaf)
+        // get back one level in tree (don't have to update the leaf/current node)
         gamePath.pop_back();
         gameState_.setNextPlayerIndex((gameState_.getNextPlayerIndex()+1)%2);
         if(gamePath.size() != 0){
@@ -161,12 +174,6 @@ namespace library {
             } while (nodeChanged && !gamePath.empty());
         }
 
-        // update counter
-        if(gameState_.getCurrentNode()->isVisited() == false){
-            gameState_.getGame()->incNumberOfVisitedLeafs();
-            gameState_.getCurrentNode()->setVisited(true);
-        }
-
         // set not started (finished) game
         boost::shared_ptr<Node> empty;
         gameState_.setCurrentNode(empty);
@@ -179,12 +186,16 @@ namespace library {
             throw GameNotStartedException();
         }
 
-        // setting value and updating tree are unnecessary here - nothing changes
-
-        // update counter
-        if(gameState_.getCurrentNode()->isVisited() == false){
-            gameState_.getGame()->incNumberOfVisitedLeafs();
-            gameState_.getCurrentNode()->setVisited(true);
+        if(!currentNode->isLeaf()){
+            /* generally shouldn't happen, but just in case of lazy programmer... */
+            updateDownTheTree(currentNode, currentNode->getValue());
+        }
+        else {
+            // update counter
+            if(!currentNode->isVisited()){
+                currentNode->setVisited(true);
+                gameState_.getGame()->incNumberOfVisitedLeafs();
+            }
         }
 
         // set not started (finished) game
@@ -227,7 +238,7 @@ namespace library {
 
 
     /* private methods */
-    bool GameStrategy::updateNodeValue(boost::shared_ptr<Node>& node, bool maximizingNode) {
+    bool GameStrategy::updateNodeValue(boost::shared_ptr<Node> node, bool maximizingNode) {
         if(node->isLeaf())
             return false;
 
@@ -244,5 +255,22 @@ namespace library {
 
         node->setValue(newValue);
         return (oldValue != newValue);
+    }
+
+    void GameStrategy::updateDownTheTree(boost::shared_ptr<Node> node, int value){
+        node->setValue(value);
+        if(node->isLeaf()){
+            if(!node->isVisited()){
+                node->setVisited(true);
+                gameState_.getGame()->incNumberOfVisitedLeafs();
+            }
+            return;
+        }
+
+        std::list<boost::shared_ptr<Move> > availableMoves = node->getAvailableMoves();
+        for(std::list<boost::shared_ptr<Move> >::iterator it = availableMoves.begin();
+                it != availableMoves.end(); ++it){
+            updateDownTheTree((*it)->getDestination(), value);
+        }
     }
 }
