@@ -6,8 +6,8 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
-#include <QtGui/QMainWindow>
-#include <boost/shared_ptr.hpp>
+#include <QtGui\QMainWindow>
+#include <boost\shared_ptr.hpp>
 #include <QGraphicsScene>
 
 #include "gameboard.hpp"
@@ -67,6 +67,8 @@ private slots:
     /** Closes the game */
     void on_actionEnd_triggered();
 
+	void on_actionChangeSign_triggered();
+
 
 /*********** PUBLIC SLOTS ************/
 public slots:
@@ -77,8 +79,9 @@ public slots:
 	void okClickedSlot
 		(TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel, QString filename);
 
+	void changeSignSlot(TicTacToePlayer::PlayerSign sign);
+
 signals:
-	void crateNewOponentSignal(TicTacToePlayer::PlayerLevel level);
 
 	void saveGameSignal();
 
@@ -92,6 +95,7 @@ signals:
 	void createFirstGameLoadPlayerSignal
 		(TicTacToePlayer::PlayerSign humanPlayerSign, std::string & computerPlayerFilename);
 
+	void changeSignSignal(TicTacToePlayer::PlayerSign sign);
 
 /******** PRIVATE FIELDS ********/
 private:
@@ -100,6 +104,8 @@ private:
 	//Ui::GameWindow * ui_;
 
 	boost::shared_ptr<QGraphicsScene> scene_;
+
+	TicTacToePlayer::PlayerSign humanPlayerSign_;
 };
 
 #endif // GAMEWINDOW_H

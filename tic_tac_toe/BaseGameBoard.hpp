@@ -7,7 +7,7 @@
 #define BASEGAMEBOARD_H
 
 #include <iostream>
-#include <boost/numeric/ublas/matrix.hpp>
+#include <boost\numeric\ublas\matrix.hpp>
 
 #include "BaseField.hpp"
 #include "TicTacToePlayer.hpp"

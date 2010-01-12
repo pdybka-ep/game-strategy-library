@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gamewindow.ui'
 **
-** Created: Tue 12. Jan 00:42:12 2010
+** Created: Tue 12. Jan 01:20:51 2010
 **      by: Qt User Interface Compiler version 4.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -44,6 +44,7 @@ public:
     QAction *actionTotalNewGame;
     QAction *actionLoad_2;
     QAction *actionSave_2;
+    QAction *actionChangeSign;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QGridLayout *gridLayout;
@@ -66,6 +67,7 @@ public:
     QSpacerItem *horizontalSpacer_2;
     QMenuBar *menuBar;
     QMenu *menuGame;
+    QMenu *menuZnak;
 
     void setupUi(QMainWindow *GameWindow)
     {
@@ -108,6 +110,9 @@ public:
         actionLoad_2->setObjectName(QString::fromUtf8("actionLoad_2"));
         actionSave_2 = new QAction(GameWindow);
         actionSave_2->setObjectName(QString::fromUtf8("actionSave_2"));
+        actionChangeSign = new QAction(GameWindow);
+        actionChangeSign->setObjectName(QString::fromUtf8("actionChangeSign"));
+        actionChangeSign->setEnabled(false);
         centralWidget = new QWidget(GameWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
@@ -243,9 +248,12 @@ public:
         menuBar->setGeometry(QRect(0, 0, 609, 23));
         menuGame = new QMenu(menuBar);
         menuGame->setObjectName(QString::fromUtf8("menuGame"));
+        menuZnak = new QMenu(menuBar);
+        menuZnak->setObjectName(QString::fromUtf8("menuZnak"));
         GameWindow->setMenuBar(menuBar);
 
         menuBar->addAction(menuGame->menuAction());
+        menuBar->addAction(menuZnak->menuAction());
         menuGame->addAction(actionNewGame);
         menuGame->addSeparator();
         menuGame->addAction(actionTotalNewGame);
@@ -253,6 +261,7 @@ public:
         menuGame->addAction(actionLoad_2);
         menuGame->addSeparator();
         menuGame->addAction(actionEnd);
+        menuZnak->addAction(actionChangeSign);
 
         retranslateUi(GameWindow);
         QObject::connect(exitButton, SIGNAL(clicked()), GameWindow, SLOT(close()));
@@ -300,6 +309,7 @@ public:
         actionTotalNewGame->setText(QApplication::translate("GameWindow", "Nowa gra", 0, QApplication::UnicodeUTF8));
         actionLoad_2->setText(QApplication::translate("GameWindow", "Wczytaj gr\304\231", 0, QApplication::UnicodeUTF8));
         actionSave_2->setText(QApplication::translate("GameWindow", "Zapisz gr\304\231", 0, QApplication::UnicodeUTF8));
+        actionChangeSign->setText(QApplication::translate("GameWindow", "Zmie\305\204 znak", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("GameWindow", "Ty:", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("GameWindow", "Jeste\305\233:", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("GameWindow", "Komputer:", 0, QApplication::UnicodeUTF8));
@@ -310,6 +320,7 @@ public:
         exitButton->setText(QApplication::translate("GameWindow", "Koniec", 0, QApplication::UnicodeUTF8));
         newGameButton->setText(QApplication::translate("GameWindow", "Nowe rozdanie", 0, QApplication::UnicodeUTF8));
         menuGame->setTitle(QApplication::translate("GameWindow", "Gra", 0, QApplication::UnicodeUTF8));
+        menuZnak->setTitle(QApplication::translate("GameWindow", "Znak", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

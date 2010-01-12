@@ -3,10 +3,10 @@
   @author Hanna Dutkiewicz
 */
 
-#include <boost/shared_ptr.hpp>
+#include <boost\shared_ptr.hpp>
 #include <QThread>
 #include <qtconcurrentrun.h>
-#include <boost/bind.hpp>
+#include <boost\bind.hpp>
 #include <QFutureWatcher>
 
 #include <stdio.h>
@@ -56,10 +56,7 @@ void TicTacToeGameController::initialize(){
 	factory_ = boost::shared_ptr<AbstractGameFactory>( static_cast<AbstractGameFactory *>(factory) );
 	gameStrategy_.initialize(factory_);
 
-
 	// connect all signals and slots between GameWindow and controller
-	connect(&gameWindow_,	SIGNAL(crateNewOponentSignal(TicTacToePlayer::PlayerLevel)), 
-			this,			SLOT(crateNewOponentSlot(TicTacToePlayer::PlayerLevel)) );
 
 	connect(&gameWindow_,	SIGNAL(createFirstGameNewPlayerSignal(TicTacToePlayer::PlayerSign, TicTacToePlayer::PlayerLevel)), 
 			this,			SLOT(createFirstGameNewPlayerSlot(TicTacToePlayer::PlayerSign, TicTacToePlayer::PlayerLevel)) );
@@ -76,6 +73,9 @@ void TicTacToeGameController::initialize(){
 	connect(&gameWindow_,	SIGNAL(loadGameSignal(std::string &)), 
 			this,			SLOT(loadGameSlot(std::string &) ) );
 
+	connect(&gameWindow_,	SIGNAL(changeSignSignal(TicTacToePlayer::PlayerSign)), 
+			this,			SLOT(changeSignSlot(TicTacToePlayer::PlayerSign) ) );
+
 
 	// connect with GameBoard
 	connect(&gameBoard_,	SIGNAL(playerMadeAmoveSignal(std::pair<int,int>)), 
@@ -84,9 +84,6 @@ void TicTacToeGameController::initialize(){
 }
 
 /************** SLOTS ********************/
-void TicTacToeGameController::crateNewOponentSlot(TicTacToePlayer::PlayerLevel level){
-	
-}
 
 void TicTacToeGameController::saveGameSlot(){
 
@@ -185,6 +182,16 @@ void TicTacToeGameController::playerMadeAmoveSlot(std::pair<int,int> move){
 	if(!checkEndGame(move, playerHuman_, gameBoard_, true)){
 		makeComputerMove();
 	}
+}
+
+
+void TicTacToeGameController::changeSignSlot(TicTacToePlayer::PlayerSign humanPlayerSign){
+
+	TicTacToePlayer * player = static_cast<TicTacToePlayer *>(playerHuman_.get());
+	player->setPlayerSign(humanPlayerSign);
+
+	player = static_cast<TicTacToePlayer *>(playerComp_.get());
+	player->setPlayerSign(humanPlayerSign == TicTacToePlayer::CIRCLE ? TicTacToePlayer::CROSS : TicTacToePlayer::CIRCLE );
 }
 
 /**************** PRIVATE METHODS *******************/

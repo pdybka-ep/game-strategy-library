@@ -7,7 +7,7 @@
 #include <QImage>
 #include <QGraphicsScene>
 
-#include <boost/shared_ptr.hpp>
+#include <boost\shared_ptr.hpp>
 #include "gameboard.hpp"
 #include "field.hpp"
 #include "TicTacToePlayer.hpp"

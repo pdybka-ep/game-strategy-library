@@ -7,7 +7,7 @@
 #include <list>
 #include <iostream>
 
-#include <boost/shared_ptr.hpp>
+#include <boost\shared_ptr.hpp>
 
 #include "..\game-strategy-library\Node.hpp"
 #include "..\game-strategy-library\Move.hpp"

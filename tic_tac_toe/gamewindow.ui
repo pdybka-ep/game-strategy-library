@@ -311,7 +311,14 @@
     <addaction name="separator"/>
     <addaction name="actionEnd"/>
    </widget>
+   <widget class="QMenu" name="menuZnak">
+    <property name="title">
+     <string>Znak</string>
+    </property>
+    <addaction name="actionChangeSign"/>
+   </widget>
    <addaction name="menuGame"/>
+   <addaction name="menuZnak"/>
   </widget>
   <action name="actionNewGame">
    <property name="enabled">
@@ -410,6 +417,14 @@
   <action name="actionSave_2">
    <property name="text">
     <string>Zapisz grę</string>
+   </property>
+  </action>
+  <action name="actionChangeSign">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Zmień znak</string>
    </property>
   </action>
  </widget>

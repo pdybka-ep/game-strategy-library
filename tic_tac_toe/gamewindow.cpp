@@ -8,13 +8,14 @@
 #include <QGraphicsScene>
 #include <QFileDialog>
 
-#include <boost/shared_ptr.hpp>
+#include <boost\shared_ptr.hpp>
 
 #include "gamewindow.hpp"
 #include "ui_gamewindow.h"
 #include "TicTacToeGameController.hpp"
 #include "TicTacToePlayer.hpp"
 #include "OptionsDialog.hpp"
+#include "SignDialog.hpp"
 
 
 /* A constructor of GameWindow - the main window of a game. */
@@ -36,12 +37,14 @@ void GameWindow::endGame(){
 	ui_->newGameButton->setEnabled(true);
 	ui_->actionTotalNewGame->setEnabled(true);
 	ui_->actionNewGame->setEnabled(true);
+	ui_->actionChangeSign->setEnabled(true);
 }
 
 void GameWindow::endGame(TicTacToePlayer::PlayerType winner){
 	ui_->newGameButton->setEnabled(true);
 	ui_->actionNewGame->setEnabled(true);
 	ui_->actionTotalNewGame->setEnabled(true);
+	ui_->actionChangeSign->setEnabled(true);
 
 	if(winner == TicTacToePlayer::COMPUTER)
 		ui_->OponentPointsLcd->display( ui_->OponentPointsLcd->intValue()+1 );
@@ -58,21 +61,25 @@ void GameWindow::wait(){
 	ui_->actionTotalNewGame->setEnabled(false);
 	ui_->actionLoad->setEnabled(false);
 	ui_->actionSave->setEnabled(false);
+	ui_->actionChangeSign->setEnabled(false);
 }
 
 void GameWindow::stopWaiting(){
 	ui_->exitButton->setEnabled(true);
 	ui_->actionEnd->setEnabled(true);
-	ui_->newGameButton->setEnabled(true);
-	ui_->actionNewGame->setEnabled(true);
+	//ui_->newGameButton->setEnabled(true);
+	//ui_->actionNewGame->setEnabled(true);
 	ui_->actionTotalNewGame->setEnabled(true);
 	ui_->actionLoad->setEnabled(true);
 	ui_->actionSave->setEnabled(true);
+	//
 }
 
 /* Sets all the parametres before game is started. */
 void GameWindow::okClickedSlot
 (TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel, QString filename){
+
+	humanPlayerSign_ = humanPlayerSign;
 
     int x, y, w, h;
     ui_->graphicsView->rect().getRect(&x, &y, &w, &h);
@@ -96,6 +103,12 @@ void GameWindow::okClickedSlot
 	}
 }
 
+void GameWindow::changeSignSlot(TicTacToePlayer::PlayerSign sign){
+	humanPlayerSign_ = sign;
+	ui_->playerSignLabel->setText(humanPlayerSign_ == TicTacToePlayer::CIRCLE ? " KÓ£KO " : " KRZY¯YK ");
+	changeSignSignal(sign);
+}
+
 
 /*************** MENU items reactions ****************/
 /* Starts a new game. */
@@ -103,6 +116,7 @@ void GameWindow::on_actionNewGame_triggered(){
 	ui_->newGameButton->setEnabled(false);
 	ui_->actionNewGame->setEnabled(false);
 	ui_->actionTotalNewGame->setEnabled(false);
+	ui_->actionChangeSign->setEnabled(false);
 	createNewGameSignal();
 }
 
@@ -126,4 +140,9 @@ void GameWindow::on_actionLoad_triggered(){
 /* Closes the game */
 void GameWindow::on_actionEnd_triggered(){
     QCoreApplication::quit();
+}
+
+void GameWindow::on_actionChangeSign_triggered(){
+	SignDialog dialog(this, humanPlayerSign_);
+	dialog.exec();
 }

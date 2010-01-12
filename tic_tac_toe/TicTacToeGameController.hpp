@@ -9,8 +9,8 @@
 #include <QObject>
 #include <QFutureWatcher>
 
-#include <boost/shared_ptr.hpp>
-#include <boost/random.hpp>
+#include <boost\shared_ptr.hpp>
+#include <boost\random.hpp>
 
 #include "..\game-strategy-library\GameStrategy.hpp"
 #include "..\game-strategy-library\Player.hpp"
@@ -42,8 +42,6 @@ public:
 
 public slots:
 
-	void crateNewOponentSlot(TicTacToePlayer::PlayerLevel level);
-
 	void saveGameSlot();
 
 	void loadGameSlot(std::string & filename);
@@ -63,9 +61,12 @@ public slots:
 
 	void gameOponentCreatedSlot();
 
+	void changeSignSlot(TicTacToePlayer::PlayerSign humanPlayerSign);
+
 
 private:
 	void makeComputerMove();
+
 	bool checkEndGame
 		(std::pair<int,int> coordinates, boost::shared_ptr<library::Player> player, BaseGameBoard & board, bool notifyWindow);
 
@@ -93,7 +94,6 @@ private:
 	static const int NODES_MEDIUM = 100000;
 	static const int NODES_ADVANCED = 300000;
 
-	//boost::variate_generator<boost::mt19937&, boost::uniform_int<int> >  random;
 };
 
 

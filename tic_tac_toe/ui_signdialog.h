@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'signdialog.ui'
 **
-** Created: Tue 12. Jan 00:42:10 2010
+** Created: Tue 12. Jan 01:20:51 2010
 **      by: Qt User Interface Compiler version 4.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!

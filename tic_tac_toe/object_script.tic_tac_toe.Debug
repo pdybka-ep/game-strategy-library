@@ -4,9 +4,11 @@ INPUT(
 ./debug\field.o
 ./debug\gameboard.o
 ./debug\optionsdialog.o
+./debug\SignDialog.o
 ./debug\moc_gamewindow.o
 ./debug\moc_optionsdialog.o
 ./debug\moc_gameboard.o
 ./debug\moc_field.o
+./debug\moc_SignDialog.o
 ./debug\qrc_res.o
 );

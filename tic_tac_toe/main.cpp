@@ -3,10 +3,10 @@
     @author Hanna Dutkiewicz
 */
 
-#include <QtGui/QApplication>
+#include <QtGui\QApplication>
 #include <QTextCodec>
 
-#include <boost/shared_ptr.hpp>
+#include <boost\shared_ptr.hpp>
 #include "gamewindow.hpp"
 #include "optionsdialog.hpp"
 #include "TicTacToeGameController.hpp"

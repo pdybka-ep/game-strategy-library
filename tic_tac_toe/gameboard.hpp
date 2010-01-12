@@ -10,8 +10,8 @@
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 
-#include <boost/multi_array.hpp>
-#include <boost/shared_ptr.hpp>
+#include <boost\multi_array.hpp>
+#include <boost\shared_ptr.hpp>
 
 #include "field.hpp"
 #include "TicTacToePlayer.hpp"

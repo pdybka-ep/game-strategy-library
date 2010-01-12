@@ -1,9 +1,9 @@
 #ifndef SIGNDIALOG_HPP
 #define SIGNDIALOG_HPP
 
-#include <QtGui/QDialog>
+#include <QtGui\QDialog>
 
-#include <boost/shared_ptr.hpp>
+#include <boost\shared_ptr.hpp>
 
 #include "TicTacToePlayer.hpp"
 
@@ -15,7 +15,7 @@ class SignDialog : public QDialog {
     Q_OBJECT
     Q_DISABLE_COPY(SignDialog)
 public:
-    explicit SignDialog(QWidget *parent = 0);
+    explicit SignDialog(QWidget *parent, TicTacToePlayer::PlayerSign sign);
     virtual ~SignDialog();
 
 signals:

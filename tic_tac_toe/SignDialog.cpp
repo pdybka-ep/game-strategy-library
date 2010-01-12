@@ -1,5 +1,5 @@
 #include "SignDialog.hpp"
-#include "ui_signdialog.hpp"
+#include "ui_signdialog.h"
 #include "gamewindow.hpp"
 
 SignDialog::SignDialog(QWidget *parent, TicTacToePlayer::PlayerSign sign): QDialog(parent), ui_(new Ui::SignDialog){
@@ -11,9 +11,8 @@ SignDialog::SignDialog(QWidget *parent, TicTacToePlayer::PlayerSign sign): QDial
     ui_->crossRadioButton->setChecked(sign == TicTacToePlayer::CROSS);
 
     GameWindow *win = (GameWindow*)this->parent();
-    connect(this,
-        SIGNAL( okSignal(TicTacToePlayer::PlayerSign) ), win,
-        SLOT(changeSignSlot(TicTacToePlayer::PlayerSign) );
+    connect(this,  SIGNAL( okSignal(TicTacToePlayer::PlayerSign) ), 
+			win,   SLOT(changeSignSlot(TicTacToePlayer::PlayerSign) ));
 
 }
 
@@ -22,6 +21,6 @@ SignDialog::~SignDialog(){
 }
 
 void SignDialog::onOk(){
-    TicTacToePlayer::PlayerSign sign = (ui_->circleRadioButton->getChecked() ? TicTacToePlayer::CIRCLE : TicTacToePlayer::CROSS);
-    changeSignSlot(sign);
+    TicTacToePlayer::PlayerSign sign = (ui_->circleRadioButton->isChecked() ? TicTacToePlayer::CIRCLE : TicTacToePlayer::CROSS);
+    okSignal(sign);
 }
