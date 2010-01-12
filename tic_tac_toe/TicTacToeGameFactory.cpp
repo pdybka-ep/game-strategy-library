@@ -9,6 +9,8 @@
 #include <sstream>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
 
 #include "../game-strategy-library/Node.hpp"
 #include "../game-strategy-library/Move.hpp"
@@ -174,20 +176,52 @@ std::string TicTacToeGameFactory::serialize(const boost::shared_ptr<Game>& game)
 boost::shared_ptr<Game> TicTacToeGameFactory::deserialize(const std::string & data){
     std::cout << "Starting deserialization..." << std::endl;
 
-    std::string line;
+    std::map<int, boost::shared_ptr<Move> > moves;
+    std::map<int, boost::shared_ptr<Node> > nodes;
+    std::map<int, int > movesDestinations;
+
+    boost::shared_ptr<Game> game(new Game());
+    int rootNodeId;
+
     std::stringstream stream(data);
-    // TODO
-	return boost::shared_ptr<Game>();
+    std::string tempString;
+    int tempInt;
+
+    // read game info
+    std::cout << "Reading game info..." << std::endl;
+    std::getline(stream, tempString);       // GAME
+    std::getline(stream, tempString);       // game id
+    game->setGameId(tempString);
+    std::getline(stream, tempString);       // rootNodeId
+    rootNodeId = boost::lexical_cast<int>(tempString);
+    std::getline(stream, tempString);       // totalNumberOfLeafs
+    tempInt = boost::lexical_cast<int>(tempString);
+    game->setTotalNumberOfLeafs(tempInt);
+    std::getline(stream, tempString);       // totalNumberOfLeafs
+    tempInt = boost::lexical_cast<int>(tempString);
+    game->setNumberOfVisitedLeafs(tempInt);
+
+    // read all moves
+    std::cout << "Reading moves..." << std::endl;
+    deserializeAllMoves(stream, moves, movesDestinations);
+
+    // read all nodes
+    std::cout << "Reading nodes..." << std::endl;
+    deserializeAllNodes(stream, nodes, moves);
+    game->setStartNode(nodes.at(rootNodeId));
+
+    // link moves and nodes
+    std::cout << "Linking moves and nodes..." << std::endl;
+    std::map<int, int >::iterator it;
+    for(it = movesDestinations.begin(); it != movesDestinations.end(); ++it){
+        moves.at(it->first)->setDestination(nodes.at(it->second));
+    }
+
+    std::cout << "Deserialization finished" << std::endl;
+	return game;
 }
 
-/*
-void TicTacToeGameFactory::printTree(boost::shared_ptr<Node> node){
 
-	TicTacToeNode * tttnode = static_cast<TicTacToeNode *> (node.get());
-	std::cout << tttnode;
-
-}
-*/
 
 /* for serialization */
 void TicTacToeGameFactory::serializeAllMoves(std::stringstream &stream, boost::shared_ptr<Node> node){
@@ -234,3 +268,81 @@ void TicTacToeGameFactory::serializeAllNodes(std::stringstream &stream, boost::s
     }
 
 }
+
+
+void TicTacToeGameFactory::deserializeAllMoves(std::stringstream &stream, std::map<int, boost::shared_ptr<Move> >& moves,
+            std::map<int, int >& movesDestinations){
+
+    std::string tempString;
+    int tempInt;
+    // read game info
+    std::getline(stream, tempString);       // "MOVE" or "END_MOVES"
+
+    bool theEnd = (tempString=="END_MOVES");
+    while(!theEnd){
+        TicTacToeMove *move = new TicTacToeMove();
+        std::getline(stream, tempString);       // move id
+        tempInt = boost::lexical_cast<int>(tempString);
+        move->setMoveId(tempInt);
+        std::getline(stream, tempString);       // node id
+        tempInt = boost::lexical_cast<int>(tempString);
+        movesDestinations.insert(std::make_pair(move->getMoveId(), tempInt));
+
+        std::getline(stream, tempString);       // x
+        int x = boost::lexical_cast<int>(tempString);
+        std::getline(stream, tempString);       // y
+        int y = boost::lexical_cast<int>(tempString);
+        move->setCoordinates(x,y);
+        boost::shared_ptr<Move> newMove(move);
+        moves.insert(std::make_pair(newMove->getMoveId(), newMove));
+
+        std::getline(stream, tempString);
+        theEnd = (tempString=="END_MOVES");
+    }
+}
+
+
+void TicTacToeGameFactory::deserializeAllNodes(std::stringstream &stream, std::map<int, boost::shared_ptr<Node> >& nodes,
+        std::map<int, boost::shared_ptr<Move> >& moves){
+
+    std::string tempString;
+    int tempInt;
+    // read game info
+    std::getline(stream, tempString);       // "NODE" or "END_NODES"
+
+    bool theEnd = (tempString=="END_NODES");
+    while(!theEnd){
+        TicTacToeNode *node = new TicTacToeNode();
+        std::getline(stream, tempString);       // node id
+        tempInt = boost::lexical_cast<int>(tempString);
+        node->setNodeId(tempInt);
+
+        std::getline(stream, tempString);       // value
+        tempInt = boost::lexical_cast<int>(tempString);
+        node->setValue(tempInt);
+
+        std::getline(stream, tempString);       // visited
+        bool visited = false;
+        if(tempString == "true")
+            visited = true;
+        node->setVisited(visited);
+
+        std::getline(stream, tempString);       // moves
+        boost::char_separator<char> sep(",");
+        boost::tokenizer<boost::char_separator<char> > tokens(tempString, sep);
+        boost::tokenizer<boost::char_separator<char> >::iterator it;
+        for(it = tokens.begin(); it != tokens.end(); ++it){
+            tempInt = boost::lexical_cast<int>(*it);
+            boost::shared_ptr<Move> move = moves.at(tempInt);
+            node->addAvailableMove(move);
+        }
+
+        boost::shared_ptr<Node> newNode(node);
+        nodes.insert(std::make_pair(newNode->getNodeId(), newNode));
+
+        std::getline(stream, tempString);
+        theEnd = (tempString=="END_NODES");
+    }
+
+}
+

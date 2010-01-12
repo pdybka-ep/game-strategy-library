@@ -7,10 +7,13 @@
 #define TICTACTOEGAMEFACTORY_H
 
 #include <sstream>
+#include <map>
+#include <list>
 
 #include "../game-strategy-library/AbstractGameFactory.hpp"
 #include "../game-strategy-library/Game.hpp"
 #include "../game-strategy-library/Node.hpp"
+#include "../game-strategy-library/Move.hpp"
 
 #include "TicTacToeNode.hpp"
 
@@ -107,21 +110,43 @@ private:
 		return ++nodeId;
 	}
 
+
 /*** SERIALIZATION ***/
-	
+
 	/**
-		Serializes all moves available from specific node
-		@param stream stream where information about moves should be placed
-		@param node pointer to a node which available moves should be serialized
-	*/
+        Serializes all moves available from specific node
+        @param stream stream where information about moves should be placed
+        @param node pointer to a node which available moves should be serialized
+    */
     void serializeAllMoves(std::stringstream &stream, boost::shared_ptr<library::Node> node);
-	
-	/**
-		Serializes all destination nodes of available moves of a specific node
-		@param stream stream where information about nodes should be placed
-		@param node pointer to a node
-	*/
+
+    /**
+        Serializes all destination nodes of available moves of a specific node
+        @param stream stream where information about nodes should be placed
+        @param node pointer to a node
+    */
     void serializeAllNodes(std::stringstream &stream, boost::shared_ptr<library::Node> node);
+
+
+/*** DESERIALIZATION ***/
+
+    /**
+        Deserializes all moves
+        @param stream stream where information about moves is placed
+        @param moves  TODO
+        @param movesDestinations  TODO
+     */
+    void deserializeAllMoves(std::stringstream &stream, std::map<int, boost::shared_ptr<library::Move> >& moves,
+            std::map<int, int >& movesDestinations);
+
+    /**
+        Deserializes all nodes
+        @param stream stream where information about nodes is placed
+        @param nodes  TODO
+     */
+    void deserializeAllNodes(std::stringstream &stream, std::map<int, boost::shared_ptr<library::Node> >& nodes,
+            std::map<int, boost::shared_ptr<library::Move> >& moves);
+
 
 	/* for debugging only */
 	//void printTree(boost::shared_ptr<library::Node> node);
