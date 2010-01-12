@@ -6,6 +6,7 @@
 #include <QBrush>
 #include <QImage>
 #include <QGraphicsScene>
+#include <QString>
 
 #include <boost/shared_ptr.hpp>
 
@@ -15,10 +16,10 @@
 
 
 GameBoard::GameBoard(QObject * parent): QObject(parent), BaseGameBoard(), pixItem_(NULL), initialized_(false){
-	winnerImage_.load(":/res/win.png");
-	loserImage_.load(":/res/lose.png");
-	remisImage_.load(":/res/remis.png");
-	waitImage_.load(":/res/make.png");
+	winnerImage_.load(QString(":/res/win.png"));
+	loserImage_.load(QString(":/res/lose.png"));
+	remisImage_.load(QString(":/res/remis.png"));
+	waitImage_.load(QString(":/res/make.png"));
 	deserImage_.load(":/res/waiting.png");
 }
 

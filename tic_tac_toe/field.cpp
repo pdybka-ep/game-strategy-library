@@ -5,6 +5,7 @@
 
 #include <QPainter>
 #include <QPen>
+#include <QString>
 
 #include "field.hpp"
 
@@ -17,8 +18,8 @@ Field::Field(QObject * parent): QObject(parent), BaseField(){
 
 	coordinates_ = std::make_pair<int,int>(-1,-1);
 
-    circleImage_.load(":/res/circle.png");
-    crossImage_.load(":/res/cross.png");
+    bool read = circleImage_.load(QString(":/res/circle.png"));
+    crossImage_.load(QString(":/res/cross.png"));
 }
 
 Field::Field(const Field & field){

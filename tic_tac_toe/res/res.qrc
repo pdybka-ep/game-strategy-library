@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/" >
-        <file>ttt.ico</file>
-        <file>circle.jpg</file>
-        <file>cross.jpg</file>
-        <file>tlo.jpg</file>
-    </qresource>
-    <qresource prefix="/res" />
-</RCC>
