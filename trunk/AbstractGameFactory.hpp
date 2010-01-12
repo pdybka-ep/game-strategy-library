@@ -48,14 +48,14 @@ namespace library {
          * @param game the game
          * @return serialized information
          */
-        virtual std::string& serialize(const boost::shared_ptr<Game>& game) = 0;
+        virtual std::string serialize(const boost::shared_ptr<library::Game>& game) = 0;
 
         /**
          * Creates a game with use of given serialized data
          * @param data serialized data containing information about the game
          * @return pointer to the created game
          */
-        virtual boost::shared_ptr<Game> deserialize(const std::string& data) = 0;
+        virtual boost::shared_ptr<library::Game> deserialize(const std::string & data) = 0;
     };
 
 }
