@@ -67,9 +67,10 @@ public:
 
 	/**
 		Method to indicate a board that computations are being done in 
-		a game controller and it should wait for the result
+		a game controller and it should wait for the result.
+		@param newGameTree is it computations of a new game tree
 	*/
-	void wait();
+	void wait(bool newGrameTree);
 	
 	/**
 		Method to indicate that computations are finished in
@@ -121,6 +122,8 @@ private:
 	QPixmap remisImage_;
 	/** Image "Computations are being done" */
 	QPixmap waitImage_;
+	/** Image "Serialization or deserialization" */
+	QPixmap deserImage_;
 	
 	/** Pointer to current pixmap item placed on a board */
 	QGraphicsPixmapItem * pixItem_;

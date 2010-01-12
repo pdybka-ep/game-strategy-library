@@ -126,6 +126,16 @@ public slots:
 	*/
 	void startNewGame();
 
+	/**
+		Starts a new loaded game
+	*/
+	void startNewLoadedGame();
+
+	/**
+		Notifies elements that game was saved
+	*/
+	void gameSaved();
+
 private:
 
 	/**
@@ -188,6 +198,9 @@ private:
 
 	/** Watcher of threads running with a function to create a game tree and train it */
 	QFutureWatcher<boost::shared_ptr<library::Game> > watcher_;
+
+	/** Watcher for threads running with function to load/save game */
+	QFutureWatcher<void > serWatcher_;
 
 	/** Holds computer player level */
 	TicTacToePlayer::PlayerLevel computerPlayerLevel_;

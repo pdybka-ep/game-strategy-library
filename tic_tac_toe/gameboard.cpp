@@ -19,7 +19,7 @@ GameBoard::GameBoard(QObject * parent): QObject(parent), BaseGameBoard(), pixIte
 	loserImage_.load(":/res/lose.png");
 	remisImage_.load(":/res/remis.png");
 	waitImage_.load(":/res/make.png");
-
+	deserImage_.load(":/res/waiting.png");
 }
 
 
@@ -123,8 +123,11 @@ void GameBoard::addFinishElementsToScene(const QPixmap & pixmap){
 	pixItem_ = scene_->addPixmap(pixmap);
 }
 
-void GameBoard::wait(){
-	pixItem_ = scene_->addPixmap(waitImage_);
+void GameBoard::wait(bool newGrameTree){
+	if(newGrameTree)
+		pixItem_ = scene_->addPixmap(waitImage_);
+	else
+		pixItem_ = scene_->addPixmap(deserImage_);
 	boardState_ = GAME_NOT_STARTED;
 }
 

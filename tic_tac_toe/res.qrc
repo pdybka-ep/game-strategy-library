@@ -7,5 +7,6 @@
         <file>res/make.png</file>
         <file>res/remis.png</file>
         <file>res/win.png</file>
+        <file>res/waiting.png</file>
     </qresource>
 </RCC>

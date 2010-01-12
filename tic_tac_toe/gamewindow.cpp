@@ -19,7 +19,7 @@
 
 
 /* A constructor of GameWindow - the main window of a game. */
-GameWindow::GameWindow(QWidget *parent): QMainWindow(parent), ui_(new Ui::GameWindow){
+GameWindow::GameWindow(QWidget *parent): QMainWindow(parent), ui_(new Ui::GameWindow), humanPlayerSign_(TicTacToePlayer::CIRCLE){
     ui_->setupUi(this);
 }
 
@@ -165,7 +165,8 @@ void GameWindow::on_actionLoad_triggered(){
 		computerPlayerLevel_ = TicTacToePlayer::ADVANCED;
 	}
 
-	loadGameSignal(filename.toStdString());
+	createFirstGameLoadPlayerSignal(humanPlayerSign_, filename.toStdString());
+	//loadGameSignal(filename.toStdString());
 }
 
 /* Closes the game */
