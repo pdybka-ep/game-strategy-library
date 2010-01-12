@@ -67,8 +67,8 @@ void GameWindow::wait(){
 void GameWindow::stopWaiting(){
 	ui_->exitButton->setEnabled(true);
 	ui_->actionEnd->setEnabled(true);
-	//ui_->newGameButton->setEnabled(true);
-	//ui_->actionNewGame->setEnabled(true);
+	ui_->newGameButton->setEnabled(true);
+	ui_->actionNewGame->setEnabled(true);
 	ui_->actionTotalNewGame->setEnabled(true);
 	ui_->actionLoad->setEnabled(true);
 	ui_->actionSave->setEnabled(true);
@@ -79,12 +79,12 @@ void GameWindow::stopWaiting(){
 void GameWindow::okClickedSlot
 (TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel, QString filename){
 
+	ui_->actionSave->setEnabled(true);
+
 	humanPlayerSign_ = humanPlayerSign;
 	computerPlayerLevel_ = computerPlayerLevel;
 
-    int x, y, w, h;
-    ui_->graphicsView->rect().getRect(&x, &y, &w, &h);
-	scene_->setSceneRect(QRect(x, y, w-2, h-2));
+    init();
 	
 	// set oponent's level and player's sign on the window
 	ui_->playerSignLabel->setText(humanPlayerSign == TicTacToePlayer::CIRCLE ? " KOLKO " : " KRZYZYK ");
@@ -104,6 +104,13 @@ void GameWindow::okClickedSlot
 	}
 }
 
+
+void GameWindow::init(){
+	 int x, y, w, h;
+    ui_->graphicsView->rect().getRect(&x, &y, &w, &h);
+	scene_->setSceneRect(QRect(x, y, w-2, h-2));
+}
+
 void GameWindow::changeSignSlot(TicTacToePlayer::PlayerSign sign){
 	humanPlayerSign_ = sign;
 	ui_->playerSignLabel->setText(humanPlayerSign_ == TicTacToePlayer::CIRCLE ? " KOLKO " : " KRZYZYK ");
@@ -114,10 +121,13 @@ void GameWindow::changeSignSlot(TicTacToePlayer::PlayerSign sign){
 /*************** MENU items reactions ****************/
 /* Starts a new game. */
 void GameWindow::on_actionNewGame_triggered(){
+	ui_->actionSave->setEnabled(true);
+
 	ui_->newGameButton->setEnabled(false);
 	ui_->actionNewGame->setEnabled(false);
 	ui_->actionTotalNewGame->setEnabled(false);
 	ui_->actionChangeSign->setEnabled(false);
+
 	createNewGameSignal();
 }
 
@@ -165,8 +175,11 @@ void GameWindow::on_actionLoad_triggered(){
 		computerPlayerLevel_ = TicTacToePlayer::ADVANCED;
 	}
 
+	ui_->playerPointsLcd->display(0);
+	ui_->OponentPointsLcd->display(0);
+
 	createFirstGameLoadPlayerSignal(humanPlayerSign_, filename.toStdString());
-	//loadGameSignal(filename.toStdString());
+
 }
 
 /* Closes the game */
@@ -177,4 +190,8 @@ void GameWindow::on_actionEnd_triggered(){
 void GameWindow::on_actionChangeSign_triggered(){
 	SignDialog dialog(this, humanPlayerSign_);
 	dialog.exec();
+}
+
+void GameWindow::setPercLabel(double percentage){
+	ui_->lcdNumberPerc->display(percentage);
 }

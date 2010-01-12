@@ -152,6 +152,7 @@ void TicTacToeGameController::saveGameSlot(std::string filename){
 void TicTacToeGameController::toBindSaveGame(std::string filename){
 	try{
 		gameStrategy_.saveGame(filename);
+
 	} catch(FileAccessException ex){
 		std::cerr << ex.toString();
 	} catch(GameFactoryInitializationException ex2){
@@ -176,6 +177,7 @@ void TicTacToeGameController::gameSaved(){
 /* load an oponent player : */
 void TicTacToeGameController::createFirstGameLoadPlayerSlot
 (TicTacToePlayer::PlayerSign humanPlayerSign, std::string filename){
+	gameWindow_.init();
 	gameBoard_.init();
 
 	// make GUI elements wait, its deserialization
@@ -195,6 +197,7 @@ void TicTacToeGameController::createFirstGameLoadPlayerSlot
 void TicTacToeGameController::toBindLoadGame(std::string filename){
 	try{
 		gameStrategy_.loadGame(filename);
+		setPercentageOnWindow();
 	} catch(FileAccessException ex){
 		std::cerr << ex.toString();
 		exit(1);
@@ -208,6 +211,8 @@ void TicTacToeGameController::toBindLoadGame(std::string filename){
 /* Starts a new loaded game */
 void TicTacToeGameController::startNewLoadedGame(){
 	gameStrategy_.startGame(gameStrategy_.getCurrentGame(), playerHuman_, playerComp_);
+
+	setPercentageOnWindow();
 
 	gameBoard_.stopWaiting();
 	gameWindow_.stopWaiting();
@@ -259,6 +264,8 @@ void TicTacToeGameController::startNewGame(){
 	gameStrategy_.startGame(game, playerHuman_, playerComp_);
 	gameBoard_.startNewGame();
 
+	setPercentageOnWindow();
+
 	gameBoard_.stopWaiting();
 	gameWindow_.stopWaiting();
 
@@ -278,9 +285,11 @@ void TicTacToeGameController::startNewGame(){
 void TicTacToeGameController::createNewGameSlot(){
 
 	gameBoard_.startNewGame();
+	setPercentageOnWindow();
 
 	try{
 		gameStrategy_.startGame();
+		setPercentageOnWindow();
 	} catch(UnknownGameException ex){
 		std::cerr<<ex.toString();
 		exit(1);
@@ -366,24 +375,30 @@ bool TicTacToeGameController::checkEndGame
 	if(gameState == GameBoard::GAME_FINISH_REMIS){
 		try{
 			gameStrategy_.endOfGame();
+			
 		} catch(GameNotStartedException ex){
 			std::cerr << ex.toString();
 			return false;
 		}
 		board.endGame();
-		if(notifyWindow)
+		if(notifyWindow){
+			setPercentageOnWindow();
 			gameWindow_.endGame();
+		}
 	}
 	else{
 		try{
 			gameStrategy_.endOfGame(player);
+			
 		} catch(GameNotStartedException ex){
 			std::cerr << ex.toString();
 			return false;
 		}
 		board.endGame(tttplayer->getPlayerType());
-		if(notifyWindow)
+		if(notifyWindow){
 			gameWindow_.endGame(tttplayer->getPlayerType());
+			setPercentageOnWindow();
+		}
 	}
 
 	return true;
@@ -460,6 +475,7 @@ boost::shared_ptr<Game> TicTacToeGameController::trainComputerPlayer(boost::shar
 			exit(1);
 		}
 	}
+	setPercentageOnWindow();
 	return game;
 }
 
@@ -497,3 +513,9 @@ void TicTacToeGameController::changeSignSlot(TicTacToePlayer::PlayerSign humanPl
 	player->setPlayerSign(humanPlayerSign == TicTacToePlayer::CIRCLE ? TicTacToePlayer::CROSS : TicTacToePlayer::CIRCLE );
 }
 
+
+void TicTacToeGameController::setPercentageOnWindow(){
+	double all = gameStrategy_.getCurrentGame()->getTotalNumberOfLeafs();
+	double known = gameStrategy_.getCurrentGame()->getNumberOfVisitedLeafs();
+	gameWindow_.setPercLabel(100*known/all);
+}

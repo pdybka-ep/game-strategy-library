@@ -130,6 +130,9 @@ private:
 
 	/** Indicates whether board was initialized */
 	bool initialized_;
+
+	/** Is board waiting */
+	bool waiting_;
 };
 
 #endif // GAMEBOARD_H

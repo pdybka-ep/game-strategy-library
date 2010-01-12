@@ -161,7 +161,7 @@
         </property>
        </spacer>
       </item>
-      <item row="8" column="1" colspan="2">
+      <item row="9" column="1" colspan="2">
        <spacer name="verticalSpacer_3">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -225,14 +225,14 @@
         </property>
        </spacer>
       </item>
-      <item row="9" column="2">
+      <item row="10" column="2">
        <widget class="QPushButton" name="exitButton">
         <property name="text">
          <string>Koniec</string>
         </property>
        </widget>
       </item>
-      <item row="9" column="1">
+      <item row="10" column="1">
        <widget class="QPushButton" name="newGameButton">
         <property name="enabled">
          <bool>false</bool>
@@ -242,7 +242,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" rowspan="10">
+      <item row="0" column="0" rowspan="11">
        <widget class="QGraphicsView" name="graphicsView">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -270,7 +270,7 @@
         </property>
        </widget>
       </item>
-      <item row="9" column="3">
+      <item row="10" column="3">
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -285,6 +285,34 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="8" column="1">
+       <widget class="QLabel" name="label_2">
+        <property name="font">
+         <font>
+          <italic>true</italic>
+         </font>
+        </property>
+        <property name="text">
+         <string>Procentowo:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QLCDNumber" name="lcdNumberPerc">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="numDigits">
+         <number>5</number>
+        </property>
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -353,6 +381,9 @@
    </property>
   </action>
   <action name="actionSave">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Zapisz grę</string>
    </property>

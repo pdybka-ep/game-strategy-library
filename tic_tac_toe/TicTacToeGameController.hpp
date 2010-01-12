@@ -184,6 +184,11 @@ private:
 	*/
 	void createPlayers(TicTacToePlayer::PlayerSign humanPlayerSign);
 
+	/**
+		Displays percentage of visited nodes in a game tree
+	*/
+	void setPercentageOnWindow();
+
 /******* PRIVATE FIELDS *********/
 // model
 	/** Game strategy, from the library*/

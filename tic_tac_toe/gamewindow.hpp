@@ -49,6 +49,11 @@ public:
 	void setGraphicsScene(boost::shared_ptr<QGraphicsScene> graphScene);
 
 	/**
+		Initialize
+	*/
+	void init();
+
+	/**
 		Method to indicate that the game was finished without a winner
 	*/
 	void endGame();
@@ -70,6 +75,11 @@ public:
 		a game controller, it can stop waiting for it
 	*/
 	void stopWaiting();
+
+	/**
+		Sets label with percentage of game tree "knowledge"
+	*/
+	void setPercLabel(double percentage);
 
 
 /*********** PUBLIC SLOTS ************/
