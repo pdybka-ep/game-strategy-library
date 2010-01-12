@@ -51,8 +51,8 @@ QObject(NULL), gameWindow_(gameWindow), computerPlayerLevel_(TicTacToePlayer::BE
 	
 }
 
-/* Initializes all elements in a game controller:
-	creates and sets graphics scene to GUI elements,
+/* Initializes all elements in a game controller.
+	Creates and sets graphics scene to GUI elements,
 	creates appropriate game factory,
 	initializes game board and game strategy,
 	makes connects with elements of the GUI */
