@@ -14,7 +14,7 @@
 #include "TicTacToePlayer.hpp"
 
 
-GameBoard::GameBoard(QObject * parent): QObject(parent), BaseGameBoard(), initialized_(false){
+GameBoard::GameBoard(QObject * parent): QObject(parent), BaseGameBoard(), pixItem_(NULL), initialized_(false){
 	winnerImage_.load(":/res/win.png");
 	loserImage_.load(":/res/lose.png");
 	remisImage_.load(":/res/remis.png");
@@ -97,7 +97,10 @@ void GameBoard::clear(){
 	for(int i = 0; i < MAX_IN_A_ROW; ++i)
 		for(int j = 0; j < MAX_IN_A_ROW; ++j)
 			field_(i,j)->setFieldState(Field::EMPTY);
-	scene_->removeItem(pixItem_);
+	if(pixItem_ != NULL){
+		scene_->removeItem(pixItem_);
+		pixItem_ = NULL;
+	}
 }
 
 /* Method called when a game is finished to stop the game, actualize game tree and show the winner. */
@@ -126,7 +129,10 @@ void GameBoard::wait(){
 }
 
 void GameBoard::stopWaiting(){
-	scene_->removeItem(pixItem_);
+	if(pixItem_ != NULL){
+		scene_->removeItem(pixItem_);
+		pixItem_ = NULL;
+	}
 	boardState_ = GAME_DURING_PLAY;
 }
 
