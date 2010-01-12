@@ -1,5 +1,5 @@
 /**
-    @file   field.hpp
+    @file   Field.hpp
     @author Hanna Dutkiewicz
 */
 
@@ -11,67 +11,74 @@
 
 #include "BaseField.hpp"
 
-
 /**
     @class Field Class
-    Represents a single field on a game board.
-    One of the GUI classes.
+    Represents a single field on a game board, one of the GUI classes, GUI representation of BaseField
     @author Hanna Dutkiewicz
   */
 class Field : public QObject, public QGraphicsItem, public BaseField{
     Q_OBJECT
 
-
-/********* PUBLIC METHODS *********/
 public:
     /**
-      A contstructor.
-      @param parent field's parent (in this case it should be a GameBoard object)
-      */
+		A contstructor.
+		@param parent field's parent (in this case it should be a GameBoard object)
+     */
 	Field(QObject * parent = 0);
 
 	Field(const Field & field);
     /**
-      A destructor.
-      */
+		A destructor.
+	*/
     ~Field();
 
-	Field& operator= (const Field&);
+	/**
+		Copy constructor
+		@param f field to be copied
+		@return copied field
+	*/
+	Field& operator= (const Field& f);
 
     /**
-      Method ovverides default paint method for QGraphicsItem objects. It paints appropriate image depending on fieldState_.
-      @param painter pointer to QPainter object
-      @param opt pointer to QStyleOptionGraphicsItem object
-      @param w pointer to QWidget object
+		Method ovverides default paint method for QGraphicsItem objects. It paints appropriate image depending on fieldState_.
+		@param painter pointer to QPainter object
+		@param pointer to QStyleOptionGraphicsItem object
+		@param pointer to QWidget object
     */
-    void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
+    void paint(QPainter * painter, const QStyleOptionGraphicsItem *, QWidget *);
 
     /**
-      Initialize size and top left point of a Field object on a GameBoard.
-      @param size size of this object
-      @param startPoint top left position point
-	  @param x
-	  @param y
-      */
+		Initialize size and top left point of a Field object on a GameBoard.
+		@param size size of this object
+		@param startPoint top left position point
+		@param x
+		@param y
+    */
     void init(QSizeF size, QPointF startPoint, int x, int y);
 
     /**
-      Method ovverides default one to handle mouse press events.
-      It generates signal wasClicked.
-      @param event pointer to QGraphicsSceneMouseEvent
-      @see wasClicked()
-      */
+		Method ovverides default one to handle mouse press events.
+		It generates signal wasClicked.
+		@param event pointer to a QGraphicsSceneMouseEvent
+		@see wasClicked()
+	*/
     void mousePressEvent (QGraphicsSceneMouseEvent * event);
 
     /**
-      It returns a bounding rectangle of an object.
-      @return bounding rectangle
-      */
+		It returns a bounding rectangle of an object.
+		@return bounding rectangle
+    */
     QRectF boundingRect() const{
         return QRectF(startPoint_.x(), startPoint_.y(), size_.width(), size_.height());
     }
 
-	void setFieldState(FieldState newState) {   fieldState_ = newState; update(); }
+	/**
+		Sets field state and updates field
+		@param newState new state of the field
+	*/	
+	void setFieldState(FieldState newState) {   
+		fieldState_ = newState; update(); 
+	}
 /*
 	friend bool operator== (const Field&, const Field&);
 	friend bool operator!= (const Field&, const Field&);
@@ -81,15 +88,13 @@ public:
 /********* SIGNALS *********/
 signals:
     /**
-      Signal generated when a field was clicked (only if fieldState_ == EMPTY).
-      It is generated to notify GameBoard that this particular field was clicked.
-      @see mousePressEvent()
+		Signal generated when a field was clicked (only if fieldState_ == EMPTY).
+		It is generated to notify GameBoard that this particular field was clicked.
+		@see mousePressEvent()
     */
     void wasClickedSignal();
 
 
-
-/********* PRIVATE FIELDS *********/
 private:
     /** Size of a field object. */
     QSizeF size_;
@@ -99,7 +104,6 @@ private:
     QImage circleImage_;
     /** Image of a cross field. */
     QImage crossImage_;
-
 };
 
 #endif // FIELD_H

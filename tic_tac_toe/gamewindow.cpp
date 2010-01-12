@@ -88,7 +88,7 @@ void GameWindow::okClickedSlot
 	// set oponent's level and player's sign on the window
 	ui_->playerSignLabel->setText(humanPlayerSign == TicTacToePlayer::CIRCLE ? " KӣKO " : " KRZY�YK ");
 
-	QString level = (computerPlayerLevel == TicTacToePlayer::BEGINNER) ? " Poczatkujacy" : ( (computerPlayerLevel == TicTacToePlayer::ADVANCED) ? " Zaawansowany " : "�redni");
+	QString level = (computerPlayerLevel == TicTacToePlayer::BEGINNER) ? " Poczatkujacy" : ( (computerPlayerLevel == TicTacToePlayer::ADVANCED) ? " Zaawansowany " : "Sredni");
 	ui_->oponentLevelLabel->setText(level);
 
 	ui_->playerPointsLcd->display(0);

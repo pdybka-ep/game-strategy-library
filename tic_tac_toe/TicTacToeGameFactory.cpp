@@ -87,7 +87,7 @@ boost::shared_ptr<Game> TicTacToeGameFactory::create(){
 	return game;
 }
 
-
+/* methods for building the game tree */
 
 boost::shared_ptr<Node> TicTacToeGameFactory::createRootNode(){
 
@@ -106,9 +106,6 @@ boost::shared_ptr<Node> TicTacToeGameFactory::createRootNode(){
 	return boost::shared_ptr<Node>(tttnode);
 }
 
-/**
-	Creates all available moves for current node
-*/
 void TicTacToeGameFactory::addAllAvailableMoves(boost::shared_ptr<Node> node){
 	TicTacToeNode * tttnode = static_cast<TicTacToeNode *>( node.get() );
 
@@ -138,14 +135,13 @@ boost::shared_ptr<Move> TicTacToeGameFactory::createNewMove
 	return boost::shared_ptr<Move>(tttmove);
 }
 
-/* methods for building the game tree */
+
 boost::shared_ptr<Node> TicTacToeGameFactory::createNewNode(std::list<std::pair<int,int> > & nextCoords){
 	TicTacToeNode * node = new TicTacToeNode;
 	node->setNextCoordinatesList(nextCoords);
 	node->setNodeId( getNextNodeId() );
 	return boost::shared_ptr<Node>(node);
 }
-
 
 
 
@@ -170,14 +166,14 @@ boost::shared_ptr<Game> TicTacToeGameFactory::deserialize(const std::string & da
 	return boost::shared_ptr<Game>();
 }
 
-
+/*
 void TicTacToeGameFactory::printTree(boost::shared_ptr<Node> node){
 
 	TicTacToeNode * tttnode = static_cast<TicTacToeNode *> (node.get());
 	std::cout << tttnode;
 
 }
-
+*/
 
 /* for serialization */
 void TicTacToeGameFactory::serializeAllMoves(std::stringstream &stream, boost::shared_ptr<TicTacToeNode> node){

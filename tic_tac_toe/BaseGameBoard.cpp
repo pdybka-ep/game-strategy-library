@@ -1,6 +1,12 @@
+/**
+    @file   BaseGameBoard.cpp
+    @author Hanna Dutkiewicz
+*/
+
 #include "BaseGameBoard.hpp"
 
 using boost::numeric::ublas::matrix;
+
 
 BaseGameBoard::BaseGameBoard(): boardState_(GAME_DURING_PLAY), field_(3,3){
 	for(int i = 0; i < MAX_IN_A_ROW; ++i)

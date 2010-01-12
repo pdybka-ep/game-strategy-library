@@ -1,5 +1,10 @@
+/**
+  @file TicTacToeNode.cpp
+  @author Hanna Dutkiewicz
+*/
 
 #include <iostream>
+
 #include "TicTacToeNode.hpp"
 #include "TicTacToeMove.hpp"
 
@@ -7,7 +12,6 @@ using namespace library;
 using std::endl;
 
 TicTacToeNode::TicTacToeNode(): Node(){
-
 }
 
 
@@ -56,7 +60,7 @@ bool operator== (const TicTacToeNode& n1, const TicTacToeNode& n2){
 bool operator!= (const TicTacToeNode& n1, const TicTacToeNode& n2){
 	return !(n1 == n2);
 }
-
+/*
 std::ostream & operator<<(std::ostream & os, const TicTacToeNode & node){
 	os << "---NODE-------------"<<endl;
 	os << " id: " << node.nodeId_;
@@ -86,3 +90,4 @@ std::ostream & operator<<(std::ostream & os, const TicTacToeNode & node){
 
 	return os;
 }
+*/

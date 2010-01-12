@@ -1,3 +1,8 @@
+/**
+  @file SignDialog.cpp
+  @author Hanna Dutkiewicz
+*/
+
 #include "SignDialog.hpp"
 #include "ui_signdialog.h"
 #include "gamewindow.hpp"

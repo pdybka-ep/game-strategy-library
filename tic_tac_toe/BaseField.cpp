@@ -1,3 +1,8 @@
+/**
+    @file   BaseField.cpp
+    @author Hanna Dutkiewicz
+*/
+
 #include <iostream>
 #include "BaseField.hpp"
 

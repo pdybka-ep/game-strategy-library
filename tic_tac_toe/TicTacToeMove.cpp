@@ -4,8 +4,10 @@
 */
 
 #include <iostream>
+
 #include "TicTacToeMove.hpp"
 #include "TicTacToeNode.hpp"
+
 #include "../game-strategy-library/Node.hpp"
 
 using std::endl;
@@ -47,7 +49,7 @@ bool operator== (const TicTacToeMove & m1, const TicTacToeMove & m2){
 bool operator!= (const TicTacToeMove & m1, const TicTacToeMove & m2){
 	return !(m1 == m2);
 }
-
+/*
 std::ostream & operator<<(std::ostream & os, const TicTacToeMove & move){
 
 	os << "---MOVE-------------"<<endl;
@@ -61,3 +63,4 @@ std::ostream & operator<<(std::ostream & os, const TicTacToeMove & move){
 
 	return os;
 }
+*/

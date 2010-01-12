@@ -5,6 +5,7 @@
 
 #include <QPainter>
 #include <QPen>
+
 #include "field.hpp"
 
 /* Represents a single field on a game board. One of GUI classes. */
