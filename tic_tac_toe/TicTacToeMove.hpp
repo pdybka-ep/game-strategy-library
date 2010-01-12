@@ -6,7 +6,7 @@
 #ifndef TICTACTOEMOVE_H
 #define TICTACTOEMOVE_H
 
-#include "..\game-strategy-library\Move.hpp"
+#include "../game-strategy-library/Move.hpp"
 
 class TicTacToeMove;
 bool operator== (const TicTacToeMove & move1, const TicTacToeMove & move2);

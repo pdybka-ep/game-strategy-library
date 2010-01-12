@@ -1,9 +1,9 @@
 #ifndef SIGNDIALOG_HPP
 #define SIGNDIALOG_HPP
 
-#include <QtGui\QDialog>
+#include <QtGui/QDialog>
 
-#include <boost\shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "TicTacToePlayer.hpp"
 

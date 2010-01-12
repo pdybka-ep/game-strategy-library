@@ -6,9 +6,9 @@
 #ifndef OPTIONSDIALOG_H
 #define OPTIONSDIALOG_H
 
-#include <QtGui\QDialog>
+#include <QtGui/QDialog>
 #include <QString>
-#include <boost\shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "TicTacToePlayer.hpp"
 

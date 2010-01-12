@@ -5,7 +5,7 @@
 
 #include <list>
 #include <ostream>
-#include "..\game-strategy-library\Node.hpp"
+#include "../game-strategy-library/Node.hpp"
 
 class TicTacToeNode;
 bool operator== (const TicTacToeNode&, const TicTacToeNode&);

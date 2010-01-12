@@ -6,7 +6,7 @@
 #ifndef TICTACTOEPLAYER_H
 #define TICTACTOEPLAYER_H
 
-#include "..\game-strategy-library\Player.hpp"
+#include "../game-strategy-library/Player.hpp"
 
 
 class TicTacToePlayer;

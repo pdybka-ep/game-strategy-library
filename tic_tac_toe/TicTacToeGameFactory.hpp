@@ -6,9 +6,9 @@
 #ifndef TICTACTOEGAMEFACTORY_H
 #define TICTACTOEGAMEFACTORY_H
 
-#include "..\game-strategy-library\AbstractGameFactory.hpp"
-#include "..\game-strategy-library\Game.hpp"
-#include "..\game-strategy-library\Node.hpp"
+#include "../game-strategy-library/AbstractGameFactory.hpp"
+#include "../game-strategy-library/Game.hpp"
+#include "../game-strategy-library/Node.hpp"
 
 
 class TicTacToeGameFactory: public library::AbstractGameFactory{

@@ -9,12 +9,12 @@
 #include <QObject>
 #include <QFutureWatcher>
 
-#include <boost\shared_ptr.hpp>
-#include <boost\random.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/random.hpp>
 
-#include "..\game-strategy-library\GameStrategy.hpp"
-#include "..\game-strategy-library\Player.hpp"
-#include "..\game-strategy-library\AbstractGameFactory.hpp"
+#include "../game-strategy-library/GameStrategy.hpp"
+#include "../game-strategy-library/Player.hpp"
+#include "../game-strategy-library/AbstractGameFactory.hpp"
 
 #include "TicTacToeGameFactory.hpp"
 #include "GameWindow.hpp"

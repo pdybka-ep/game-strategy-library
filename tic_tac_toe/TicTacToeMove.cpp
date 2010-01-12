@@ -6,7 +6,7 @@
 #include <iostream>
 #include "TicTacToeMove.hpp"
 #include "TicTacToeNode.hpp"
-#include "..\game-strategy-library\Node.hpp"
+#include "../game-strategy-library/Node.hpp"
 
 using std::endl;
 

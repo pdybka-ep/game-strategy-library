@@ -3,20 +3,20 @@
   @author Hanna Dutkiewicz
 */
 
-#include <boost\shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <QThread>
 #include <qtconcurrentrun.h>
-#include <boost\bind.hpp>
+#include <boost/bind.hpp>
 #include <QFutureWatcher>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-#include "..\game-strategy-library\AbstractGameFactory.hpp"
-#include "..\game-strategy-library\Node.hpp"
-#include "..\game-strategy-library\Player.hpp"
-#include "..\game-strategy-library\Game.hpp"
+#include "../game-strategy-library/AbstractGameFactory.hpp"
+#include "../game-strategy-library/Node.hpp"
+#include "../game-strategy-library/Player.hpp"
+#include "../game-strategy-library/Game.hpp"
 
 #include "TicTacToeGameController.hpp"
 #include "TicTacToeGameFactory.hpp"

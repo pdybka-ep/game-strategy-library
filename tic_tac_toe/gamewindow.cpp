@@ -8,7 +8,7 @@
 #include <QGraphicsScene>
 #include <QFileDialog>
 
-#include <boost\shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "gamewindow.hpp"
 #include "ui_gamewindow.h"

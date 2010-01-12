@@ -7,11 +7,11 @@
 #include <list>
 #include <iostream>
 
-#include <boost\shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
-#include "..\game-strategy-library\Node.hpp"
-#include "..\game-strategy-library\Move.hpp"
-#include "..\game-strategy-library\Game.hpp"
+#include "../game-strategy-library/Node.hpp"
+#include "../game-strategy-library/Move.hpp"
+#include "../game-strategy-library/Game.hpp"
 
 #include "TicTacToeGameFactory.hpp"
 #include "TicTacToeMove.hpp"

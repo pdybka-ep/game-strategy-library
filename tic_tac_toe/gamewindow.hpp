@@ -6,8 +6,8 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
-#include <QtGui\QMainWindow>
-#include <boost\shared_ptr.hpp>
+#include <QtGui/QMainWindow>
+#include <boost/shared_ptr.hpp>
 #include <QGraphicsScene>
 
 #include "gameboard.hpp"
