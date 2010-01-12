@@ -214,7 +214,7 @@ boost::shared_ptr<Game> TicTacToeGameFactory::deserialize(const std::string & da
     std::cout << "Linking moves and nodes..." << std::endl;
     std::map<int, int >::iterator it;
     for(it = movesDestinations.begin(); it != movesDestinations.end(); ++it){
-        moves.at(it->first)->setDestination(nodes.at(it->second));
+        moves.find(it->first)->second->setDestination(nodes.find(it->second)->second);
     }
 
     std::cout << "Deserialization finished" << std::endl;
@@ -333,7 +333,7 @@ void TicTacToeGameFactory::deserializeAllNodes(std::stringstream &stream, std::m
         boost::tokenizer<boost::char_separator<char> >::iterator it;
         for(it = tokens.begin(); it != tokens.end(); ++it){
             tempInt = boost::lexical_cast<int>(*it);
-            boost::shared_ptr<Move> move = moves.at(tempInt);
+            boost::shared_ptr<Move> move = moves.find(tempInt)->second;
             node->addAvailableMove(move);
         }
 
