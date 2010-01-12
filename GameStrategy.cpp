@@ -224,13 +224,13 @@ namespace library {
             throw FileAccessException();
         }
         boost::shared_ptr<Game> game;
-        std::stringstream gameDataBuf;
-        std::string gameData, tmp;
-        while(!file.eof()){
-            file >> tmp;
-            gameDataBuf << tmp;
+
+        std::string gameData;
+        std::string line;
+        while(std::getline(file,line)){
+            gameData += line;
+            gameData += '\n'; // don't extract it
         }
-        gameData = gameDataBuf.str();
         file.close();
         game = gameFactory_->deserialize(gameData);
         gameState_.setGame(game);

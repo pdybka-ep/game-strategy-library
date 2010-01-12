@@ -7,7 +7,6 @@
 
 #include <boost/test/included/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
-//#include <iostream> // FIXME
 #include "GameStrategy.hpp"
 #include "Player.hpp"
 #include "Game.hpp"
@@ -20,7 +19,6 @@ using namespace library;
 
 struct GameStrategyFixture{
     GameStrategyFixture(){
-//        std::cout << "game strategy fixture SETUP" << std::endl;
         // node 8
         n8 = boost::shared_ptr<Node>(new Node());
         n8->setNodeId(8);
@@ -110,7 +108,6 @@ struct GameStrategyFixture{
         p2->setName("test2");
     }
     ~GameStrategyFixture() {
-//        std::cout << "game strategy fixture TEARDOWN" << std::endl;
     }
 
     GameStrategy gameStrategy;
