@@ -17,9 +17,9 @@
 #include "../game-strategy-library/AbstractGameFactory.hpp"
 
 #include "TicTacToeGameFactory.hpp"
-#include "GameWindow.hpp"
+#include "gamewindow.hpp"
 #include "TicTacToePlayer.hpp"
-#include "GameBoard.hpp"
+#include "gameboard.hpp"
 #include "TicTacToeMove.hpp"
 #include "BaseGameBoard.hpp"
 

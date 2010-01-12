@@ -85,7 +85,7 @@ signals:
 
 	void saveGameSignal();
 
-	void loadGameSignal(std::string &filename);
+	void loadGameSignal(std::string filename);
 
 	void createNewGameSignal();
 
@@ -93,7 +93,7 @@ signals:
 		(TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel);
 
 	void createFirstGameLoadPlayerSignal
-		(TicTacToePlayer::PlayerSign humanPlayerSign, std::string & computerPlayerFilename);
+		(TicTacToePlayer::PlayerSign humanPlayerSign, std::string computerPlayerFilename);
 
 	void changeSignSignal(TicTacToePlayer::PlayerSign sign);
 

@@ -14,7 +14,7 @@
 #include "ui_gamewindow.h"
 #include "TicTacToeGameController.hpp"
 #include "TicTacToePlayer.hpp"
-#include "OptionsDialog.hpp"
+#include "optionsdialog.hpp"
 #include "SignDialog.hpp"
 
 
@@ -86,9 +86,9 @@ void GameWindow::okClickedSlot
 	scene_->setSceneRect(QRect(x, y, w-2, h-2));
 	
 	// set oponent's level and player's sign on the window
-	ui_->playerSignLabel->setText(humanPlayerSign == TicTacToePlayer::CIRCLE ? " KÓ£KO " : " KRZY¯YK ");
+	ui_->playerSignLabel->setText(humanPlayerSign == TicTacToePlayer::CIRCLE ? " KÓ£KO " : " KRZYï¿½YK ");
 
-	QString level = (computerPlayerLevel == TicTacToePlayer::BEGINNER) ? " Poczatkujacy" : ( (computerPlayerLevel == TicTacToePlayer::ADVANCED) ? " Zaawansowany " : "Œredni");
+	QString level = (computerPlayerLevel == TicTacToePlayer::BEGINNER) ? " Poczatkujacy" : ( (computerPlayerLevel == TicTacToePlayer::ADVANCED) ? " Zaawansowany " : "ï¿½redni");
 	ui_->oponentLevelLabel->setText(level);
 
 	ui_->playerPointsLcd->display(0);
@@ -105,7 +105,7 @@ void GameWindow::okClickedSlot
 
 void GameWindow::changeSignSlot(TicTacToePlayer::PlayerSign sign){
 	humanPlayerSign_ = sign;
-	ui_->playerSignLabel->setText(humanPlayerSign_ == TicTacToePlayer::CIRCLE ? " KÓ£KO " : " KRZY¯YK ");
+	ui_->playerSignLabel->setText(humanPlayerSign_ == TicTacToePlayer::CIRCLE ? " KÓ£KO " : " KRZYï¿½YK ");
 	changeSignSignal(sign);
 }
 

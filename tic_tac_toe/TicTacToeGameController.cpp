@@ -20,7 +20,7 @@
 
 #include "TicTacToeGameController.hpp"
 #include "TicTacToeGameFactory.hpp"
-#include "GameWindow.hpp"
+#include "gamewindow.hpp"
 #include "BaseGameBoard.hpp"
 
 

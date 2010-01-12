@@ -9,6 +9,8 @@
 #include "../game-strategy-library/AbstractGameFactory.hpp"
 #include "../game-strategy-library/Game.hpp"
 #include "../game-strategy-library/Node.hpp"
+#include "TicTacToeNode.hpp"
+#include <sstream>
 
 
 class TicTacToeGameFactory: public library::AbstractGameFactory{
@@ -24,7 +26,7 @@ public:
 	*/
 	boost::shared_ptr<library::Game> create();
 
-	std::string& serialize(const boost::shared_ptr<library::Game>& game);
+	std::string serialize(const boost::shared_ptr<library::Game>& game);
 	boost::shared_ptr<library::Game> deserialize(const std::string & data);
 
 private:
@@ -43,6 +45,10 @@ private:
 	int getNextNodeId(){
 		return ++nodeId;
 	}
+
+	/* for serialization */
+    void serializeAllMoves(std::stringstream &stream, boost::shared_ptr<TicTacToeNode> node);
+    void serializeAllNodes(std::stringstream &stream, boost::shared_ptr<TicTacToeNode> node);
 
 /* for debugging only */
 	void printTree(boost::shared_ptr<library::Node> node);
