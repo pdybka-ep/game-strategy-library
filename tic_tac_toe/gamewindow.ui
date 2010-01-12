@@ -306,8 +306,8 @@
     <addaction name="actionNewGame"/>
     <addaction name="separator"/>
     <addaction name="actionTotalNewGame"/>
-    <addaction name="actionSave_2"/>
-    <addaction name="actionLoad_2"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionLoad"/>
     <addaction name="separator"/>
     <addaction name="actionEnd"/>
    </widget>
@@ -334,63 +334,6 @@
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="actionNew">
-   <property name="text">
-    <string>Nowy...</string>
-   </property>
-  </action>
-  <action name="actionBeginner">
-   <property name="text">
-    <string>Początkujący</string>
-   </property>
-   <property name="toolTip">
-    <string>&amp;Początkujący</string>
-   </property>
-  </action>
-  <action name="actionIntermediate">
-   <property name="text">
-    <string>Średni</string>
-   </property>
-   <property name="toolTip">
-    <string>Ś&amp;redni</string>
-   </property>
-  </action>
-  <action name="actionAdvanced">
-   <property name="text">
-    <string>Zaawansowany</string>
-   </property>
-   <property name="toolTip">
-    <string>Z&amp;aawansowany</string>
-   </property>
-  </action>
-  <action name="actionSave">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Zapisz...</string>
-   </property>
-   <property name="toolTip">
-    <string>&amp;Zapisz</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+S</string>
-   </property>
-   <property name="visible">
-    <bool>true</bool>
-   </property>
-  </action>
-  <action name="actionLoad">
-   <property name="text">
-    <string>Wczytaj...</string>
-   </property>
-   <property name="toolTip">
-    <string>&amp;Wczytaj</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+O</string>
-   </property>
-  </action>
   <action name="actionEnd">
    <property name="text">
     <string>Zakończ</string>
@@ -399,22 +342,17 @@
     <string>Za&amp;kończ</string>
    </property>
   </action>
-  <action name="actionNowa_gra">
-   <property name="text">
-    <string>Nowa gra</string>
-   </property>
-  </action>
   <action name="actionTotalNewGame">
    <property name="text">
     <string>Nowa gra</string>
    </property>
   </action>
-  <action name="actionLoad_2">
+  <action name="actionLoad">
    <property name="text">
     <string>Wczytaj grę</string>
    </property>
   </action>
-  <action name="actionSave_2">
+  <action name="actionSave">
    <property name="text">
     <string>Zapisz grę</string>
    </property>

@@ -44,7 +44,7 @@ public:
 	/**
 		Copies elements from another node
 		@param node to be copied
-	*/d
+	*/
     TicTacToeNode& operator= (const TicTacToeNode& node);
 
 	/**

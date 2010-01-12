@@ -67,17 +67,17 @@ void TicTacToeGameController::initialize(){
 	connect(&gameWindow_,	SIGNAL(createFirstGameNewPlayerSignal(TicTacToePlayer::PlayerSign, TicTacToePlayer::PlayerLevel)), 
 			this,			SLOT(createFirstGameNewPlayerSlot(TicTacToePlayer::PlayerSign, TicTacToePlayer::PlayerLevel)) );
 
-	connect(&gameWindow_,	SIGNAL(createFirstGameLoadPlayerSignal(TicTacToePlayer::PlayerSign, std::string & )), 
-			this,			SLOT(createFirstGameLoadPlayerSlot(TicTacToePlayer::PlayerSign, std::string & )) );
+	connect(&gameWindow_,	SIGNAL(createFirstGameLoadPlayerSignal(TicTacToePlayer::PlayerSign, std::string )), 
+			this,			SLOT(createFirstGameLoadPlayerSlot(TicTacToePlayer::PlayerSign, std::string )) );
 
 	connect(&gameWindow_,	SIGNAL(createNewGameSignal()), 
 			this,			SLOT(createNewGameSlot()) );
 
-	connect(&gameWindow_,	SIGNAL(saveGameSignal()), 
-			this,			SLOT(saveGameSlot()) );
+	connect(&gameWindow_,	SIGNAL(saveGameSignal(std::string) ), 
+			this,			SLOT(saveGameSlot(std::string)) );
 
-	connect(&gameWindow_,	SIGNAL(loadGameSignal(std::string &)), 
-			this,			SLOT(loadGameSlot(std::string &) ) );
+	connect(&gameWindow_,	SIGNAL(loadGameSignal(std::string)), 
+			this,			SLOT(loadGameSlot(std::string) ) );
 
 	connect(&gameWindow_,	SIGNAL(changeSignSignal(TicTacToePlayer::PlayerSign)), 
 			this,			SLOT(changeSignSlot(TicTacToePlayer::PlayerSign) ) );
@@ -91,28 +91,12 @@ void TicTacToeGameController::initialize(){
 
 
 /************** SLOTS ********************/
-void TicTacToeGameController::saveGameSlot(){
+void TicTacToeGameController::saveGameSlot(std::string filename){
 
 }
 
-void TicTacToeGameController::loadGameSlot(std::string & filename){
+void TicTacToeGameController::loadGameSlot(std::string filename){
 
-}
-
-void TicTacToeGameController::createNewGameSlot(){
-
-	gameBoard_.startNewGame();
-
-	try{
-		gameStrategy_.startGame();
-	} catch(UnknownGameException ex){
-		std::cerr<<ex.toString();
-		exit(1);
-	}
-
-	if(playerComp_->isStartingPlayer()){
-		makeComputerMove();
-	}
 }
 
 
@@ -167,6 +151,22 @@ boost::shared_ptr<library::Game> TicTacToeGameController::toBindCreateGameAndTra
 }
 
 
+void TicTacToeGameController::createNewGameSlot(){
+
+	gameBoard_.startNewGame();
+
+	try{
+		gameStrategy_.startGame();
+	} catch(UnknownGameException ex){
+		std::cerr<<ex.toString();
+		exit(1);
+	}
+
+	if(playerComp_->isStartingPlayer()){
+		makeComputerMove();
+	}
+}
+
 void TicTacToeGameController::startNewGame(){
 	// thread was finished, there should be a result - a new game
 	boost::shared_ptr<library::Game> game = watcher_.result();
@@ -185,8 +185,8 @@ void TicTacToeGameController::startNewGame(){
 
 
 void TicTacToeGameController::createFirstGameLoadPlayerSlot
-(TicTacToePlayer::PlayerSign humanPlayerSign, std::string & computerPlayerFilename){
-	gameBoard_.init();
+(TicTacToePlayer::PlayerSign humanPlayerSign, std::string computerPlayerFilename){
+	//gameBoard_.init();
 
 }
 

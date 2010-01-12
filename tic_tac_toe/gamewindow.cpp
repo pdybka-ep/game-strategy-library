@@ -80,6 +80,7 @@ void GameWindow::okClickedSlot
 (TicTacToePlayer::PlayerSign humanPlayerSign, TicTacToePlayer::PlayerLevel computerPlayerLevel, QString filename){
 
 	humanPlayerSign_ = humanPlayerSign;
+	computerPlayerLevel_ = computerPlayerLevel;
 
     int x, y, w, h;
     ui_->graphicsView->rect().getRect(&x, &y, &w, &h);
@@ -128,13 +129,43 @@ void GameWindow::on_actionTotalNewGame_triggered(){
 
 /* Saves current state of game (to be specific: the wisdom of an oponent). */
 void GameWindow::on_actionSave_triggered(){
-	saveGameSignal();
+	std::string text = "Game Files (*";
+
+	std::string extend = (computerPlayerLevel_ == TicTacToePlayer::BEGINNER) ? ".beg" : ( (computerPlayerLevel_ == TicTacToePlayer::ADVANCED) ? ".adv" : ".int");
+
+	text.append(extend);
+	text.append(")");
+
+	QString qfilename = QFileDialog::getSaveFileName(this, tr("Save"), "/", tr(text.c_str()));
+
+	if(qfilename.isEmpty())
+		return;
+
+	if(!qfilename.contains(".")){
+		qfilename.append(QString(extend.c_str()));
+	}
+
+	saveGameSignal(qfilename.toStdString());
 }
 
 /* Loads state of game (to be specific: the wisdom of an oponent). */
 void GameWindow::on_actionLoad_triggered(){
-	QString qfilename = QFileDialog::getOpenFileName(this, tr("Open"), "/", tr("Game Files (*.beg *.int *.adv)"));
-	loadGameSignal(qfilename.toStdString());
+	QString filename = QFileDialog::getOpenFileName(this, tr("Open"), "/", tr("Game Files (*.beg *.int *.adv)"));
+
+	if(filename.endsWith(".beg")){
+		ui_->oponentLevelLabel->setText("Poczatkujacy");
+		computerPlayerLevel_ = TicTacToePlayer::BEGINNER;
+	} 
+	else if(filename.endsWith(".int")){
+		ui_->oponentLevelLabel->setText("Sredni");
+		computerPlayerLevel_ = TicTacToePlayer::INTERMEDIATE;
+	} 
+	else if(filename.endsWith(".adv")){
+		ui_->oponentLevelLabel->setText("Zaawansowany");
+		computerPlayerLevel_ = TicTacToePlayer::ADVANCED;
+	}
+
+	loadGameSignal(filename.toStdString());
 }
 
 /* Closes the game */

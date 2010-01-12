@@ -94,8 +94,9 @@ public slots:
 signals:
 	/**
 		Signal generate to game controller to save the game
+		@param filename name of the file to save to
 	*/
-	void saveGameSignal();
+	void saveGameSignal(std::string filename);
 
 	/**
 		Signal generate to a game controller to load the game
@@ -174,6 +175,9 @@ private:
 
 	/** Holds human player sign */
 	TicTacToePlayer::PlayerSign humanPlayerSign_;
+
+	/** Holds computer player level */
+	TicTacToePlayer::PlayerLevel computerPlayerLevel_;
 };
 
 #endif // GAMEWINDOW_H
