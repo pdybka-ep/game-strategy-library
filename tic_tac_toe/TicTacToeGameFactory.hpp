@@ -133,8 +133,8 @@ private:
     /**
         Deserializes all moves
         @param stream stream where information about moves is placed
-        @param moves  TODO
-        @param movesDestinations  TODO
+        @param moves map of all moves (moveId -> Move) to be filled
+        @param movesDestinations map of all moves' destinations (moveId -> nodeId) to be filled
      */
     void deserializeAllMoves(std::stringstream &stream, std::map<int, boost::shared_ptr<library::Move> >& moves,
             std::map<int, int >& movesDestinations);
@@ -142,7 +142,8 @@ private:
     /**
         Deserializes all nodes
         @param stream stream where information about nodes is placed
-        @param nodes  TODO
+        @param nodes map of all Nodes (nodeId -> Node) to be filled
+        @param moves filled map of all moves (moveId -> Move)
      */
     void deserializeAllNodes(std::stringstream &stream, std::map<int, boost::shared_ptr<library::Node> >& nodes,
             std::map<int, boost::shared_ptr<library::Move> >& moves);
