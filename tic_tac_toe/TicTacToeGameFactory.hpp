@@ -114,14 +114,14 @@ private:
 		@param stream stream where information about moves should be placed
 		@param node pointer to a node which available moves should be serialized
 	*/
-    void serializeAllMoves(std::stringstream &stream, boost::shared_ptr<TicTacToeNode> node);
+    void serializeAllMoves(std::stringstream &stream, boost::shared_ptr<library::Node> node);
 	
 	/**
 		Serializes all destination nodes of available moves of a specific node
 		@param stream stream where information about nodes should be placed
 		@param node pointer to a node
 	*/
-    void serializeAllNodes(std::stringstream &stream, boost::shared_ptr<TicTacToeNode> node);
+    void serializeAllNodes(std::stringstream &stream, boost::shared_ptr<library::Node> node);
 
 	/* for debugging only */
 	//void printTree(boost::shared_ptr<library::Node> node);

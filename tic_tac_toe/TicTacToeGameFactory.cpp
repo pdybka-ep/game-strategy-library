@@ -146,6 +146,8 @@ boost::shared_ptr<Node> TicTacToeGameFactory::createNewNode(std::list<std::pair<
 
 
 std::string TicTacToeGameFactory::serialize(const boost::shared_ptr<Game>& game){
+    std::cout << "Starting serialization..." << std::endl;
+
     std::stringstream strStream;
     // game
     strStream << "GAME" << std::endl
@@ -153,16 +155,28 @@ std::string TicTacToeGameFactory::serialize(const boost::shared_ptr<Game>& game)
             << game->getStartNode()->getNodeId() << std::endl
             << game->getTotalNumberOfLeafs() << std::endl
             << game->getNumberOfVisitedLeafs() << std::endl;
-    TicTacToeNode *node = dynamic_cast<TicTacToeNode *>(game->getStartNode().get());
-    boost::shared_ptr<TicTacToeNode> rootNode(node);
-    serializeAllMoves(strStream, rootNode);
+
+    std::cout << "Game written, starting with moves..." << std::endl;
+
+    serializeAllMoves(strStream, game->getStartNode());
     strStream << "END_MOVES" << std::endl;
-    serializeAllNodes(strStream, rootNode);
+
+    std::cout << "Moves written, starting with nodes..." << std::endl;
+
+    serializeAllNodes(strStream, game->getStartNode());
     strStream << "END_NODES" << std::endl;
+
+    std::cout << "Nodes written, finished" << std::endl;
+
 	return strStream.str();
 }
 
 boost::shared_ptr<Game> TicTacToeGameFactory::deserialize(const std::string & data){
+    std::cout << "Starting deserialization..." << std::endl;
+
+    std::string line;
+    std::stringstream stream(data);
+    // TODO
 	return boost::shared_ptr<Game>();
 }
 
@@ -176,14 +190,15 @@ void TicTacToeGameFactory::printTree(boost::shared_ptr<Node> node){
 */
 
 /* for serialization */
-void TicTacToeGameFactory::serializeAllMoves(std::stringstream &stream, boost::shared_ptr<TicTacToeNode> node){
+void TicTacToeGameFactory::serializeAllMoves(std::stringstream &stream, boost::shared_ptr<Node> node){
     if(node.get() == 0)
         return;
+    if(node->isLeaf())
+        return;
+
     std::list<boost::shared_ptr<Move> > avalilableMoves = node->getAvailableMoves();
     std::list<boost::shared_ptr<Move> >::iterator it;
     TicTacToeMove *ttt_move;
-    TicTacToeNode *ttt_node;
-    boost::shared_ptr<TicTacToeNode> tmpNode;
     for(it = avalilableMoves.begin(); it != avalilableMoves.end(); ++it){
         ttt_move = dynamic_cast<TicTacToeMove *>((*it).get());
         stream << "MOVE" << std::endl
@@ -191,13 +206,11 @@ void TicTacToeGameFactory::serializeAllMoves(std::stringstream &stream, boost::s
                 << ttt_move->getDestination()->getNodeId() << std::endl
                 << ttt_move->getCoordinates().first << std::endl
                 << ttt_move->getCoordinates().second << std::endl;
-        ttt_node = dynamic_cast<TicTacToeNode *>(ttt_move->getDestination().get());
-        tmpNode = boost::shared_ptr<TicTacToeNode>(ttt_node);
-        serializeAllMoves(stream, tmpNode);
+        serializeAllMoves(stream, (*it)->getDestination());
     }
 }
 
-void TicTacToeGameFactory::serializeAllNodes(std::stringstream &stream, boost::shared_ptr<TicTacToeNode> node){
+void TicTacToeGameFactory::serializeAllNodes(std::stringstream &stream, boost::shared_ptr<Node> node){
     if(node.get() == 0)
         return;
 
@@ -216,12 +229,8 @@ void TicTacToeGameFactory::serializeAllNodes(std::stringstream &stream, boost::s
     }
     stream << std::endl;
 
-    TicTacToeNode *ttt_node;
-    boost::shared_ptr<TicTacToeNode> tmpNode;
     for(it = avalilableMoves.begin(); it != avalilableMoves.end(); ++it){
-        ttt_node = dynamic_cast<TicTacToeNode *>((*it)->getDestination().get());
-        tmpNode = boost::shared_ptr<TicTacToeNode>(ttt_node);
-        serializeAllNodes(stream, tmpNode);
+        serializeAllNodes(stream, (*it)->getDestination());
     }
 
 }
