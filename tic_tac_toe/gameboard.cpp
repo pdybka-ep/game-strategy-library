@@ -15,10 +15,10 @@
 
 
 GameBoard::GameBoard(QObject * parent): QObject(parent), BaseGameBoard(), pixItem_(NULL), initialized_(false){
-	winnerImage_.load(":\res\win.png");
-	loserImage_.load(":\res\lose.png");
-	remisImage_.load(":\res\remis.png");
-	waitImage_.load(":\res\make.png");
+	winnerImage_.load(":/res/win.png");
+	loserImage_.load(":/res/lose.png");
+	remisImage_.load(":/res/remis.png");
+	waitImage_.load(":/res/make.png");
 
 }
 
@@ -30,7 +30,7 @@ GameBoard::~GameBoard(){
 
 void GameBoard::setGraphicsScene(boost::shared_ptr<QGraphicsScene> scene){
 	scene_ = scene;
-    QImage backIm(":/res/tlo.bmp");
+    //QImage backIm(":/res/tlo.bmp");
     scene_->setBackgroundBrush(QBrush(Qt::black));
 }
 
