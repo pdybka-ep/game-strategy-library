@@ -160,6 +160,12 @@ private:
 	*/
 	boost::shared_ptr<library::Move> getRandMove();
 
+	/**
+		Creates players
+		@param humanPlayerSign sign of the human player
+	*/
+	void createPlayers(TicTacToePlayer::PlayerSign humanPlayerSign);
+
 /******* PRIVATE FIELDS *********/
 // model
 	/** Game strategy, from the library*/
