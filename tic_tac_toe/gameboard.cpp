@@ -125,6 +125,10 @@ void GameBoard::addFinishElementsToScene(const QPixmap & pixmap){
 }
 
 void GameBoard::wait(bool newGrameTree){
+	if(pixItem_ != NULL){
+		scene_->removeItem(pixItem_);
+		pixItem_ = NULL;
+	}
 	if(newGrameTree)
 		pixItem_ = scene_->addPixmap(waitImage_);
 	else
