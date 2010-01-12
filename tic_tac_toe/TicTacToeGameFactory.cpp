@@ -208,7 +208,7 @@ boost::shared_ptr<Game> TicTacToeGameFactory::deserialize(const std::string & da
     // read all nodes
     std::cout << "Reading nodes..." << std::endl;
     deserializeAllNodes(stream, nodes, moves);
-    game->setStartNode(nodes.at(rootNodeId));
+    game->setStartNode(nodes.find(rootNodeId)->second);
 
     // link moves and nodes
     std::cout << "Linking moves and nodes..." << std::endl;
