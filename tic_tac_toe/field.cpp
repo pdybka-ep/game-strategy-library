@@ -10,7 +10,7 @@
 #include "field.hpp"
 
 /* Represents a single field on a game board. One of GUI classes. */
-Field::Field(QObject * parent): QObject(parent), BaseField(){
+Field::Field(QObject * parent): QObject(parent), QGraphicsItem(), BaseField(){
 
     setFlags(QGraphicsItem::ItemIsSelectable);
     setFlags(QGraphicsItem::ItemIsFocusable);
@@ -18,11 +18,11 @@ Field::Field(QObject * parent): QObject(parent), BaseField(){
 
 	coordinates_ = std::make_pair<int,int>(-1,-1);
 
-    bool read = circleImage_.load(QString(":/res/circle.png"));
+    circleImage_.load(QString(":/res/circle.png"));
     crossImage_.load(QString(":/res/cross.png"));
 }
 
-Field::Field(const Field & field){
+Field::Field(const Field & field): QObject(), QGraphicsItem(), BaseField(){
 	*this = field;
 }
 

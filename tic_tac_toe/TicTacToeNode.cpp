@@ -15,7 +15,7 @@ TicTacToeNode::TicTacToeNode(): Node(){
 }
 
 
-TicTacToeNode::TicTacToeNode(const TicTacToeNode & node){
+TicTacToeNode::TicTacToeNode(const TicTacToeNode & node): Node(){
 	*this = node;
 }
 
