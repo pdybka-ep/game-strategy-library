@@ -1,0 +1,1 @@
+A library implementing algorithm that helps to find optimal strategy for games with small game tree.
